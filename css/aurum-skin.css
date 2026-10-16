@@ -51,28 +51,43 @@ body::after {
 /* ── 4. 金色选区 ── */
 ::selection { background: rgba(201, 168, 106, .32); color: #f6efdd; }
 
-/* ── 5. 暗区板块：金 hairline + 四角卷草金饰 + 半透明深底 ──
-   注意 :not(.zone-archive)：羊皮纸区自带金角饰与纸底，不得覆盖 */
+/* ── 5. 暗区板块 = 参考图4主面板复刻 ──
+   暗红噪点星空内里 + 金色双线框 + 四角蝴蝶结花结角饰 */
 .section-dark:not(.zone-archive) > .section-inner {
-  background-color: rgba(10, 6, 6, .62);
-  box-shadow: inset 0 0 0 1px rgba(201, 168, 106, .18);
+  background-color: #150908;
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cpath d='M43 3.5 H15 Q3.5 3.5 3.5 15 V43' fill='none' stroke='%23C9A86A' stroke-width='1.1'/%3E%3Cpath d='M43 9.5 H17.5 Q9.5 9.5 9.5 17.5 V43' fill='none' stroke='%23C9A86A' stroke-opacity='.4' stroke-width='.7'/%3E%3Ccircle cx='3.5' cy='3.5' r='1.5' fill='%23C9A86A'/%3E%3Ccircle cx='43' cy='3.5' r='.9' fill='%23C9A86A' fill-opacity='.55'/%3E%3Ccircle cx='3.5' cy='43' r='.9' fill='%23C9A86A' fill-opacity='.55'/%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cg transform='translate(44,0) scale(-1,1)'%3E%3Cpath d='M43 3.5 H15 Q3.5 3.5 3.5 15 V43' fill='none' stroke='%23C9A86A' stroke-width='1.1'/%3E%3Cpath d='M43 9.5 H17.5 Q9.5 9.5 9.5 17.5 V43' fill='none' stroke='%23C9A86A' stroke-opacity='.4' stroke-width='.7'/%3E%3Ccircle cx='3.5' cy='3.5' r='1.5' fill='%23C9A86A'/%3E%3Ccircle cx='43' cy='3.5' r='.9' fill='%23C9A86A' fill-opacity='.55'/%3E%3Ccircle cx='3.5' cy='43' r='.9' fill='%23C9A86A' fill-opacity='.55'/%3E%3C/g%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cg transform='translate(0,44) scale(1,-1)'%3E%3Cpath d='M43 3.5 H15 Q3.5 3.5 3.5 15 V43' fill='none' stroke='%23C9A86A' stroke-width='1.1'/%3E%3Cpath d='M43 9.5 H17.5 Q9.5 9.5 9.5 17.5 V43' fill='none' stroke='%23C9A86A' stroke-opacity='.4' stroke-width='.7'/%3E%3Ccircle cx='3.5' cy='3.5' r='1.5' fill='%23C9A86A'/%3E%3Ccircle cx='3.5' cy='43' r='.9' fill='%23C9A86A' fill-opacity='.55'/%3E%3C/g%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cg transform='translate(44,44) scale(-1,-1)'%3E%3Cpath d='M43 3.5 H15 Q3.5 3.5 3.5 15 V43' fill='none' stroke='%23C9A86A' stroke-width='1.1'/%3E%3Cpath d='M43 9.5 H17.5 Q9.5 9.5 9.5 17.5 V43' fill='none' stroke='%23C9A86A' stroke-opacity='.4' stroke-width='.7'/%3E%3Ccircle cx='3.5' cy='3.5' r='1.5' fill='%23C9A86A'/%3E%3Ccircle cx='3.5' cy='43' r='.9' fill='%23C9A86A' fill-opacity='.55'/%3E%3C/g%3E%3C/svg%3E");
-  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
-  background-position: top 8px left 8px, top 8px right 8px,
-                       bottom 8px left 8px, bottom 8px right 8px;
-  background-size: 44px 44px, 44px 44px, 44px 44px, 44px 44px;
+    /* 四角蝴蝶结花结角饰（56px） */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cpath d='M55 12 H20 Q12 12 12 20 V55' fill='none' stroke='%23C9A86A' stroke-width='1.4'/%3E%3Cpath d='M55 18 H23 Q18 18 18 23 V55' fill='none' stroke='%23C9A86A' stroke-opacity='.45' stroke-width='.8'/%3E%3Cpath d='M12 5 L19 12 L12 19 L5 12 Z' fill='none' stroke='%23C9A86A' stroke-width='1.1'/%3E%3Ccircle cx='12' cy='12' r='1.7' fill='%23C9A86A'/%3E%3Cpath d='M55 9 L58 12 L55 15 L52 12 Z' fill='%23C9A86A' fill-opacity='.85'/%3E%3Cpath d='M9 55 L12 58 L15 55 L12 52 Z' fill='%23C9A86A' fill-opacity='.85'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg transform='translate(56,0) scale(-1,1)'%3E%3Cpath d='M55 12 H20 Q12 12 12 20 V55' fill='none' stroke='%23C9A86A' stroke-width='1.4'/%3E%3Cpath d='M55 18 H23 Q18 18 18 23 V55' fill='none' stroke='%23C9A86A' stroke-opacity='.45' stroke-width='.8'/%3E%3Cpath d='M12 5 L19 12 L12 19 L5 12 Z' fill='none' stroke='%23C9A86A' stroke-width='1.1'/%3E%3Ccircle cx='12' cy='12' r='1.7' fill='%23C9A86A'/%3E%3Cpath d='M55 9 L58 12 L55 15 L52 12 Z' fill='%23C9A86A' fill-opacity='.85'/%3E%3Cpath d='M9 55 L12 58 L15 55 L12 52 Z' fill='%23C9A86A' fill-opacity='.85'/%3E%3C/g%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg transform='translate(0,56) scale(1,-1)'%3E%3Cpath d='M55 12 H20 Q12 12 12 20 V55' fill='none' stroke='%23C9A86A' stroke-width='1.4'/%3E%3Cpath d='M55 18 H23 Q18 18 18 23 V55' fill='none' stroke='%23C9A86A' stroke-opacity='.45' stroke-width='.8'/%3E%3Cpath d='M12 5 L19 12 L12 19 L5 12 Z' fill='none' stroke='%23C9A86A' stroke-width='1.1'/%3E%3Ccircle cx='12' cy='12' r='1.7' fill='%23C9A86A'/%3E%3Cpath d='M55 9 L58 12 L55 15 L52 12 Z' fill='%23C9A86A' fill-opacity='.85'/%3E%3Cpath d='M9 55 L12 58 L15 55 L12 52 Z' fill='%23C9A86A' fill-opacity='.85'/%3E%3C/g%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg transform='translate(56,56) scale(-1,-1)'%3E%3Cpath d='M55 12 H20 Q12 12 12 20 V55' fill='none' stroke='%23C9A86A' stroke-width='1.4'/%3E%3Cpath d='M55 18 H23 Q18 18 18 23 V55' fill='none' stroke='%23C9A86A' stroke-opacity='.45' stroke-width='.8'/%3E%3Cpath d='M12 5 L19 12 L12 19 L5 12 Z' fill='none' stroke='%23C9A86A' stroke-width='1.1'/%3E%3Ccircle cx='12' cy='12' r='1.7' fill='%23C9A86A'/%3E%3Cpath d='M55 9 L58 12 L55 15 L52 12 Z' fill='%23C9A86A' fill-opacity='.85'/%3E%3Cpath d='M9 55 L12 58 L15 55 L12 52 Z' fill='%23C9A86A' fill-opacity='.85'/%3E%3C/g%3E%3C/svg%3E"),
+    /* 星点点阵（参考图4噪点星空） */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cg fill='%23e8cf9a'%3E%3Ccircle cx='12' cy='34' r='.9' opacity='.5'/%3E%3Ccircle cx='58' cy='12' r='.6' opacity='.35'/%3E%3Ccircle cx='103' cy='48' r='1.1' opacity='.6'/%3E%3Ccircle cx='150' cy='22' r='.7' opacity='.4'/%3E%3Ccircle cx='199' cy='60' r='.9' opacity='.5'/%3E%3Ccircle cx='230' cy='14' r='.6' opacity='.3'/%3E%3Ccircle cx='30' cy='90' r='.7' opacity='.4'/%3E%3Ccircle cx='80' cy='120' r='1.0' opacity='.55'/%3E%3Ccircle cx='135' cy='95' r='.6' opacity='.35'/%3E%3Ccircle cx='188' cy='130' r='.8' opacity='.45'/%3E%3Ccircle cx='220' cy='105' r='.6' opacity='.35'/%3E%3Ccircle cx='14' cy='160' r='.8' opacity='.45'/%3E%3Ccircle cx='64' cy='190' r='.6' opacity='.35'/%3E%3Ccircle cx='112' cy='165' r='.9' opacity='.5'/%3E%3Ccircle cx='160' cy='205' r='.7' opacity='.4'/%3E%3Ccircle cx='205' cy='180' r='1.0' opacity='.5'/%3E%3Ccircle cx='45' cy='228' r='.7' opacity='.4'/%3E%3Ccircle cx='145' cy='235' r='.6' opacity='.3'/%3E%3Ccircle cx='95' cy='75' r='.5' opacity='.3'/%3E%3Ccircle cx='175' cy='55' r='.5' opacity='.3'/%3E%3C/g%3E%3C/svg%3E"),
+    /* 血雾团（参考图4中央红云） */
+    radial-gradient(ellipse 55% 45% at 22% 18%, rgba(168,50,38,.34) 0%, transparent 62%),
+    radial-gradient(ellipse 60% 50% at 80% 78%, rgba(126,26,16,.40) 0%, transparent 58%),
+    radial-gradient(ellipse 45% 40% at 85% 15%, rgba(110,22,14,.30) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 35% at 30% 85%, rgba(104,20,14,.28) 0%, transparent 62%);
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+  background-position: top 10px left 10px, top 10px right 10px, bottom 10px left 10px, bottom 10px right 10px,
+                       top left, 0 0, 0 0, 0 0, 0 0;
+  background-size: 56px 56px, 56px 56px, 56px 56px, 56px 56px, 240px 240px, auto, auto, auto, auto;
+  border: 1.5px solid rgba(201,168,106,.55);
+  outline: 1px solid rgba(201,168,106,.28);
+  outline-offset: 6px;
+  box-shadow: inset 0 0 70px rgba(50,8,5,.55), 0 0 44px rgba(126,26,16,.14);
+  padding: 3.4rem 2.6rem;
 }
-/* 研究框架子块：只留 hairline，不加角饰与深底（避免过密） */
+/* 研究框架子块：暗红小面板 + 金单线框（无角饰，避免过密） */
 .section-dark:not(.zone-archive) > .section-inner.rf-block {
-  background-color: rgba(10, 6, 6, .38);
-  background-image: none;
-  box-shadow: inset 0 0 0 1px rgba(201, 168, 106, .10);
+  background-color: rgba(21, 9, 8, .55);
+  background-image:
+    radial-gradient(ellipse 50% 60% at 20% 20%, rgba(126,26,16,.30) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 85% 85%, rgba(110,22,14,.26) 0%, transparent 58%);
+  border: 1px solid rgba(201,168,106,.35);
+  outline: none;
+  box-shadow: inset 0 0 34px rgba(50,8,5,.4);
 }
-
 /* ── 6. 板块标签：金色菱形前缀 ── */
 .section-dark .section-label::before {
   content: "◆ ";
