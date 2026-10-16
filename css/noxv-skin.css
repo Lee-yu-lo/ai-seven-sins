@@ -49,6 +49,8 @@ html { scrollbar-color: #8e6b3a #0b0708; }
 }
 
 /* ── 5. 符号卡：四角金饰（勾边与悬停晕由 eclipse 层负责）── */
+.sin-card { border-radius: 8px; }
+
 /* 四角金饰 —— .sin-card（::after 覆盖层，避免被卡片图片遮挡） */
 .sin-card::after {
   content: '';
