@@ -173,3 +173,178 @@ body::after {
   body::before { opacity: .32; background-size: 260px 260px; }
   .section-dark > .section-inner { background-size: 30px 30px, 30px 30px, 30px 30px, 30px 30px; }
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   6 · v20261016e 全站暗色清洗 —— research / plan / press-kit 卷宗区
+   参考图语言：黑底 + 血红星云 + 细金框暗面板 + 金字 + 金 pill
+   推翻 culture 层"整区羊皮纸"翻转，纸感只保留小徽记
+   ══════════════════════════════════════════════════════════════════ */
+
+#research,
+#plan,
+#press-kit {
+  /* 令牌翻转：纸卷 → 雕金暗卷宗 */
+  --pq-ink: #ecdcb4;
+  --pq-ink-soft: #cbb287;
+  --pq-ink-faint: #9d8760;
+  --pq-gold: #c6a674;
+  --pq-seal: #c33f33;
+  --pq-rule: rgba(198, 166, 116, .24);
+  --pq-rule-strong: rgba(198, 166, 116, .52);
+  --pq-bg: #0d0605;
+  --text: var(--pq-ink);
+  --text-dim: var(--pq-ink-soft);
+  --text-faint: var(--pq-ink-faint);
+  --wax: var(--pq-ink);
+  --warm: #e0c48e;
+  --accent: var(--pq-gold);
+  --gold: var(--pq-gold);
+  --gold-deep: #8f6e3e;
+  --ash: var(--pq-ink-faint);
+  --ash-dim: #a68f66;
+  --border: var(--pq-rule);
+  --border-bright: var(--pq-rule-strong);
+  --bg-light: #1d0f0b;
+  --bg-mid: #170c09;
+  --ember: #d24a3c;
+  --crimson: #b8433a;
+  --ok: #c6a674;
+  --pending: #8f6e3e;
+  --tint: 198, 166, 116;
+
+  color: var(--pq-ink);
+  background-color: #0d0605;
+  /* 黑底 + 血红星云 + 金星点阵（参考图 4 主面板） */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cg fill='%23c6a674'%3E%3Ccircle cx='23' cy='41' r='1.1'/%3E%3Ccircle cx='97' cy='13' r='.8'/%3E%3Ccircle cx='171' cy='67' r='1.3'/%3E%3Ccircle cx='211' cy='133' r='.7'/%3E%3Ccircle cx='57' cy='113' r='1'/%3E%3Ccircle cx='133' cy='167' r='.9'/%3E%3Ccircle cx='13' cy='197' r='.8'/%3E%3Ccircle cx='83' cy='221' r='1.2'/%3E%3Ccircle cx='187' cy='211' r='.8'/%3E%3Ccircle cx='147' cy='23' r='.6'/%3E%3C/g%3E%3C/svg%3E"),
+    radial-gradient(ellipse 65% 42% at 18% 8%, rgba(146, 26, 16, .34) 0%, transparent 62%),
+    radial-gradient(ellipse 70% 45% at 85% 30%, rgba(112, 20, 12, .30) 0%, transparent 64%),
+    radial-gradient(ellipse 80% 40% at 45% 75%, rgba(96, 16, 10, .28) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 35% at 50% 50%, transparent 42%, rgba(0, 0, 0, .5) 100%);
+  box-shadow:
+    inset 0 30px 60px -44px rgba(198, 166, 116, .28),
+    inset 0 -30px 60px -44px rgba(198, 166, 116, .2),
+    0 0 0 1px rgba(198, 166, 116, .18);
+  border-top: 1px solid rgba(198, 166, 116, .35);
+  border-bottom: 1px solid rgba(198, 166, 116, .35);
+}
+#research::before,
+#plan::before,
+#press-kit::before { background: linear-gradient(90deg, transparent, rgba(198,166,116,.45), transparent); }
+
+/* 标题 / 标签 → 雕金 */
+#research .section-label,
+#plan .section-label,
+#press-kit .section-label {
+  color: var(--pq-gold);
+  border-bottom-color: rgba(198, 166, 116, .45);
+}
+#research .section-title,
+#plan .section-title,
+#press-kit .section-title {
+  color: #f2e4c2;
+  text-shadow: 0 0 26px rgba(198, 166, 116, .3), 0 2px 14px rgba(0, 0, 0, .8);
+}
+#research .section-title::after,
+#plan .section-title::after,
+#press-kit .section-title::after {
+  background: linear-gradient(90deg, #c6a674, transparent);
+}
+#research .section-desc,
+#plan .section-desc,
+#press-kit .section-desc { color: var(--pq-ink-soft); }
+
+/* 卡片全员 → 细金框暗面板（参考图 1/4 面板语言） */
+#research .survey-card,
+#research .research-bg-card,
+#research .research-question-card,
+#research .theory-card,
+#research .refcase-card,
+#research .innovation-card,
+#research .feasibility-card,
+#research .method-step,
+#research .apparatus-meta-item,
+#research .fw-stat,
+#plan .plan-phase,
+#plan .progress-wrap,
+#press-kit .press-kit-card,
+#press-kit .copyright-section {
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 0%, rgba(126, 26, 16, .16) 0%, transparent 60%),
+    linear-gradient(165deg, #1d0f0b 0%, #150908 62%, #180b09 100%);
+  border: 1px solid rgba(198, 166, 116, .3);
+  box-shadow: inset 0 1px 0 rgba(198, 166, 116, .14), 0 10px 26px -18px rgba(0, 0, 0, .9);
+}
+#research .research-question-card:hover,
+#research .refcase-card:hover,
+#research .survey-card:hover,
+#research .research-bg-card:hover,
+#research .theory-card:hover,
+#research .feasibility-card:hover,
+#research .innovation-card:hover,
+#press-kit .press-kit-card:hover,
+#plan .plan-phase:hover,
+#research .method-step:hover {
+  background: linear-gradient(165deg, #241310 0%, #1a0d0a 62%, #1d0e0b 100%);
+  border-color: rgba(220, 188, 130, .62);
+  box-shadow: inset 0 1px 0 rgba(220, 188, 130, .2), 0 14px 30px -18px rgba(0, 0, 0, .95);
+}
+
+/* INDEX 总览：金数字 + 金框暗条 */
+.fw-overview {
+  background: linear-gradient(180deg, rgba(126, 26, 16, .14), rgba(126, 26, 16, .03)) !important;
+  border-color: rgba(198, 166, 116, .28) !important;
+  border-left-color: #c6a674 !important;
+}
+.fw-stat-num { color: #dcbc84 !important; text-shadow: 0 0 20px rgba(198, 166, 116, .45) !important; }
+.fw-stat-label { color: var(--pq-ink-soft) !important; }
+.fw-toc { border-top-color: rgba(198, 166, 116, .24) !important; }
+.fw-toc-label { color: var(--pq-gold) !important; }
+.fw-toc a { color: var(--pq-ink-soft) !important; }
+.fw-toc a:hover { color: #ecdcb4 !important; border-color: rgba(198, 166, 116, .5) !important; background: rgba(198, 166, 116, .1) !important; }
+
+/* 进度条：橄榄绿 → 雕金 */
+#plan .progress-track { background: rgba(198, 166, 116, .14) !important; }
+#plan .progress-fill {
+  background: linear-gradient(90deg, #6e5023 0%, #a8823f 45%, #ecd39c 100%) !important;
+  box-shadow: 0 0 16px rgba(198, 166, 116, .5) !important;
+}
+#plan .progress-marker { border-color: #c6a674 !important; background: #1d0f0b !important; box-shadow: 0 0 10px rgba(198, 166, 116, .55) !important; }
+#plan .progress-head, #plan .progress-stat, #plan .progress-scale { color: var(--pq-ink-soft) !important; }
+#plan .plan-status { color: #c6a674 !important; }
+#plan .plan-date { color: var(--pq-ink-faint) !important; }
+#plan .plan-phase h4, #plan .plan-phase strong { color: #ecdcb4; }
+#plan .plan-timeline { background: rgba(198, 166, 116, .2) !important; }
+
+/* 下载按钮 → 实心金 pill（参考图 1/3） */
+#press-kit .press-kit-download {
+  color: #241505 !important;
+  background: linear-gradient(180deg, #e6cd96 0%, #c6a674 100%) !important;
+  border: 1px solid #8f6e3e !important;
+  box-shadow: 0 0 14px rgba(198, 166, 116, .35), inset 0 1px 0 rgba(255, 244, 214, .6) !important;
+  font-weight: 600;
+}
+#press-kit .press-kit-download:hover {
+  background: linear-gradient(180deg, #f2ddab 0%, #d4b684 100%) !important;
+  box-shadow: 0 0 22px rgba(220, 188, 130, .55), inset 0 1px 0 rgba(255, 248, 224, .7) !important;
+}
+#press-kit .kit-ok { color: #c6a674 !important; }
+#press-kit .kit-pending { color: #b8433a !important; }
+#press-kit .copyright-title, #press-kit .press-kit-card h3 { color: #ecdcb4; }
+
+/* 表格线与卷宗分隔 → 金线 */
+#research .method-flow, #research .apparatus-meta { background: rgba(198, 166, 116, .2) !important; }
+.survey-table, .symbol-map-table, .zone-table, .kit-map-table { border-color: rgba(198, 166, 116, .24); }
+.survey-table th, .symbol-map-table th, .zone-table th, .kit-map-table th { color: var(--pq-gold); border-color: rgba(198, 166, 116, .3); }
+.survey-table td, .symbol-map-table td, .zone-table td, .kit-map-table td { border-color: rgba(198, 166, 116, .16); }
+.kit-map-table tbody tr:hover { background: rgba(198, 166, 116, .07); }
+
+@media (max-width: 768px) {
+  #research, #plan, #press-kit { background-size: 200px 200px, auto, auto, auto, auto; }
+}
+
+/* 表格隔行灰带 → 金微光；冲突注记提亮 */
+#research .survey-table tbody tr:nth-child(even),
+#research .symbol-map-table tbody tr:nth-child(even),
+#research .kit-map-table tbody tr:nth-child(even) { background: rgba(198, 166, 116, .06); }
+.survey-conflict { color: #d8a05a !important; text-shadow: 0 0 10px rgba(198, 130, 60, .3); }
