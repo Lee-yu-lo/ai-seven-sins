@@ -1,0 +1,100 @@
+/* ============================================================
+   AMBER SKIN · 暖琥珀转调层（v20261016c，加载于 aurum-skin 之后）
+   依据 2026-10-16 晚参考 moodboard（金羽 / 逆光螺旋日 / 金沙手 /
+   青铜鹰 / 埃及眼妆 / 沙漠篝火 / 墓室金壁）：整站由「黑底血红」
+   转调为「暖烟棕 · 蜜金 · 古铜琥珀」。token 重定义 + 板块级渲染。
+   封面（hero）结构不动，随 token 自然暖化。
+   ============================================================ */
+
+/* ── 1. Token 转调：炭黑透血 → 暖烟棕透金 ── */
+:root {
+  --bg: #150d07;            /* 圣所暗区 · 暖烟棕 */
+  --bg-light: #221609;      /* 祭台侧壁（卡片底）· 暖铜棕 */
+  --bg-mid: #1a1108;
+  --bg-deep: #0b0703;
+  --gold: #dfb878;          /* 蜜金（提亮提暖） */
+  --gold-deep: #9a6f35;
+  --accent: #c07b35;        /* 高亮 = 琥珀铜 */
+  --ember: #d98e3f;         /* 余烬 · 蜜火 */
+  --blood: #8a4522;         /* 铜赭 */
+  --blood-bright: #d08a3e;  /* 亮琥珀铜 · 高亮文字 */
+  --blood-deep: #4a2812;
+  --crimson: #7c4322;
+  --crimson-lit: #c98a45;
+  --seal: #8a6a3f;
+  /* 羊皮纸区同步暖化 */
+  --pq-bg: #ecdfc2;
+  --pq-bg-alt: #f4ebd6;
+  --pq-seal: #96581f;       /* 琥珀封印（原朱红） */
+  --pq-gold: #96702f;
+}
+
+/* ── 2. 板块级渲染：暖棕渐变 + 顶部逆光琥珀辉（moodboard 的逆光日 / 篝火光）── */
+.section-dark {
+  background:
+    radial-gradient(ellipse 72% 26% at 50% 0%, rgba(217, 142, 63, .10) 0%, transparent 72%),
+    radial-gradient(ellipse 55% 22% at 50% 100%, rgba(154, 111, 53, .08) 0%, transparent 70%),
+    linear-gradient(180deg, #1a1009 0%, #130c07 48%, #0e0905 100%) !important;
+}
+
+/* ── 3. 猩红雾 → 琥珀烟（覆盖 aurum-skin 的 body::before）── */
+body::before {
+  background:
+    radial-gradient(ellipse 120% 55% at 50% -8%, rgba(154, 96, 34, .30) 0%, transparent 62%),
+    radial-gradient(ellipse 105% 48% at 50% 108%, rgba(128, 78, 28, .24) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 40% at 6% 46%, rgba(110, 66, 24, .15) 0%, transparent 65%),
+    radial-gradient(ellipse 70% 40% at 94% 46%, rgba(110, 66, 24, .15) 0%, transparent 65%);
+}
+
+/* ── 4. 符号卡：暖铜棕底 + 金沙内衬线 ── */
+.sin-card {
+  background: linear-gradient(180deg, #251809 0%, #1c1207 100%);
+  box-shadow: inset 0 0 0 1px rgba(223, 184, 120, .10);
+}
+.sin-card:hover { box-shadow: 0 20px 60px -20px rgba(217, 142, 63, .55), inset 0 0 0 1px rgba(223, 184, 120, .22); }
+
+/* ── 5. 导航 / 加载器底色暖化 ── */
+#nav {
+  background: linear-gradient(180deg, rgba(23, 14, 7, .94), rgba(23, 14, 7, .80)) !important;
+  border-bottom-color: rgba(223, 184, 120, .24) !important;
+}
+#loader { background: var(--bg-deep); }
+
+/* ── 6. 雕金角饰线色随层提亮（金饰已是 C9A86A，叠加蜜金 hairline 增暖）── */
+.section-dark > .section-inner {
+  box-shadow: inset 0 0 0 1px rgba(223, 184, 120, .20) !important;
+}
+
+/* ── 7. 羊皮纸区：纸色更蜜金、边框转铜金 ── */
+.zone-archive > .section-inner {
+  border-color: rgba(154, 111, 53, .8) !important;
+}
+
+/* ── 8. hero 血红辉光 → 蜜火辉光（光轮/徽章光晕转琥珀，与 moodboard 篝火呼应）── */
+.hero-halo {
+  background: repeating-conic-gradient(from -90deg,
+    rgba(217, 142, 63, .20) 0deg 1.6deg,
+    transparent 1.6deg 9deg);
+}
+#hero {
+  background:
+    radial-gradient(ellipse 90% 34% at 50% 88%, rgba(138, 69, 34, .42) 0%, transparent 68%),
+    radial-gradient(ellipse at 50% 38%, #1a1209 0%, #0e0905 46%, #070402 100%) !important;
+}
+#hero .hero-content::after {
+  background: radial-gradient(circle,
+    rgba(217, 142, 63, .20) 0%,
+    rgba(138, 69, 34, .10) 38%,
+    transparent 68%);
+}
+
+/* ── 9. 强调文字：血红 → 琥珀铜（版面高亮全面转暖）── */
+.section-dark .section-label { color: var(--gold) !important; }
+.zone-archive .section-label { color: var(--pq-seal) !important; }
+
+@media (max-width: 768px) {
+  body::before { background:
+    radial-gradient(ellipse 160% 40% at 50% -6%, rgba(154, 96, 34, .28) 0%, transparent 60%),
+    radial-gradient(ellipse 140% 36% at 50% 106%, rgba(128, 78, 28, .22) 0%, transparent 58%);
+  }
+}

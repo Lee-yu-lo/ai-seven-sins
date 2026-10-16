@@ -1,0 +1,252 @@
+/* ============================================================
+   VITRUVIAN SKIN · 希腊化版画亮调皮肤（v20261016c，最后加载）
+   依据 2026-10-16 参考图（羊皮纸底 / 锈红放射色块 / 黑色点刻
+   剪影 / 金色星轨环 / 希腊回纹 / 暗面板金字 UI）：
+   整站由「黑金暗黑」翻转为「羊皮纸亮底 + 锈红 + 墨黑 + 金线」。
+   暗面板（导航 / 符号卡 / 页脚 / 加载门）保留深棕黑金字作对比，
+   如同参考图右侧的暗色 UI 面板。
+   ============================================================ */
+
+/* ── 1. Token 翻转：暗区 token 全部改为羊皮纸亮调 ── */
+:root {
+  --bg: #e9e0cb;            /* 羊皮纸做旧底 */
+  --bg-light: #f0e8d5;      /* 卡片浅纸 */
+  --bg-mid: #e2d8bf;
+  --bg-deep: #d8ccb0;       /* 做旧深处 */
+  --text: #241a0c;          /* 铁胆墨 */
+  --text-dim: #5f5138;
+  --text-faint: #8d7d5e;
+  --accent: #a8492c;        /* 锈红 */
+  --gold: #9c7a2e;          /* 亮底金 → 金褐（米白上可见） */
+  --gold-deep: #7a5c22;
+  --blood: #a8492c;         /* 锈红主色 */
+  --blood-bright: #b8552f;
+  --blood-deep: #7e2d1a;
+  --warm: #241a0c;
+  --bone: #3a2d18;
+}
+
+/* ── 2. body：羊皮纸做旧底（覆盖 aurum 血雾层）── */
+body {
+  background:
+    radial-gradient(ellipse 130% 90% at 50% 40%, #ede5d1 0%, #e9e0cb 52%, #ddd1b4 100%) !important;
+  color: var(--text);
+}
+/* aurum body::before 血棕云纹 → 羊皮纸做旧斑（multiply 压暗成褐斑） */
+body::before {
+  mix-blend-mode: multiply !important;
+  opacity: .13 !important;
+  background-size: 340px 340px !important;
+}
+/* aurum body::after → 深色纤维颗粒（multiply，版画纸纹） */
+body::after {
+  mix-blend-mode: multiply !important;
+  opacity: .05 !important;
+}
+
+/* ── 3. HERO：羊皮纸 + 左上锈红放射色块 + 右侧金色星轨环 ── */
+#hero {
+  background:
+    radial-gradient(ellipse at 50% 42%, #f0e8d5 0%, #e7ddc6 48%, #dccfb0 100%) !important;
+}
+/* 左上锈红放射大色块（参考图左侧的红色放射楔形） */
+#hero::before {
+  content: "";
+  position: absolute;
+  left: -6%; top: -8%;
+  width: 44%; height: 86%;
+  pointer-events: none;
+  background:
+    repeating-conic-gradient(from 205deg at 14% 6%,
+      rgba(168, 73, 44, .52) 0deg 1.1deg,
+      transparent 1.1deg 6.5deg),
+    linear-gradient(155deg, rgba(168, 73, 44, .58) 0%, rgba(168, 73, 44, .22) 52%, transparent 78%);
+  clip-path: polygon(0 0, 100% 0, 26% 100%, 0 92%);
+  z-index: 0;
+}
+/* aurum 的 hero 红光晕 → 关闭 */
+#hero .hero-content::after { content: none !important; }
+/* hero-halo（金色放射）→ 右侧金色星轨同心环（参考图的金圈星轨） */
+.hero-halo {
+  background:
+    radial-gradient(circle, transparent 56.5%, rgba(156, 122, 46, .55) 57%, transparent 58.4%),
+    radial-gradient(circle, transparent 63.5%, rgba(156, 122, 46, .38) 64%, transparent 65.4%),
+    radial-gradient(circle, transparent 70.5%, rgba(156, 122, 46, .26) 71%, transparent 72.2%),
+    radial-gradient(circle, transparent 77.5%, rgba(156, 122, 46, .18) 78%, transparent 79%),
+    radial-gradient(circle, transparent 84.5%, rgba(156, 122, 46, .12) 85%, transparent 86%) !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  opacity: .9 !important;
+}
+/* 日蚀徽章：亮底上加墨色细描边光 */
+.hero-seal {
+  filter:
+    drop-shadow(0 1px 0 rgba(36, 26, 12, .35))
+    drop-shadow(0 0 16px rgba(168, 73, 44, .30)) !important;
+  animation: none !important;
+}
+/* 主标题 → 墨黑点刻感 */
+.hero-title-line {
+  color: #241a0c !important;
+  text-shadow: 0 1px 0 rgba(255, 252, 244, .6), 0 0 1px rgba(36, 26, 12, .8) !important;
+}
+.hero-title-en, .hero-subtitle { color: #4a3c22 !important; }
+.hero-eyebrow { color: #7a5c22 !important; }
+.hero-script { color: #8a5a20 !important; text-shadow: 0 0 18px rgba(156, 122, 46, .3) !important; }
+/* 扉页双线版框 → 墨线外框 + 金线内框 */
+#hero .hero-content::before { border-color: rgba(36, 26, 12, .4) !important; }
+#hero .hero-content::after { border-color: rgba(156, 122, 46, .45) !important; }
+/* hero 底部：希腊回纹饰带 */
+#hero > .section-inner::after,
+#hero::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 12px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='12' viewBox='0 0 28 12'%3E%3Cpath d='M1 11 V1 H13 V7 H6 V11 M15 11 V1 H27 V7 H20 V11' fill='none' stroke='%239c7a2e' stroke-width='1.4'/%3E%3C/svg%3E") repeat-x left center / 28px 12px;
+  opacity: .8;
+  z-index: 2;
+  pointer-events: none;
+}
+/* 暗黑 vignette → 羊皮纸褐晕（黑角在亮纸上=脏灰，必须替换） */
+.hero-vignette {
+  background:
+    radial-gradient(ellipse at 50% 44%, transparent 50%, rgba(122, 92, 34, .15) 86%, rgba(101, 74, 26, .27) 100%),
+    radial-gradient(ellipse at 50% 96%, rgba(168, 73, 44, .10) 0%, transparent 55%) !important;
+}
+.hero-grain { opacity: .06 !important; }
+/* 顶部身份条：亮纸底墨字（原暗底条在纸上突兀） */
+.hero-identity {
+  background: rgba(240, 232, 213, .55) !important;
+  border: 1px solid rgba(126, 92, 34, .45) !important;
+  color: #6b5a38 !important;
+}
+/* 大 XV 底纹：锈红点刻更贴版画 */
+.hero-watermark i { color: rgba(168, 73, 44, .07) !important; }
+
+/* ── 4. 导航：羊皮纸上的暗面板（参考图右侧深色 UI）── */
+#nav {
+  background: linear-gradient(180deg, #1d150c, #17110b) !important;
+  border-bottom: 2px solid #9c7a2e !important;
+  box-shadow: 0 4px 22px -8px rgba(36, 26, 12, .5) !important;
+}
+.nav-logo { color: #e9dfc8 !important; }
+.nav-logo .striked { color: #c96a3a !important; }
+.nav-links a { color: #cdbf9d !important; }
+.nav-links a:hover { color: #e9cf8f !important; }
+.nav-page-link { background: rgba(201, 168, 106, .12) !important; }
+.nav-time { color: #a8977a !important; }
+.nav-build { color: #c9a86a !important; }
+
+/* ── 5. 暗区板块：文字翻墨、背景透纸 ── */
+.section-dark { color: var(--text); }
+.section-dark .section-label { color: #a8492c !important; }
+.section-dark .section-label::before { color: #a8492c !important; }
+.section-dark .section-title {
+  color: #241a0c !important;
+  text-shadow: none !important;
+}
+.section-dark .section-desc { color: #5f5138 !important; }
+.section-dark p, .section-dark li, .section-dark span, .section-dark h3 {
+  color: inherit;
+}
+/* 板块容器：去暗底透纸，金 hairline 与角饰保留（金褐在纸上呈金线）
+   注意：aurum 用了 :not(.zone-archive) 高特异性暗面板，此处必须同特异性反超 */
+.section-dark:not(.zone-archive) > .section-inner {
+  background-color: rgba(240, 232, 213, .55) !important;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cpath d='M43 3.5 H15 Q3.5 3.5 3.5 15 V43' fill='none' stroke='%239c7a2e' stroke-width='1.1'/%3E%3Cpath d='M43 9.5 H17.5 Q9.5 9.5 9.5 17.5 V43' fill='none' stroke='%239c7a2e' stroke-opacity='.4' stroke-width='.7'/%3E%3Ccircle cx='3.5' cy='3.5' r='1.5' fill='%239c7a2e'/%3E%3Ccircle cx='43' cy='3.5' r='.9' fill='%239c7a2e' fill-opacity='.55'/%3E%3Ccircle cx='3.5' cy='43' r='.9' fill='%239c7a2e' fill-opacity='.55'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cg transform='translate(44,0) scale(-1,1)'%3E%3Cpath d='M43 3.5 H15 Q3.5 3.5 3.5 15 V43' fill='none' stroke='%239c7a2e' stroke-width='1.1'/%3E%3Cpath d='M43 9.5 H17.5 Q9.5 9.5 9.5 17.5 V43' fill='none' stroke='%239c7a2e' stroke-opacity='.4' stroke-width='.7'/%3E%3Ccircle cx='3.5' cy='3.5' r='1.5' fill='%239c7a2e'/%3E%3Ccircle cx='43' cy='3.5' r='.9' fill='%239c7a2e' fill-opacity='.55'/%3E%3Ccircle cx='3.5' cy='43' r='.9' fill='%239c7a2e' fill-opacity='.55'/%3E%3C/g%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cg transform='translate(0,44) scale(1,-1)'%3E%3Cpath d='M43 3.5 H15 Q3.5 3.5 3.5 15 V43' fill='none' stroke='%239c7a2e' stroke-width='1.1'/%3E%3Cpath d='M43 9.5 H17.5 Q9.5 9.5 9.5 17.5 V43' fill='none' stroke='%239c7a2e' stroke-opacity='.4' stroke-width='.7'/%3E%3Ccircle cx='3.5' cy='3.5' r='1.5' fill='%239c7a2e'/%3E%3Ccircle cx='43' cy='3.5' r='.9' fill='%239c7a2e' fill-opacity='.55'/%3E%3Ccircle cx='3.5' cy='43' r='.9' fill='%239c7a2e' fill-opacity='.55'/%3E%3C/g%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cg transform='translate(44,44) scale(-1,-1)'%3E%3Cpath d='M43 3.5 H15 Q3.5 3.5 3.5 15 V43' fill='none' stroke='%239c7a2e' stroke-width='1.1'/%3E%3Cpath d='M43 9.5 H17.5 Q9.5 9.5 9.5 17.5 V43' fill='none' stroke='%239c7a2e' stroke-opacity='.4' stroke-width='.7'/%3E%3Ccircle cx='3.5' cy='3.5' r='1.5' fill='%239c7a2e'/%3E%3Ccircle cx='43' cy='3.5' r='.9' fill='%239c7a2e' fill-opacity='.55'/%3E%3Ccircle cx='3.5' cy='43' r='.9' fill='%239c7a2e' fill-opacity='.55'/%3E%3C/g%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-position: top 8px left 8px, top 8px right 8px, bottom 8px left 8px, bottom 8px right 8px;
+  background-size: 44px 44px, 44px 44px, 44px 44px, 44px 44px;
+  border: 1px solid rgba(126, 92, 34, .5) !important;
+  outline: 1px solid rgba(126, 92, 34, .25) !important;
+  outline-offset: 5px;
+  box-shadow: 0 4px 22px -12px rgba(36, 26, 12, .35) !important;
+}
+.section-dark:not(.zone-archive) > .section-inner.rf-block {
+  background-color: rgba(240, 232, 213, .4) !important;
+  background-image: none !important;
+  border: 1px solid rgba(126, 92, 34, .35) !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+/* 研究框架子块：只留 hairline（低调） */
+.section-dark > .section-inner.rf-block {
+  box-shadow: inset 0 0 0 1px rgba(156, 122, 46, .22) !important;
+}
+
+/* ── 6. 符号卡：暗面板金字（羊皮纸上的深色卡，参考图右下暗卡）── */
+.sin-card {
+  background: #1d150c !important;
+  border: 1px solid rgba(156, 122, 46, .55) !important;
+  box-shadow: 0 6px 26px -10px rgba(36, 26, 12, .45) !important;
+}
+.sin-card-name { color: #ede3cb !important; }
+.sin-card-sub { color: #b3a582 !important; }
+.sin-card-quote { color: #94876a !important; }
+.sin-card-num { color: #c9a86a !important; }
+
+/* ── 7. 页脚：暗面板 + 顶部希腊回纹饰带 ── */
+#footer {
+  background: linear-gradient(180deg, #1d150c, #120d08) !important;
+  position: relative;
+  border-top: 2px solid #9c7a2e !important;
+}
+#footer::before {
+  content: "";
+  position: absolute;
+  top: -14px; left: 0; right: 0;
+  height: 12px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='12' viewBox='0 0 28 12'%3E%3Cpath d='M1 11 V1 H13 V7 H6 V11 M15 11 V1 H27 V7 H20 V11' fill='none' stroke='%239c7a2e' stroke-width='1.4'/%3E%3C/svg%3E") repeat-x left center / 28px 12px;
+  opacity: .85;
+}
+#footer .footer-question, #footer p, #footer h2, #footer h3 { color: #d8c9a4 !important; }
+#footer span, #footer small, #footer div { color: #94876a; }
+
+/* ── 8. 按钮 / 链接：亮底上墨字金框 ── */
+.apparatus-btn {
+  color: #4a3c22 !important;
+  border-color: rgba(126, 92, 34, .65) !important;
+  background: rgba(240, 232, 213, .5) !important;
+}
+.apparatus-btn:hover {
+  background: #9c7a2e !important;
+  color: #f6efdd !important;
+  box-shadow: 0 0 16px rgba(156, 122, 46, .4) !important;
+}
+.section-dark a { color: #8a5a20 !important; }
+.section-dark a:hover { color: #6e4514 !important; }
+/* 语言胶囊（羊皮纸区内） */
+.zone-archive .about-lang-btn {
+  border-color: rgba(126, 92, 34, .65) !important;
+  color: #5f5138 !important;
+}
+
+/* ── 9. 羊皮纸宣言区：统一纸底（去灰提亮）── */
+.zone-archive {
+  --tint: 36, 26, 12;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='14'%3E%3Cpath d='M0 7 Q 15 2 30 7 T 60 7 T 90 7 T 120 7' fill='none' stroke='%232c2218' stroke-opacity='.12' stroke-width='.9'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, #ece3cd 0%, #e7dcc2 55%, #dccfae 100%) !important;
+}
+.zone-archive > .section-inner {
+  background-color: rgba(246, 239, 221, .8) !important;
+}
+
+/* ── 10. 滚动条 / 选区：纸墨反转 ── */
+::-webkit-scrollbar-track { background: #e2d8bf !important; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #9c7a2e, #7a5c22) !important;
+  border-color: #e2d8bf !important;
+}
+::selection { background: rgba(168, 73, 44, .3) !important; color: #241a0c !important; }
+
+/* ── 11. 加载门 / loader 保留暗幕（黑 → 亮的仪式反转）── */
+
+@media (max-width: 768px) {
+  #hero::before { width: 70%; height: 52%; }
+}

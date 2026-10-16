@@ -145,7 +145,7 @@ let heroTime = 0;
 function drawHero() {
   requestAnimationFrame(drawHero);
   if (!heroVisible) return;
-  hctx.fillStyle = 'rgba(0,0,0,0.15)';
+  hctx.fillStyle = 'rgba(236,227,205,0.18)';   /* 希腊亮调：纸色拖尾（画布即第二层羊皮纸） */
   hctx.fillRect(0, 0, hw, hh);
 
   heroTime += 0.005;
@@ -156,7 +156,7 @@ function drawHero() {
   // 中央光：血色暮光（参考图 8 的暗红天光），而非金色光斑
   hctx.globalAlpha = 0.04;
   const grad = hctx.createRadialGradient(hw/2, hh/2, 0, hw/2, hh/2, Math.min(hw, hh) * 0.42);
-  grad.addColorStop(0, '#a83226');
+  grad.addColorStop(0, 'rgba(168,73,44,0.55)');   /* 锈红暮光 */
   grad.addColorStop(1, 'transparent');
   hctx.fillStyle = grad;
   hctx.fillRect(0, 0, hw, hh);

@@ -9,15 +9,44 @@
    ⑤ 板块标签 ◆ 前缀 · 按钮 pill · 金色选区
    ============================================================ */
 
+/* ── 0. 沙金 token 总层（v20261016f · 埃及沙金参考图）──
+   金 → 暖铜金 / 血 → 琥珀棕 / 底 → 沙漠咖啡黑。
+   hero 日蚀徽章为 HTML 内联色不受影响，作为全站唯一红焰焦点。 */
+:root {
+  --gold: #d9ae62;          /* 暖铜金（埃及鎏金） */
+  --gold-deep: #96742f;     /* 暗铜 */
+  --accent: #d4a24e;        /* 琥珀高亮 */
+  --blood: #a87430;         /* 血红 → 琥珀棕 */
+  --blood-bright: #d9ae62;  /* 亮血红 → 亮铜金 */
+  --blood-deep: #4a3416;    /* 酒红暗部 → 深琥珀 */
+  --crimson: #a87430;
+  --crimson-lit: #c08a3e;
+  --ember: #c8802d;         /* 余烬 → 沙漠火光 */
+  --bg: #120c06;            /* 沙漠夜咖啡黑 */
+  --bg-light: #1d1308;      /* 卡片底 · 暖棕 */
+  --bg-mid: #181008;
+  --bg-deep: #0b0704;
+  --text: #f2e7d0;          /* 沙白 */
+  --text-dim: #b3a384;
+  --text-faint: #7a6d54;
+  --border: rgba(217, 174, 98, .16);
+  --ecl-gold: #d9ae62;
+  --ecl-gold-bright: #ecc87f;
+  --ecl-gold-deep: #96742f;
+}
+
+/* 板块背景透明化：让 body 的沙漠金雾透出（纸区/卷宗区自带底不受影响） */
+.section-dark:not(.zone-archive) { background: transparent !important; }
+
 /* ── 1. 满屏血雾背景（参考图 2 的血块面 + 图 3 的血雾林）── */
 body {
-  background-color: #0c0708;
+  background-color: #120c06;
   background-image:
-    radial-gradient(ellipse 60% 50% at 15% 12%, rgba(126, 26, 16, 0.42) 0%, transparent 60%),
-    radial-gradient(ellipse 55% 45% at 88% 18%, rgba(110, 22, 14, 0.36) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 55% at 8% 52%, rgba(94, 18, 12, 0.30) 0%, transparent 65%),
-    radial-gradient(ellipse 55% 50% at 92% 48%, rgba(116, 24, 16, 0.32) 0%, transparent 65%),
-    radial-gradient(ellipse 70% 50% at 50% 92%, rgba(126, 26, 16, 0.40) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 15% 12%, rgba(146, 96, 34, 0.42) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 45% at 88% 18%, rgba(122, 78, 26, 0.36) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 55% at 8% 52%, rgba(104, 66, 22, 0.30) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 50% at 92% 48%, rgba(128, 82, 28, 0.32) 0%, transparent 65%),
+    radial-gradient(ellipse 70% 50% at 50% 92%, rgba(146, 96, 34, 0.40) 0%, transparent 70%),
     radial-gradient(ellipse 35% 18% at 50% 30%, rgba(90, 56, 26, 0.22) 0%, transparent 70%);
   background-attachment: scroll;
 }
@@ -29,7 +58,7 @@ body::before {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='340'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.013 0.019' numOctaves='2' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.55  0 0 0 0 0.12  0 0 0 0 0.08  0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='340' height='340' filter='url(%23c)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='340'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.013 0.019' numOctaves='2' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.62  0 0 0 0 0.44  0 0 0 0 0.18  0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='340' height='340' filter='url(%23c)'/%3E%3C/svg%3E");
   background-size: 380px 380px;
   opacity: 0.45;
   mix-blend-mode: screen;
@@ -49,12 +78,12 @@ body::after {
 }
 
 /* ── 4. 金色选区 ── */
-::selection { background: rgba(201, 168, 106, .32); color: #f6efdd; }
+::selection { background: rgba(217, 174, 98, .32); color: #f6efdd; }
 
 /* ── 5. 暗区板块 = 参考图4主面板复刻 ──
    暗红噪点星空内里 + 金色双线框 + 四角蝴蝶结花结角饰 */
 .section-dark:not(.zone-archive) > .section-inner {
-  background-color: #150908;
+  background-color: #1a1108;
   background-image:
     /* 四角蝴蝶结花结角饰（56px） */
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cpath d='M55 12 H20 Q12 12 12 20 V55' fill='none' stroke='%23C9A86A' stroke-width='1.4'/%3E%3Cpath d='M55 18 H23 Q18 18 18 23 V55' fill='none' stroke='%23C9A86A' stroke-opacity='.45' stroke-width='.8'/%3E%3Cpath d='M12 5 L19 12 L12 19 L5 12 Z' fill='none' stroke='%23C9A86A' stroke-width='1.1'/%3E%3Ccircle cx='12' cy='12' r='1.7' fill='%23C9A86A'/%3E%3Cpath d='M55 9 L58 12 L55 15 L52 12 Z' fill='%23C9A86A' fill-opacity='.85'/%3E%3Cpath d='M9 55 L12 58 L15 55 L12 52 Z' fill='%23C9A86A' fill-opacity='.85'/%3E%3C/svg%3E"),
@@ -64,34 +93,34 @@ body::after {
     /* 星点点阵（参考图4噪点星空） */
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cg fill='%23e8cf9a'%3E%3Ccircle cx='12' cy='34' r='.9' opacity='.5'/%3E%3Ccircle cx='58' cy='12' r='.6' opacity='.35'/%3E%3Ccircle cx='103' cy='48' r='1.1' opacity='.6'/%3E%3Ccircle cx='150' cy='22' r='.7' opacity='.4'/%3E%3Ccircle cx='199' cy='60' r='.9' opacity='.5'/%3E%3Ccircle cx='230' cy='14' r='.6' opacity='.3'/%3E%3Ccircle cx='30' cy='90' r='.7' opacity='.4'/%3E%3Ccircle cx='80' cy='120' r='1.0' opacity='.55'/%3E%3Ccircle cx='135' cy='95' r='.6' opacity='.35'/%3E%3Ccircle cx='188' cy='130' r='.8' opacity='.45'/%3E%3Ccircle cx='220' cy='105' r='.6' opacity='.35'/%3E%3Ccircle cx='14' cy='160' r='.8' opacity='.45'/%3E%3Ccircle cx='64' cy='190' r='.6' opacity='.35'/%3E%3Ccircle cx='112' cy='165' r='.9' opacity='.5'/%3E%3Ccircle cx='160' cy='205' r='.7' opacity='.4'/%3E%3Ccircle cx='205' cy='180' r='1.0' opacity='.5'/%3E%3Ccircle cx='45' cy='228' r='.7' opacity='.4'/%3E%3Ccircle cx='145' cy='235' r='.6' opacity='.3'/%3E%3Ccircle cx='95' cy='75' r='.5' opacity='.3'/%3E%3Ccircle cx='175' cy='55' r='.5' opacity='.3'/%3E%3C/g%3E%3C/svg%3E"),
     /* 血雾团（参考图4中央红云） */
-    radial-gradient(ellipse 55% 45% at 22% 18%, rgba(168,50,38,.34) 0%, transparent 62%),
-    radial-gradient(ellipse 60% 50% at 80% 78%, rgba(126,26,16,.40) 0%, transparent 58%),
-    radial-gradient(ellipse 45% 40% at 85% 15%, rgba(110,22,14,.30) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 35% at 30% 85%, rgba(104,20,14,.28) 0%, transparent 62%);
+    radial-gradient(ellipse 55% 45% at 22% 18%, rgba(186,128,52,.34) 0%, transparent 62%),
+    radial-gradient(ellipse 60% 50% at 80% 78%, rgba(146,96,34,.40) 0%, transparent 58%),
+    radial-gradient(ellipse 45% 40% at 85% 15%, rgba(122,78,26,.30) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 35% at 30% 85%, rgba(112,72,24,.28) 0%, transparent 62%);
   background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat, no-repeat, no-repeat, no-repeat, no-repeat;
   background-position: top 10px left 10px, top 10px right 10px, bottom 10px left 10px, bottom 10px right 10px,
                        top left, 0 0, 0 0, 0 0, 0 0;
   background-size: 56px 56px, 56px 56px, 56px 56px, 56px 56px, 240px 240px, auto, auto, auto, auto;
-  border: 1.5px solid rgba(201,168,106,.55);
-  outline: 1px solid rgba(201,168,106,.28);
+  border: 1.5px solid rgba(217,174,98,.55);
+  outline: 1px solid rgba(217,174,98,.28);
   outline-offset: 6px;
-  box-shadow: inset 0 0 70px rgba(50,8,5,.55), 0 0 44px rgba(126,26,16,.14);
+  box-shadow: inset 0 0 70px rgba(40,26,9,.55), 0 0 44px rgba(146,96,34,.14);
   padding: 3.4rem 2.6rem;
 }
 /* 研究框架子块：暗红小面板 + 金单线框（无角饰，避免过密） */
 .section-dark:not(.zone-archive) > .section-inner.rf-block {
   background-color: rgba(21, 9, 8, .55);
   background-image:
-    radial-gradient(ellipse 50% 60% at 20% 20%, rgba(126,26,16,.30) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 60% at 85% 85%, rgba(110,22,14,.26) 0%, transparent 58%);
-  border: 1px solid rgba(201,168,106,.35);
+    radial-gradient(ellipse 50% 60% at 20% 20%, rgba(146,96,34,.30) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 85% 85%, rgba(122,78,26,.26) 0%, transparent 58%);
+  border: 1px solid rgba(217,174,98,.35);
   outline: none;
-  box-shadow: inset 0 0 34px rgba(50,8,5,.4);
+  box-shadow: inset 0 0 34px rgba(40,26,9,.4);
 }
 /* ── 6. 板块标签：金色菱形前缀 ── */
 .section-dark .section-label::before {
   content: "◆ ";
-  color: var(--gold, #c9a86a);
+  color: var(--gold, #d9ae62);
   font-size: .72em;
   letter-spacing: 0;
   opacity: .9;
@@ -101,17 +130,17 @@ body::after {
 .apparatus-btn,
 .about-lang-btn {
   border-radius: 999px !important;
-  border-color: rgba(201, 168, 106, .6) !important;
+  border-color: rgba(217, 174, 98, .6) !important;
   transition: background .25s ease, color .25s ease, box-shadow .25s ease;
 }
 .apparatus-btn:hover {
-  background: rgba(201, 168, 106, .14) !important;
-  box-shadow: 0 0 18px rgba(201, 168, 106, .25);
+  background: rgba(217, 174, 98, .14) !important;
+  box-shadow: 0 0 18px rgba(217, 174, 98, .25);
 }
 .about-lang-btn.active {
-  background: rgba(201, 168, 106, .9) !important;
-  color: #17110b !important;
-  border-color: rgba(201, 168, 106, .9) !important;
+  background: rgba(217, 174, 98, .9) !important;
+  color: #1d1409 !important;
+  border-color: rgba(217, 174, 98, .9) !important;
 }
 .zone-archive .about-lang-btn.active {
   background: #8e7440 !important;
@@ -133,7 +162,7 @@ body::after {
     radial-gradient(ellipse 45% 38% at 92% 26%, rgba(168,116,44,.28) 0%, transparent 65%),
     radial-gradient(ellipse 42% 30% at 26% 58%, rgba(122,82,30,.20) 0%, transparent 70%),
     radial-gradient(ellipse 38% 30% at 78% 72%, rgba(112,74,28,.18) 0%, transparent 70%),
-    linear-gradient(160deg, #c6a674 0%, #b6935e 38%, #a5824c 72%, #8f6e3e 100%);
+    linear-gradient(160deg, #d4ac66 0%, #b6935e 38%, #a5824c 72%, #8f6e3e 100%);
 }
 
 /* 内页：陈年金纸面（金粉闪屑 + 斑驳 + 四角金饰 + 烧灼暗角） */
@@ -168,8 +197,8 @@ body::after {
 
 @media (max-width: 768px) {
   body { background-image:
-    radial-gradient(ellipse 120% 45% at 50% -8%, rgba(126, 26, 16, .42) 0%, transparent 60%),
-    radial-gradient(ellipse 110% 40% at 50% 108%, rgba(110, 22, 14, .38) 0%, transparent 60%); }
+    radial-gradient(ellipse 120% 45% at 50% -8%, rgba(146, 96, 34, .42) 0%, transparent 60%),
+    radial-gradient(ellipse 110% 40% at 50% 108%, rgba(122, 78, 26, .38) 0%, transparent 60%); }
   body::before { opacity: .32; background-size: 260px 260px; }
   .section-dark > .section-inner { background-size: 30px 30px, 30px 30px, 30px 30px, 30px 30px; }
 }
@@ -187,11 +216,11 @@ body::after {
   --pq-ink: #ecdcb4;
   --pq-ink-soft: #cbb287;
   --pq-ink-faint: #9d8760;
-  --pq-gold: #c6a674;
+  --pq-gold: #d4ac66;
   --pq-seal: #c33f33;
-  --pq-rule: rgba(198, 166, 116, .24);
-  --pq-rule-strong: rgba(198, 166, 116, .52);
-  --pq-bg: #0d0605;
+  --pq-rule: rgba(217, 174, 98, .24);
+  --pq-rule-strong: rgba(217, 174, 98, .52);
+  --pq-bg: #140d06;
   --text: var(--pq-ink);
   --text-dim: var(--pq-ink-soft);
   --text-faint: var(--pq-ink-faint);
@@ -204,51 +233,51 @@ body::after {
   --ash-dim: #a68f66;
   --border: var(--pq-rule);
   --border-bright: var(--pq-rule-strong);
-  --bg-light: #1d0f0b;
-  --bg-mid: #170c09;
+  --bg-light: #241608;
+  --bg-mid: #1d1207;
   --ember: #d24a3c;
   --crimson: #b8433a;
-  --ok: #c6a674;
+  --ok: #d4ac66;
   --pending: #8f6e3e;
   --tint: 198, 166, 116;
 
   color: var(--pq-ink);
-  background-color: #0d0605;
+  background-color: #140d06;
   /* 黑底 + 血红星云 + 金星点阵（参考图 4 主面板） */
   background-image:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cg fill='%23c6a674'%3E%3Ccircle cx='23' cy='41' r='1.1'/%3E%3Ccircle cx='97' cy='13' r='.8'/%3E%3Ccircle cx='171' cy='67' r='1.3'/%3E%3Ccircle cx='211' cy='133' r='.7'/%3E%3Ccircle cx='57' cy='113' r='1'/%3E%3Ccircle cx='133' cy='167' r='.9'/%3E%3Ccircle cx='13' cy='197' r='.8'/%3E%3Ccircle cx='83' cy='221' r='1.2'/%3E%3Ccircle cx='187' cy='211' r='.8'/%3E%3Ccircle cx='147' cy='23' r='.6'/%3E%3C/g%3E%3C/svg%3E"),
-    radial-gradient(ellipse 65% 42% at 18% 8%, rgba(146, 26, 16, .34) 0%, transparent 62%),
-    radial-gradient(ellipse 70% 45% at 85% 30%, rgba(112, 20, 12, .30) 0%, transparent 64%),
-    radial-gradient(ellipse 80% 40% at 45% 75%, rgba(96, 16, 10, .28) 0%, transparent 60%),
+    radial-gradient(ellipse 65% 42% at 18% 8%, rgba(150, 98, 32, .34) 0%, transparent 62%),
+    radial-gradient(ellipse 70% 45% at 85% 30%, rgba(124, 80, 26, .30) 0%, transparent 64%),
+    radial-gradient(ellipse 80% 40% at 45% 75%, rgba(106, 68, 22, .28) 0%, transparent 60%),
     radial-gradient(ellipse 60% 35% at 50% 50%, transparent 42%, rgba(0, 0, 0, .5) 100%);
   box-shadow:
-    inset 0 30px 60px -44px rgba(198, 166, 116, .28),
-    inset 0 -30px 60px -44px rgba(198, 166, 116, .2),
-    0 0 0 1px rgba(198, 166, 116, .18);
-  border-top: 1px solid rgba(198, 166, 116, .35);
-  border-bottom: 1px solid rgba(198, 166, 116, .35);
+    inset 0 30px 60px -44px rgba(217, 174, 98, .28),
+    inset 0 -30px 60px -44px rgba(217, 174, 98, .2),
+    0 0 0 1px rgba(217, 174, 98, .18);
+  border-top: 1px solid rgba(217, 174, 98, .35);
+  border-bottom: 1px solid rgba(217, 174, 98, .35);
 }
 #research::before,
 #plan::before,
-#press-kit::before { background: linear-gradient(90deg, transparent, rgba(198,166,116,.45), transparent); }
+#press-kit::before { background: linear-gradient(90deg, transparent, rgba(217,174,98,.45), transparent); }
 
 /* 标题 / 标签 → 雕金 */
 #research .section-label,
 #plan .section-label,
 #press-kit .section-label {
   color: var(--pq-gold);
-  border-bottom-color: rgba(198, 166, 116, .45);
+  border-bottom-color: rgba(217, 174, 98, .45);
 }
 #research .section-title,
 #plan .section-title,
 #press-kit .section-title {
   color: #f2e4c2;
-  text-shadow: 0 0 26px rgba(198, 166, 116, .3), 0 2px 14px rgba(0, 0, 0, .8);
+  text-shadow: 0 0 26px rgba(217, 174, 98, .3), 0 2px 14px rgba(0, 0, 0, .8);
 }
 #research .section-title::after,
 #plan .section-title::after,
 #press-kit .section-title::after {
-  background: linear-gradient(90deg, #c6a674, transparent);
+  background: linear-gradient(90deg, #d4ac66, transparent);
 }
 #research .section-desc,
 #plan .section-desc,
@@ -270,10 +299,10 @@ body::after {
 #press-kit .press-kit-card,
 #press-kit .copyright-section {
   background:
-    radial-gradient(ellipse 90% 70% at 50% 0%, rgba(126, 26, 16, .16) 0%, transparent 60%),
-    linear-gradient(165deg, #1d0f0b 0%, #150908 62%, #180b09 100%);
-  border: 1px solid rgba(198, 166, 116, .3);
-  box-shadow: inset 0 1px 0 rgba(198, 166, 116, .14), 0 10px 26px -18px rgba(0, 0, 0, .9);
+    radial-gradient(ellipse 90% 70% at 50% 0%, rgba(146, 96, 34, .16) 0%, transparent 60%),
+    linear-gradient(165deg, #241608 0%, #1a1108 62%, #1e1308 100%);
+  border: 1px solid rgba(217, 174, 98, .3);
+  box-shadow: inset 0 1px 0 rgba(217, 174, 98, .14), 0 10px 26px -18px rgba(0, 0, 0, .9);
 }
 #research .research-question-card:hover,
 #research .refcase-card:hover,
@@ -285,59 +314,59 @@ body::after {
 #press-kit .press-kit-card:hover,
 #plan .plan-phase:hover,
 #research .method-step:hover {
-  background: linear-gradient(165deg, #241310 0%, #1a0d0a 62%, #1d0e0b 100%);
+  background: linear-gradient(165deg, #2a1a0c 0%, #1f1408 62%, #1d0e0b 100%);
   border-color: rgba(220, 188, 130, .62);
   box-shadow: inset 0 1px 0 rgba(220, 188, 130, .2), 0 14px 30px -18px rgba(0, 0, 0, .95);
 }
 
 /* INDEX 总览：金数字 + 金框暗条 */
 .fw-overview {
-  background: linear-gradient(180deg, rgba(126, 26, 16, .14), rgba(126, 26, 16, .03)) !important;
-  border-color: rgba(198, 166, 116, .28) !important;
-  border-left-color: #c6a674 !important;
+  background: linear-gradient(180deg, rgba(146, 96, 34, .14), rgba(146, 96, 34, .03)) !important;
+  border-color: rgba(217, 174, 98, .28) !important;
+  border-left-color: #d4ac66 !important;
 }
-.fw-stat-num { color: #dcbc84 !important; text-shadow: 0 0 20px rgba(198, 166, 116, .45) !important; }
+.fw-stat-num { color: #dcbc84 !important; text-shadow: 0 0 20px rgba(217, 174, 98, .45) !important; }
 .fw-stat-label { color: var(--pq-ink-soft) !important; }
-.fw-toc { border-top-color: rgba(198, 166, 116, .24) !important; }
+.fw-toc { border-top-color: rgba(217, 174, 98, .24) !important; }
 .fw-toc-label { color: var(--pq-gold) !important; }
 .fw-toc a { color: var(--pq-ink-soft) !important; }
-.fw-toc a:hover { color: #ecdcb4 !important; border-color: rgba(198, 166, 116, .5) !important; background: rgba(198, 166, 116, .1) !important; }
+.fw-toc a:hover { color: #ecdcb4 !important; border-color: rgba(217, 174, 98, .5) !important; background: rgba(217, 174, 98, .1) !important; }
 
 /* 进度条：橄榄绿 → 雕金 */
-#plan .progress-track { background: rgba(198, 166, 116, .14) !important; }
+#plan .progress-track { background: rgba(217, 174, 98, .14) !important; }
 #plan .progress-fill {
   background: linear-gradient(90deg, #6e5023 0%, #a8823f 45%, #ecd39c 100%) !important;
-  box-shadow: 0 0 16px rgba(198, 166, 116, .5) !important;
+  box-shadow: 0 0 16px rgba(217, 174, 98, .5) !important;
 }
-#plan .progress-marker { border-color: #c6a674 !important; background: #1d0f0b !important; box-shadow: 0 0 10px rgba(198, 166, 116, .55) !important; }
+#plan .progress-marker { border-color: #d4ac66 !important; background: #241608 !important; box-shadow: 0 0 10px rgba(217, 174, 98, .55) !important; }
 #plan .progress-head, #plan .progress-stat, #plan .progress-scale { color: var(--pq-ink-soft) !important; }
-#plan .plan-status { color: #c6a674 !important; }
+#plan .plan-status { color: #d4ac66 !important; }
 #plan .plan-date { color: var(--pq-ink-faint) !important; }
 #plan .plan-phase h4, #plan .plan-phase strong { color: #ecdcb4; }
-#plan .plan-timeline { background: rgba(198, 166, 116, .2) !important; }
+#plan .plan-timeline { background: rgba(217, 174, 98, .2) !important; }
 
 /* 下载按钮 → 实心金 pill（参考图 1/3） */
 #press-kit .press-kit-download {
   color: #241505 !important;
-  background: linear-gradient(180deg, #e6cd96 0%, #c6a674 100%) !important;
+  background: linear-gradient(180deg, #e6cd96 0%, #d4ac66 100%) !important;
   border: 1px solid #8f6e3e !important;
-  box-shadow: 0 0 14px rgba(198, 166, 116, .35), inset 0 1px 0 rgba(255, 244, 214, .6) !important;
+  box-shadow: 0 0 14px rgba(217, 174, 98, .35), inset 0 1px 0 rgba(255, 244, 214, .6) !important;
   font-weight: 600;
 }
 #press-kit .press-kit-download:hover {
   background: linear-gradient(180deg, #f2ddab 0%, #d4b684 100%) !important;
   box-shadow: 0 0 22px rgba(220, 188, 130, .55), inset 0 1px 0 rgba(255, 248, 224, .7) !important;
 }
-#press-kit .kit-ok { color: #c6a674 !important; }
+#press-kit .kit-ok { color: #d4ac66 !important; }
 #press-kit .kit-pending { color: #b8433a !important; }
 #press-kit .copyright-title, #press-kit .press-kit-card h3 { color: #ecdcb4; }
 
 /* 表格线与卷宗分隔 → 金线 */
-#research .method-flow, #research .apparatus-meta { background: rgba(198, 166, 116, .2) !important; }
-.survey-table, .symbol-map-table, .zone-table, .kit-map-table { border-color: rgba(198, 166, 116, .24); }
-.survey-table th, .symbol-map-table th, .zone-table th, .kit-map-table th { color: var(--pq-gold); border-color: rgba(198, 166, 116, .3); }
-.survey-table td, .symbol-map-table td, .zone-table td, .kit-map-table td { border-color: rgba(198, 166, 116, .16); }
-.kit-map-table tbody tr:hover { background: rgba(198, 166, 116, .07); }
+#research .method-flow, #research .apparatus-meta { background: rgba(217, 174, 98, .2) !important; }
+.survey-table, .symbol-map-table, .zone-table, .kit-map-table { border-color: rgba(217, 174, 98, .24); }
+.survey-table th, .symbol-map-table th, .zone-table th, .kit-map-table th { color: var(--pq-gold); border-color: rgba(217, 174, 98, .3); }
+.survey-table td, .symbol-map-table td, .zone-table td, .kit-map-table td { border-color: rgba(217, 174, 98, .16); }
+.kit-map-table tbody tr:hover { background: rgba(217, 174, 98, .07); }
 
 @media (max-width: 768px) {
   #research, #plan, #press-kit { background-size: 200px 200px, auto, auto, auto, auto; }
@@ -346,5 +375,5 @@ body::after {
 /* 表格隔行灰带 → 金微光；冲突注记提亮 */
 #research .survey-table tbody tr:nth-child(even),
 #research .symbol-map-table tbody tr:nth-child(even),
-#research .kit-map-table tbody tr:nth-child(even) { background: rgba(198, 166, 116, .06); }
+#research .kit-map-table tbody tr:nth-child(even) { background: rgba(217, 174, 98, .06); }
 .survey-conflict { color: #d8a05a !important; text-shadow: 0 0 10px rgba(198, 130, 60, .3); }
