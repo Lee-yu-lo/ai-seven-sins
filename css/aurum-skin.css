@@ -1,63 +1,79 @@
 /* ============================================================
-   AURUM SKIN · 雕金增量层（v20261016b，加载于 noxv-skin 之后）
-   依据 2026-10-16 参考图板补齐三块未覆盖语汇：
-   ① 猩红烟雾 vignette（图2/3 的大面积血雾质感）
-   ② 星尘颗粒层（图4 主画布噪点星空）
-   ③ 暗区板块金角饰 + 金 hairline（图1 的金线雕花面板）
-   另：金色选区 · 板块标签菱形前缀 · 按钮 pill 补齐。
-   不重复 noxv-skin/eclipse 已有规则。
+   AURUM SKIN · 雕金增量层（v20261016c，加载于 noxv-skin 之后）
+   依据 2026-10-16 参考图板（血雾林照片 / 暗红噪点星空 /
+   金线雕花面板 / 菱形角饰 / 金色 pill）补齐视觉：
+   ① 满屏血雾层（body 主背景：6 团 radial-gradient）
+   ② 血色云纹层（body::before：feTurbulence 染血棕）
+   ③ 细星尘层（body::after：feTurbulence，opacity+overlay）
+   ④ 暗区板块：四角卷草金饰 + 金 hairline + 半透明深底
+   ⑤ 板块标签 ◆ 前缀 · 按钮 pill · 金色选区
    ============================================================ */
 
-/* ── 1. 猩红烟雾 vignette（画在内容之下，羊皮纸区自带底不受影响）── */
+/* ── 1. 满屏血雾背景（参考图 2 的血块面 + 图 3 的血雾林）── */
+body {
+  background-color: #0c0708;
+  background-image:
+    radial-gradient(ellipse 60% 50% at 15% 12%, rgba(126, 26, 16, 0.42) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 45% at 88% 18%, rgba(110, 22, 14, 0.36) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 55% at 8% 52%, rgba(94, 18, 12, 0.30) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 50% at 92% 48%, rgba(116, 24, 16, 0.32) 0%, transparent 65%),
+    radial-gradient(ellipse 70% 50% at 50% 92%, rgba(126, 26, 16, 0.40) 0%, transparent 70%),
+    radial-gradient(ellipse 35% 18% at 50% 30%, rgba(90, 56, 26, 0.22) 0%, transparent 70%);
+  background-attachment: scroll;
+}
+
+/* ── 2. 血色云纹层（大尺度 feTurbulence 染血棕色，模拟血雾林）── */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background:
-    radial-gradient(ellipse 120% 55% at 50% -8%, rgba(126, 26, 16, .30) 0%, transparent 62%),
-    radial-gradient(ellipse 105% 48% at 50% 108%, rgba(110, 22, 14, .24) 0%, transparent 60%),
-    radial-gradient(ellipse 70% 40% at 6% 46%, rgba(90, 18, 12, .15) 0%, transparent 65%),
-    radial-gradient(ellipse 70% 40% at 94% 46%, rgba(90, 18, 12, .15) 0%, transparent 65%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='340'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.013 0.019' numOctaves='2' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.55  0 0 0 0 0.12  0 0 0 0 0.08  0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='340' height='340' filter='url(%23c)'/%3E%3C/svg%3E");
+  background-size: 380px 380px;
+  opacity: 0.45;
+  mix-blend-mode: screen;
 }
 
-/* ── 2. 星尘颗粒层（最上层极淡，不挡交互）── */
+/* ── 3. 细星尘层（最上层：feTurbulence 细噪点）── */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 2147483000;
   pointer-events: none;
-  opacity: .055;
-  mix-blend-mode: screen;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' seed='7'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.10;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='7'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 180px 180px;
 }
 
-/* ── 3. 金色选区 ── */
+/* ── 4. 金色选区 ── */
 ::selection { background: rgba(201, 168, 106, .32); color: #f6efdd; }
 
-/* ── 4. 暗区板块：金 hairline 内框 + 四角卷草金饰（与羊皮纸区同款）── */
-.section-dark > .section-inner {
-  box-shadow: inset 0 0 0 1px rgba(201, 168, 106, .16);
+/* ── 5. 暗区板块：金 hairline + 四角卷草金饰 + 半透明深底 ──
+   注意 :not(.zone-archive)：羊皮纸区自带金角饰与纸底，不得覆盖 */
+.section-dark:not(.zone-archive) > .section-inner {
+  background-color: rgba(10, 6, 6, .62);
+  box-shadow: inset 0 0 0 1px rgba(201, 168, 106, .18);
   background-image:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cpath d='M43 3.5 H15 Q3.5 3.5 3.5 15 V43' fill='none' stroke='%23C9A86A' stroke-width='1.1'/%3E%3Cpath d='M43 9.5 H17.5 Q9.5 9.5 9.5 17.5 V43' fill='none' stroke='%23C9A86A' stroke-opacity='.4' stroke-width='.7'/%3E%3Ccircle cx='3.5' cy='3.5' r='1.5' fill='%23C9A86A'/%3E%3Ccircle cx='43' cy='3.5' r='.9' fill='%23C9A86A' fill-opacity='.55'/%3E%3Ccircle cx='3.5' cy='43' r='.9' fill='%23C9A86A' fill-opacity='.55'/%3E%3C/svg%3E"),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cg transform='translate(44,0) scale(-1,1)'%3E%3Cpath d='M43 3.5 H15 Q3.5 3.5 3.5 15 V43' fill='none' stroke='%23C9A86A' stroke-width='1.1'/%3E%3Cpath d='M43 9.5 H17.5 Q9.5 9.5 9.5 17.5 V43' fill='none' stroke='%23C9A86A' stroke-opacity='.4' stroke-width='.7'/%3E%3Ccircle cx='3.5' cy='3.5' r='1.5' fill='%23C9A86A'/%3E%3Ccircle cx='43' cy='3.5' r='.9' fill='%23C9A86A' fill-opacity='.55'/%3E%3Ccircle cx='3.5' cy='43' r='.9' fill='%23C9A86A' fill-opacity='.55'/%3E%3C/g%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cg transform='translate(0,44) scale(1,-1)'%3E%3Cpath d='M43 3.5 H15 Q3.5 3.5 3.5 15 V43' fill='none' stroke='%23C9A86A' stroke-width='1.1'/%3E%3Cpath d='M43 9.5 H17.5 Q9.5 9.5 9.5 17.5 V43' fill='none' stroke='%23C9A86A' stroke-opacity='.4' stroke-width='.7'/%3E%3Ccircle cx='3.5' cy='3.5' r='1.5' fill='%23C9A86A'/%3E%3Ccircle cx='43' cy='3.5' r='.9' fill='%23C9A86A' fill-opacity='.55'/%3E%3Ccircle cx='3.5' cy='43' r='.9' fill='%23C9A86A' fill-opacity='.55'/%3E%3C/g%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cg transform='translate(44,44) scale(-1,-1)'%3E%3Cpath d='M43 3.5 H15 Q3.5 3.5 3.5 15 V43' fill='none' stroke='%23C9A86A' stroke-width='1.1'/%3E%3Cpath d='M43 9.5 H17.5 Q9.5 9.5 9.5 17.5 V43' fill='none' stroke='%23C9A86A' stroke-opacity='.4' stroke-width='.7'/%3E%3Ccircle cx='3.5' cy='3.5' r='1.5' fill='%23C9A86A'/%3E%3Ccircle cx='43' cy='3.5' r='.9' fill='%23C9A86A' fill-opacity='.55'/%3E%3Ccircle cx='3.5' cy='43' r='.9' fill='%23C9A86A' fill-opacity='.55'/%3E%3C/g%3E%3C/svg%3E");
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cg transform='translate(0,44) scale(1,-1)'%3E%3Cpath d='M43 3.5 H15 Q3.5 3.5 3.5 15 V43' fill='none' stroke='%23C9A86A' stroke-width='1.1'/%3E%3Cpath d='M43 9.5 H17.5 Q9.5 9.5 9.5 17.5 V43' fill='none' stroke='%23C9A86A' stroke-opacity='.4' stroke-width='.7'/%3E%3Ccircle cx='3.5' cy='3.5' r='1.5' fill='%23C9A86A'/%3E%3Ccircle cx='3.5' cy='43' r='.9' fill='%23C9A86A' fill-opacity='.55'/%3E%3C/g%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cg transform='translate(44,44) scale(-1,-1)'%3E%3Cpath d='M43 3.5 H15 Q3.5 3.5 3.5 15 V43' fill='none' stroke='%23C9A86A' stroke-width='1.1'/%3E%3Cpath d='M43 9.5 H17.5 Q9.5 9.5 9.5 17.5 V43' fill='none' stroke='%23C9A86A' stroke-opacity='.4' stroke-width='.7'/%3E%3Ccircle cx='3.5' cy='3.5' r='1.5' fill='%23C9A86A'/%3E%3Ccircle cx='3.5' cy='43' r='.9' fill='%23C9A86A' fill-opacity='.55'/%3E%3C/g%3E%3C/svg%3E");
   background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
   background-position: top 8px left 8px, top 8px right 8px,
                        bottom 8px left 8px, bottom 8px right 8px;
   background-size: 44px 44px, 44px 44px, 44px 44px, 44px 44px;
 }
-/* 研究框架子块：只留 hairline，不加角饰（避免过密） */
-.section-dark > .section-inner.rf-block {
+/* 研究框架子块：只留 hairline，不加角饰与深底（避免过密） */
+.section-dark:not(.zone-archive) > .section-inner.rf-block {
+  background-color: rgba(10, 6, 6, .38);
   background-image: none;
   box-shadow: inset 0 0 0 1px rgba(201, 168, 106, .10);
 }
 
-/* ── 5. 板块标签：金色菱形前缀 ── */
+/* ── 6. 板块标签：金色菱形前缀 ── */
 .section-dark .section-label::before {
   content: "◆ ";
   color: var(--gold, #c9a86a);
@@ -66,7 +82,7 @@ body::after {
   opacity: .9;
 }
 
-/* ── 6. 按钮 pill 补齐（导航胶囊已有；补 apparatus / 语言胶囊）── */
+/* ── 7. 按钮 pill 补齐 ── */
 .apparatus-btn,
 .about-lang-btn {
   border-radius: 999px !important;
@@ -89,9 +105,9 @@ body::after {
 }
 
 @media (max-width: 768px) {
-  body::before { background:
-    radial-gradient(ellipse 160% 40% at 50% -6%, rgba(126, 26, 16, .28) 0%, transparent 60%),
-    radial-gradient(ellipse 140% 36% at 50% 106%, rgba(110, 22, 14, .22) 0%, transparent 58%);
-  }
+  body { background-image:
+    radial-gradient(ellipse 120% 45% at 50% -8%, rgba(126, 26, 16, .42) 0%, transparent 60%),
+    radial-gradient(ellipse 110% 40% at 50% 108%, rgba(110, 22, 14, .38) 0%, transparent 60%); }
+  body::before { opacity: .32; background-size: 260px 260px; }
   .section-dark > .section-inner { background-size: 30px 30px, 30px 30px, 30px 30px, 30px 30px; }
 }
