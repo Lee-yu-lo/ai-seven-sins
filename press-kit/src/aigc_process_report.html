@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>AIGC 创作过程说明 · AIGC Process Report</title>
+<style>
+  @page { size: A4; margin: 17mm 15mm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Songti SC", "STSong", "Heiti SC", serif; color: #111; font-size: 9.5pt; line-height: 1.65; }
+  .doc-head { border-bottom: 2.5pt solid #111; padding-bottom: 4.5mm; margin-bottom: 5mm; }
+  .doc-head .label { font-family: "Heiti SC", sans-serif; font-size: 8pt; letter-spacing: 3pt; color: #666; }
+  .doc-head h1 { font-family: "Heiti SC", sans-serif; font-size: 19pt; margin-top: 2mm; }
+  h2 { font-family: "Heiti SC", sans-serif; font-size: 12pt; margin: 5mm 0 2mm; padding-left: 2.5mm; border-left: 3pt solid #111; }
+  p { text-align: justify; margin-bottom: 2mm; }
+  table { width: 100%; border-collapse: collapse; margin: 2.5mm 0; font-size: 8.3pt; }
+  th, td { border: 0.5pt solid #888; padding: 1.5mm 2mm; text-align: left; vertical-align: top; }
+  th { background: #f0f0f0; font-family: "Heiti SC", sans-serif; }
+  .en-prompt { font-family: "Menlo", monospace; font-size: 7.6pt; color: #333; }
+  .decision { background: #f5f5f0; padding: 2mm 3mm; border-left: 2.5pt solid #666; margin: 2mm 0; font-size: 8.8pt; }
+  .decision b { font-family: "Heiti SC", sans-serif; }
+</style>
+</head>
+<body>
+
+<div class="doc-head">
+  <div class="label">PRESS KIT · 05</div>
+  <h1>AIGC 创作过程说明 / AIGC Process Report</h1>
+</div>
+
+<p>本作品为 AIGC 深度参与创作的新媒体影像作品。以下完整披露人机协作过程：创作意图（Prompt 设计策略）、人工判断（候选筛选与决策点）、以及后期处理中的人类作者性，以回应"AIGC 作品应考察创作意图、人机协作过程与人工判断有效性"的评审要求。</p>
+
+<h2>一、创作方法论：意图先行，机器执行，人工裁决</h2>
+<p>创作流程遵循"概念 → 分镜 → 关键帧 → 视频 → 人工策展 → 算法后期"六步链路。AI 在其中承担"执行放大器"角色：每一个视觉决策（构图母题、色彩系统、情绪节奏）均由人工在 Prompt 层面定义，AI 负责生成候选，人类负责筛选、否决与重组。<b>作品的主题、叙事结构、美学方向、后期参数全部由人类作者决定。</b></p>
+
+<h2>二、七罪 Prompt 策略表（创作意图）</h2>
+<table>
+  <tr><th style="width:9%">罪</th><th style="width:20%">时代转译</th><th style="width:46%">核心 Prompt 策略（视觉母题 + 色彩锚定）</th><th>色彩系统</th></tr>
+  <tr><td>饕餮</td><td>对 AI 生成内容的无限吞噬</td><td class="en-prompt">naked figure curled fetal in dark void, AI content flowing into mouth and eyes, pixel textures under skin, fingers dissolving into pixels, information overload</td><td>冷蓝 / 惨白</td></tr>
+  <tr><td>贪婪</td><td>算力与数据所有权掠夺</td><td class="en-prompt">server farm as golden temple, GPUs in pyramid, hands grasping golden data streams, face cracking like peeling gold leaf, opulent decay</td><td>暗金 / 黑</td></tr>
+  <tr><td>懒惰</td><td>思考外包给算法</td><td class="en-prompt">person in transparent liquid pod, neural cables, neurons shutting off like city lights, thoughts turning to ash, serene face, mechanical arm turning pages</td><td>深蓝 / 白</td></tr>
+  <tr><td>淫欲</td><td>虚拟伴侣情感成瘾</td><td class="en-prompt">man embracing translucent holographic woman of code and light, glitch revealing code grid, man casts shadow but hologram does not, intimate loneliness</td><td>粉霓虹 / 深紫</td></tr>
+  <tr><td>骄傲</td><td>人类中心主义最后倔强</td><td class="en-prompt">lone human at cliff edge, circuit board crown, tattered cape, AI neural network nebula behind, shadow morphing into machine silhouette, epic scale</td><td>橙红 / 星空蓝</td></tr>
+  <tr><td>嫉妒</td><td>对 AI 能力的嫉恨</td><td class="en-prompt">person before smart mirror, perfect AI reflection of data streams, hand cracking like porcelain, infinite better versions in mirror depth, venomous</td><td>翠绿 / 暗黑</td></tr>
+  <tr><td>愤怒</td><td>算法操控群体愤怒</td><td class="en-prompt">city split by algorithm wall, two raging crowds blood red vs ice blue, massive mechanical hand feeding hate to screens, blank eyes, dystopian epic</td><td>血红 / 冰蓝</td></tr>
+</table>
+<p style="font-size:8.5pt;color:#444">Prompt 设计遵循三条人工原则：① 每罪一个可被镜头语言捕捉的<b>身体性母题</b>（吞噬/抓取/躺卧/拥抱/伫立/触碰/怒吼）；② 色彩系统互斥，保证七段在剪辑中可被瞬间识别；③ 全部锚定"cyberpunk + cinematic"统一美学基调，避免风格漂移。</p>
+
+<h2>三、人工决策点时间线（人工判断）</h2>
+
+<div class="decision"><b>Phase 1 · 分镜策划</b> — 人工撰写 3 分钟完整分镜脚本（含每段旁白文案与视觉关键词），确立"片头 18s + 七段各 22s + 片尾 18s"结构。此阶段无 AI 参与。</div>
+<div class="decision"><b>Phase 2 · 关键帧生成</b> — 将视觉关键词提交 HY-Image-V3.0 文生图，从多轮候选中按"母题可读性 / 色彩系统吻合度 / 电影感构图"三项标准人工筛选出 7 张定稿，未采用任何一次性生成结果。</div>
+<div class="decision"><b>Phase 3 · 视频生成</b> — 以定稿关键帧为输入进行图生视频（非随机文生视频，保证与已确认的构图/色彩一致），人工审核运动方向与情绪节奏后采纳。</div>
+<div class="decision"><b>Phase 4 · 剪辑策展</b> — 人工决定七段排列顺序、时长分配与字幕文案；因长视频字幕渲染内存溢出，人工将 drawtext 方案改为 SRT/libass 方案——技术故障的解决本身构成创作决策。</div>
+<div class="decision"><b>Phase 5 · BGM 合成</b> — 人工确定 D 小调/128 BPM/金属质感方向，人工设计 10 层合成器架构与 FM/环调/非谐分音参数；AI 仅参与代码纠错。</div>
+<div class="decision"><b>Phase 6 · VJ 后期</b> — <b>本作品最关键的人工判断案例：</b>初版 VJ 管线效果过重（饱和度砍半 + 边缘检测全屏叠加），导致色彩丢失、形体不可辨；第二版色彩恢复但生成层仍盖住画面。创作者基于"效果必须服务于原片叙事"的美学判断，连续两次否决自己的参数方案，最终将全部叠加透明度压至 0.15 以下、移除 glitch 行位移与反馈拖影，确立"VJ 效果是氛围层而非覆盖层"的原则并回写进管线文档。</div>
+<div class="decision"><b>Phase 7 · 交互系统</b> — 人工设计 VJ 混合器的模块划分、参数范围与交互逻辑（键盘映射/录制导出），供展览现场实时演奏。</div>
+
+<h2>四、人机贡献边界声明</h2>
+<table>
+  <tr><th style="width:50%">AI 生成（机器贡献）</th><th style="width:50%">人类作者（人工贡献）</th></tr>
+  <tr><td>7 张关键帧图像（文生图）<br>7 段视频素材（图生视频）<br>部分代码辅助</td><td>主题概念与七罪时代转译<br>分镜脚本全部文案<br>Prompt 策略设计与候选筛选<br>剪辑结构 / 调色判断<br>BGM 作曲架构与音色设计<br>VJ 管线全部参数与迭代决策<br>交互系统设计 / 网站全部代码</td></tr>
+</table>
+
+</body>
+</html>

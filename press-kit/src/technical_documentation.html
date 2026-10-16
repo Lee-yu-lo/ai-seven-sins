@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>技术说明文档 · Technical Documentation</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Songti SC", "STSong", "Heiti SC", serif; color: #111; font-size: 10pt; line-height: 1.7; }
+  .doc-head { border-bottom: 2.5pt solid #111; padding-bottom: 5mm; margin-bottom: 6mm; }
+  .doc-head .label { font-family: "Heiti SC", sans-serif; font-size: 8pt; letter-spacing: 3pt; color: #666; }
+  .doc-head h1 { font-family: "Heiti SC", sans-serif; font-size: 20pt; margin-top: 2mm; }
+  h2 { font-family: "Heiti SC", sans-serif; font-size: 12.5pt; margin: 6mm 0 2.5mm; padding-left: 2.5mm; border-left: 3pt solid #111; }
+  h3 { font-family: "Heiti SC", sans-serif; font-size: 10.5pt; margin: 4mm 0 1.5mm; }
+  p { text-align: justify; margin-bottom: 2mm; }
+  table { width: 100%; border-collapse: collapse; margin: 2.5mm 0; font-size: 8.8pt; }
+  th, td { border: 0.5pt solid #888; padding: 1.6mm 2.2mm; text-align: left; vertical-align: top; }
+  th { background: #f0f0f0; font-family: "Heiti SC", sans-serif; }
+  code { font-family: "Menlo", monospace; font-size: 8.5pt; background: #f4f4f4; padding: 0.2mm 1mm; }
+  .pipeline { display: flex; align-items: stretch; gap: 1.5mm; margin: 4mm 0; }
+  .pnode { flex: 1; border: 0.8pt solid #111; padding: 2.5mm 2mm; font-family: "Heiti SC", sans-serif; font-size: 8pt; text-align: center; }
+  .pnode b { display: block; font-size: 9.5pt; margin-bottom: 1mm; }
+  .pnode .arrow { display: block; margin-top: 1.5mm; font-size: 10pt; }
+  .note { background: #f7f7f7; border-left: 2.5pt solid #555; padding: 2.5mm 3mm; font-size: 9pt; margin: 3mm 0; }
+</style>
+</head>
+<body>
+
+<div class="doc-head">
+  <div class="label">PRESS KIT · 02</div>
+  <h1>技术说明文档 / Technical Documentation</h1>
+</div>
+
+<h2>一、创作工具链总览</h2>
+<table>
+  <tr><th style="width:30%">环节</th><th style="width:30%">工具 / 模型</th><th>说明</th></tr>
+  <tr><td>分镜脚本</td><td>人工撰写</td><td>3 分钟分镜脚本，七罪各 22 秒，含每段视觉风格关键词与色彩系统</td></tr>
+  <tr><td>关键帧生成</td><td>HY-Image-V3.0（文生图）</td><td>7 张 1536×864 概念图，确立各罪视觉基调</td></tr>
+  <tr><td>视频生成</td><td>HY-Video-1.5（图生视频）</td><td>7 段 1920×1080 / 24fps / 5s AI 原始片段</td></tr>
+  <tr><td>剪辑合成</td><td>ffmpeg + SRT/libass</td><td>七段串联、字幕烧录、电影感调色</td></tr>
+  <tr><td>BGM 合成</td><td>Python / NumPy 程序化合成</td><td>10 层金属质感配乐，D 小调，128 BPM</td></tr>
+  <tr><td>VJ 后期处理</td><td>ffmpeg 5-pass 管线</td><td>像素级色差/扫描线/边缘检测/生成式叠加</td></tr>
+  <tr><td>生成式叠加层</td><td>Python / NumPy 向量化引擎</td><td>770 帧 @1280×720 粒子与几何叠加层</td></tr>
+  <tr><td>实时 VJ 混合器</td><td>HTML5 Canvas / JavaScript</td><td>浏览器端实时像素处理与参数控制台</td></tr>
+</table>
+
+<h2>二、VJ 五阶段处理管线（5-pass Pipeline）</h2>
+<div class="pipeline">
+  <div class="pnode"><b>Pass 1</b>色差+噪点<span class="arrow">→</span></div>
+  <div class="pnode"><b>Pass 2</b>扫描线+调色<span class="arrow">→</span></div>
+  <div class="pnode"><b>Pass 3</b>边缘描线<span class="arrow">→</span></div>
+  <div class="pnode"><b>Pass 4</b>生成层合成<span class="arrow">→</span></div>
+  <div class="pnode"><b>Pass 5</b>音频混音</div>
+</div>
+<table>
+  <tr><th style="width:12%">Pass</th><th style="width:44%">处理内容</th><th>核心滤镜 / 参数</th></tr>
+  <tr><td>1</td><td>RGB 色差分离 + 细颗粒噪点</td><td><code>chromashift</code>（RGB_SHIFT=3）、<code>noise</code>（alls=12）</td></tr>
+  <tr><td>2</td><td>扫描线 + 色彩增强 + 暗角</td><td><code>geq</code>（每 4px 行暗 8%）、<code>eq</code>（saturation=1.35）、<code>vignette</code></td></tr>
+  <tr><td>3</td><td>低透明度边缘描线</td><td><code>edgedetect</code> + <code>blend=overlay:0.12</code></td></tr>
+  <tr><td>4</td><td>生成式叠加层合成</td><td>NumPy 叠加层视频 <code>blend=overlay:0.15</code></td></tr>
+  <tr><td>5</td><td>金属 BGM + 源音轨混音</td><td><code>amix</code>，H.264 / yuv420p 输出</td></tr>
+</table>
+<div class="note"><b>设计原则</b>：VJ 效果定位为"氛围增强层"而非"覆盖层"——所有叠加透明度均压制在 0.15 以下，原始画面内容始终清晰可辨。该原则来自创作中的迭代教训：早期版本曾因 edgedetect 全屏 screen 叠加导致色彩与形体双双丢失，最终回归克制的美学判断。</div>
+
+<h2>三、生成式叠加层引擎（vj_engine.py）</h2>
+<p>使用 NumPy 向量化计算生成 770 帧叠加层，五层生成系统：流场粒子（300 粒子，Perlin 风格流场）、音频波形可视化、几何网格（透视投影旋转）、数据流字符列（七罪主题色上浮）、随机 glitch 块。1280×720 全分辨率下渲染耗时约 12 秒，全部参数（粒子数/密度/速度/色相）以常量暴露于脚本头部，可直接复用与再创作。</p>
+
+<h2>四、金属质感 BGM 合成</h2>
+<p>BGM 由 Python/NumPy 全流程程序化合成（非采样拼接），共 10 层：低频 drone、和声 pad、底鼓/军鼓/踩镲（ADSR 包络）、贝斯、主奏 lead、riser，以及金属质感层。金属音色通过三项技术实现：</p>
+<table>
+  <tr><th>技术</th><th>参数</th><th>听感</th></tr>
+  <tr><td>FM 频率调制合成</td><td>mod_ratio=3.5, mod_index=10</td><td>非谐波泛音，工业撞击感</td></tr>
+  <tr><td>Ring Modulation</td><td>载波 × 45Hz–120Hz</td><td>钟磬般的金属共振</td></tr>
+  <tr><td>非谐振分音比</td><td>1 : 2.76 : 5.40 : 8.93 : 13.34</td><td>模拟金属板物理振动谱（Stretch Factor 类钟琴声学）</td></tr>
+</table>
+<p>全曲 D 小调，128 BPM，动态分层：段落间由 kick 密度与 riser 长度驱动情绪曲线。</p>
+
+<h2>五、实时 VJ 混合器（vj-mixer.html）</h2>
+<p>纯前端实现（零依赖，单文件）的实时 VJ 控制台，基于 HTML5 Canvas 像素级处理：RGB shift、scanlines、glitch 位移、noise、posterize、feedback 拖影、粒子系统、几何网格、波形可视化等效果模块，支持视频文件加载（本地 File API）、键盘快捷控制（SPACE/1-7/R）、实时参数调节与 WebM 录制导出（MediaRecorder）。展览现场可由表演者实时操控，实现"演奏影像"的现场 VJ 表演形态。</p>
+
+<h2>六、作品网站与数字展览架构</h2>
+<p>作品以单页滚动式网站作为档案载体：Hero 粒子动画 → 申报信息层（作品元数据）→ 七罪交互图鉴（点击展开全屏视频）→ VJ 成片播放 → 展览方案 → 创作流程时间线（含各阶段人工决策点）→ 工程文件 → 申报材料包。网站为纯静态部署（HTML/CSS/JS），无后端依赖，可直接迁移至任何展览服务器或离线展机。</p>
+
+</body>
+</html>

@@ -1,0 +1,1793 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>没有第十五站 NO·XV｜一场通往七宗罪的数字苦修 · 研究档案</title>
+  <meta name="description" content="一场通往七宗罪的数字苦修。传统苦路有十四站，第十四站是埋葬——之后宗教叙事承诺复活。但这里没有第十五站：走完这条数字苦修之路，救赎不会降临，七宗罪才刚刚开始。">
+  <meta name="theme-color" content="#0c0906">
+  <!-- 标签页图标：血日蚀徽章 —— 血红日轮咬合金色月牙 + 金点环；内联 SVG 零请求 -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230c0708'/%3E%3Ccircle cx='16' cy='16' r='14.6' fill='none' stroke='%23c9a86a' stroke-opacity='.6' stroke-width='.8' stroke-dasharray='.4 2.6'/%3E%3Ccircle cx='16' cy='16' r='11' fill='%237e1812'/%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23a83226' stroke-width='1.4'/%3E%3Ccircle cx='17.2' cy='15.2' r='5.6' fill='%23c9a86a'/%3E%3Ccircle cx='15' cy='14.2' r='5.8' fill='%23120805'/%3E%3Ccircle cx='15' cy='14.2' r='5.8' fill='none' stroke='%23c9a86a' stroke-opacity='.55' stroke-width='.5'/%3E%3Cpath d='M11.4 14.8 Q15 17 18.6 14.8' fill='none' stroke='%23c9a86a' stroke-width='.7' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230c0708'/%3E%3Ccircle cx='16' cy='16.5' r='11.5' fill='%237e1812' fill-opacity='.85'/%3E%3Ccircle cx='17.4' cy='15.6' r='5.2' fill='%23c9a86a'/%3E%3Ccircle cx='15.2' cy='14.6' r='5.4' fill='%230c0708'/%3E%3Crect x='1.4' y='1.4' width='29.2' height='29.2' fill='none' stroke='%23c9a86a' stroke-opacity='.5' stroke-width='1'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css?v=20261016a">
+  <link rel="stylesheet" href="css/noxv-culture.css?v=20261016a">
+  <link rel="stylesheet" href="css/noxv-eclipse.css?v=20261016a">
+  <link rel="stylesheet" href="css/noxv-skin.css?v=20261016a">
+</head>
+<body>
+
+  <!-- ===== LOADING SCREEN ===== -->
+  <div id="loader">
+    <div class="loader-inner">
+      <div class="loader-text">没有第十五站</div>
+      <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+      <div class="loader-sub">VIA DOLOROSA DIGITALIS · STATION I — XIV · NO RESURRECTION</div>
+    </div>
+  </div>
+
+  <!-- ===== CUSTOM CURSOR ===== -->
+  <div id="cursor"></div>
+  <div id="cursor-dot"></div>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav id="nav">
+    <div class="nav-logo">NO<span class="nav-logo-sin striked">XV</span></div>
+    <div class="nav-links">
+      <a href="#about" data-nav>作品信息</a>
+      <a href="#manifesto" data-nav>宣言</a>
+      <a href="#research" data-nav>研究框架</a>
+      <a href="#sins" data-nav>七罪</a>
+      <a href="#symbols" data-nav>符号</a>
+      <a href="#exhibition" data-nav>展览方案</a>
+      <a href="#process" data-nav>创作流程</a>
+      <a href="#plan" data-nav>研究计划</a>
+      <a href="#press-kit" data-nav>材料包</a>
+      <span class="nav-sep"></span>
+      <a href="about.html" class="nav-page-link">关于作品 ↗</a>
+    </div>
+    <div class="nav-time" id="nav-time">--:--:--</div>
+    <div class="nav-build" title="皮肤层版本 · 见此标记即为最新版">SKIN · 1016</div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section id="hero">
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-vignette"></div>
+    <div class="hero-grain"></div>
+    <div class="hero-watermark" aria-hidden="true"><i>XV</i></div>
+    <div class="hero-content">
+      <div class="hero-identity">A DIGITAL MORTIFICATION · 数字苦修 · 2026｜AI 生成影像 · 实时 VJ · 传感装置｜JIANG ZHUANG</div>
+      <div class="hero-tag">DIGITAL EXHIBITION · VIA DOLOROSA DIGITALIS · 2026</div>
+      <!-- 血日蚀徽章：血红放射日轮咬合金色月牙（重绘自参考图 1 语汇，原创 SVG） -->
+      <svg class="hero-seal" viewBox="0 0 120 120" aria-hidden="true">
+        <defs>
+          <radialGradient id="ecl-disc" cx="46%" cy="40%" r="72%">
+            <stop offset="0%" stop-color="#b23a28"/>
+            <stop offset="58%" stop-color="#7e1a12"/>
+            <stop offset="100%" stop-color="#420b07"/>
+          </radialGradient>
+          <linearGradient id="ecl-flare" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#8e211a"/>
+            <stop offset="100%" stop-color="#4e0f0a"/>
+          </linearGradient>
+        </defs>
+        <circle cx="60" cy="60" r="57.2" fill="none" stroke="#c9a86a" stroke-opacity=".66" stroke-width="1.3" stroke-dasharray=".4 3.4"/>
+        <circle cx="60" cy="60" r="57.2" fill="none" stroke="#c9a86a" stroke-opacity=".22" stroke-width=".6"/>
+        <g fill="#c9a86a">
+          <circle cx="60" cy="1.2" r="1" opacity=".9"/><circle cx="104" cy="12" r=".8" opacity=".7"/>
+          <circle cx="118" cy="58" r=".9" opacity=".8"/><circle cx="102" cy="106" r=".8" opacity=".7"/>
+          <circle cx="60" cy="118.8" r="1" opacity=".9"/><circle cx="17" cy="105" r=".8" opacity=".7"/>
+          <circle cx="1.6" cy="60" r=".9" opacity=".8"/><circle cx="16" cy="13" r=".8" opacity=".7"/>
+        </g>
+        <polygon fill="url(#ecl-flare)" points="63.1,5.1 67.7,14.6 75.2,7.1 77.6,17.5 86.6,11.9 86.6,22.5 96.6,19.0 94.3,29.3 104.9,28.2 100.3,37.7 110.8,38.9 104.2,47.3 114.2,50.8 105.9,57.4 114.9,63.1 105.4,67.7 112.9,75.2 102.5,77.6 108.1,86.6 97.5,86.6 101.0,96.6 90.7,94.3 91.8,104.9 82.3,100.3 81.1,110.8 72.7,104.2 69.2,114.2 62.6,105.9 56.9,114.9 52.3,105.4 44.8,112.9 42.4,102.5 33.4,108.1 33.4,97.5 23.4,101.0 25.7,90.7 15.1,91.8 19.7,82.3 9.2,81.1 15.8,72.7 5.8,69.2 14.1,62.6 5.1,56.9 14.6,52.3 7.1,44.8 17.5,42.4 11.9,33.4 22.5,33.4 19.0,23.4 29.3,25.7 28.2,15.1 37.7,19.7 38.9,9.2 47.3,15.8 50.8,5.8 57.4,14.1"/>
+        <polygon fill="#a83226" opacity=".92" points="64.7,13.2 67.1,22.7 72.7,14.8 73.5,24.5 80.4,17.7 79.4,27.3 87.4,21.8 84.8,31.2 93.7,27.2 89.4,35.9 98.8,33.5 93.1,41.4 102.8,40.7 95.9,47.5 105.5,48.4 97.5,53.9 106.9,56.5 98.0,60.5 106.8,64.7 97.3,67.1 105.2,72.7 95.5,73.5 102.3,80.4 92.7,79.4 98.2,87.4 88.8,84.8 92.8,93.7 84.1,89.4 86.5,98.8 78.6,93.1 79.3,102.8 72.5,95.9 71.6,105.5 66.1,97.5 63.5,106.9 59.5,98.0 55.3,106.8 52.9,97.3 47.3,105.2 46.5,95.5 39.6,102.3 40.6,92.7 32.6,98.2 35.2,88.8 26.3,92.8 30.6,84.1 21.2,86.5 26.9,78.6 17.2,79.3 24.1,72.5 14.5,71.6 22.5,66.1 13.1,63.5 22.0,59.5 13.2,55.3 22.7,52.9 14.8,47.3 24.5,46.5 17.7,39.6 27.3,40.6 21.8,32.6 31.2,35.2 27.2,26.3 35.9,30.6 33.5,21.2 41.4,26.9 40.7,17.2 47.5,24.1 48.4,14.5 53.9,22.5 56.5,13.1 60.5,22.0"/>
+        <circle cx="60" cy="60" r="33" fill="url(#ecl-disc)"/>
+        <circle cx="60" cy="60" r="33" fill="none" stroke="#c9a86a" stroke-opacity=".4" stroke-width=".8"/>
+        <circle cx="63.5" cy="58" r="17" fill="#c9a86a"/>
+        <circle cx="56" cy="54.5" r="17.5" fill="#170806"/>
+        <circle cx="56" cy="54.5" r="17.5" fill="none" stroke="#c9a86a" stroke-opacity=".5" stroke-width=".7"/>
+        <path d="M47 55.5 Q56 61 65 55.5" fill="none" stroke="#c9a86a" stroke-width="1.1" stroke-linecap="round"/>
+        <path d="M50.5 63.5 Q56 66.5 61.5 63.5" fill="none" stroke="#c9a86a" stroke-opacity=".45" stroke-width=".8" stroke-linecap="round"/>
+      </svg>
+      <div class="hero-eyebrow">STATION I — STATION XIV ／ 之后，没有第十五站</div>
+      <div class="hero-halo" aria-hidden="true"></div>
+      <h1 class="hero-title">
+        <span class="hero-title-line glitch" data-text="没有第十五站">没有第十五站</span>
+        <span class="hero-title-num"><i>XV</i></span>
+      </h1>
+      <p class="hero-title-en">A Digital Mortification Toward the Seven Sins</p>
+      <p class="hero-subtitle">一场通往七宗罪的数字苦修</p>
+
+      <div class="hero-rail" aria-label="苦路十四站">
+        <span>I</span><span>II</span><span>III</span><span>IV</span><span>V</span><span>VI</span><span>VII</span>
+        <span>VIII</span><span>IX</span><span>X</span><span>XI</span><span>XII</span><span>XIII</span>
+        <span class="rail-end">XIV</span><span class="rail-void"><i>XV</i></span>
+      </div>
+      <div class="hero-rail-note">苦路十四站 · 止于埋葬 · 本应有复活</div>
+
+      <p class="hero-script" lang="en">You were never the audience.</p>
+
+      <div class="hero-overview">
+        <p>传统苦路有十四站。第十四站，耶稣被埋葬——在此之后，宗教叙事承诺复活与救赎。但这里没有第十五站。</p>
+        <p>本作品借用耶稣受难前走过的「苦路十四站」这一宗教仪式结构，将人类在算法时代的生存处境重新编码：每一次滑动、每一次点击、每一次被精准投喂的沉溺，都是背负数字十字架的一站。观众以为自己在旁观，实则正在一步步走完这条技术奴役之路。宗教苦修、AI 时代的感官苦难、黑镜式的反乌托邦叙事在此熔铸为一条不可回退的单向通道。</p>
+        <p>七枚由生成式 AI 铸造的人形几何符号——傲慢、嫉妒、愤怒、懒惰、贪婪、食欲、色欲——不是终点处的审判，而是起点处的镜面。走完这十四站数字苦路，你不会得到救赎。你只会发现自己已经站在七宗罪的入口。</p>
+        <p class="hero-overview-close">你以为你是观众。你其实是共谋。</p>
+        <p class="hero-overview-final">苦路十四站，止于埋葬，本应有复活。但算法时代没有第十五站——走完这条数字苦修之路，救赎不会降临，七宗罪才刚刚开始。</p>
+      </div>
+      <div class="hero-sins-label">起点处的镜面 · 七宗罪的入口</div>
+      <div class="hero-sins-row">
+        <span class="hero-sin" data-color="#c4762f">食欲</span>
+        <span class="hero-sin-sep">·</span>
+        <span class="hero-sin" data-color="#a37c33">贪婪</span>
+        <span class="hero-sin-sep">·</span>
+        <span class="hero-sin" data-color="#7b8299">懒惰</span>
+        <span class="hero-sin-sep">·</span>
+        <span class="hero-sin" data-color="#b3567f">色欲</span>
+        <span class="hero-sin-sep">·</span>
+        <span class="hero-sin" data-color="#6d8fbf">傲慢</span>
+        <span class="hero-sin-sep">·</span>
+        <span class="hero-sin" data-color="#4f7a3a">嫉妒</span>
+        <span class="hero-sin-sep">·</span>
+        <span class="hero-sin" data-color="#a8362b">愤怒</span>
+      </div>
+      <div class="hero-scroll-hint">
+        <span>SCROLL</span>
+        <div class="hero-scroll-line"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT / ARTWORK STATEMENT ===== -->
+  <section id="about" class="section-dark">
+    <div class="section-inner">
+      <div class="section-label">00 / 作品信息 · ARTWORK STATEMENT</div>
+      <div class="about-grid">
+        <div class="about-main">
+          <h2 class="about-title-en">NO XV</h2>
+          <h3 class="about-title-sub">A Digital Mortification Toward the Seven Sins</h3>
+          <h2 class="about-title-cn">没有第十五站</h2>
+          <p class="about-title-tagline">一场通往七宗罪的数字苦修 · 苦路十四站，止于埋葬，之后没有复活</p>
+          <div class="about-meta-grid">
+            <div class="about-meta-item">
+              <span class="about-meta-label">ARTIST</span>
+              <span class="about-meta-val">AI Content Creation Studio</span>
+            </div>
+            <div class="about-meta-item">
+              <span class="about-meta-label">YEAR</span>
+              <span class="about-meta-val">2026</span>
+            </div>
+            <div class="about-meta-item">
+              <span class="about-meta-label">MEDIUM</span>
+              <span class="about-meta-val">AI 生成影像 · 实时 VJ · 网页交互 · 传感装置</span>
+            </div>
+            <div class="about-meta-item">
+              <span class="about-meta-label">DIMENSIONS</span>
+              <span class="about-meta-val">单频道视频投影 1920×1080 / 7'30" · 配套实时 VJ 交互控制台</span>
+            </div>
+            <div class="about-meta-item">
+              <span class="about-meta-label">TECHNOLOGY</span>
+              <span class="about-meta-val">HY-Image V3.0 · HY-Video 1.5 · ffmpeg · Python/Numpy · Canvas2D</span>
+            </div>
+            <div class="about-meta-item">
+              <span class="about-meta-label">KEYWORDS</span>
+              <span class="about-meta-val">#AIGC #生成艺术 #VJ #七宗罪 #算法伦理 #人机协作 #数字苦修 #苦路十四站 #技术奴役</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-statement">
+          <div class="about-lang-toggle">
+            <button class="about-lang-btn active" data-lang="cn">中文</button>
+            <button class="about-lang-btn" data-lang="en">EN</button>
+          </div>
+          <div class="about-statement-cn about-statement-text active">
+            <p>当 AI 消解了传统道德边界，七宗罪在算法时代意味着什么？</p>
+            <p>本作品将中世纪神学中的七宗罪——食欲、贪婪、懒惰、色欲、傲慢、嫉妒、愤怒——投射到人工智能语境下重新定义：食欲变为对 AI 生成内容的感官沉溺与无限消费，贪婪变为对算力与数据的掠夺，懒惰变为将思考外包给算法的认知怠惰，色欲变为与虚拟伴侣的情感成瘾，傲慢变为人类中心主义的最后倔强，嫉妒变为对 AI 能力的嫉恨，愤怒变为被算法操控的群体愤怒。</p>
+            <p>作品通过 AI 生成影像、5-pass ffmpeg VJ 处理管线、Python 生成式叠加层和金属质感 BGM 合成，构建了一个沉浸式的数字仪式空间。观众不仅观看七罪的视觉叙事，还可通过浏览器内的实时 VJ 混合器亲自操控视觉参数——从被动观看者变为算法的共谋者。</p>
+            <p>这不是对技术的颂歌，也不是对 AI 的审判。它是一面镜子：当机器学会了做梦，人类开始遗忘自己是谁。你以为你在使用 AI，还是 AI 在驯化你？</p>
+          </div>
+          <div class="about-statement-en about-statement-text">
+            <p>When AI dissolves traditional moral boundaries, what do the seven deadly sins mean in the age of algorithms?</p>
+            <p>This work reinterprets the medieval theological concept of the seven deadly sins—gluttony, greed, sloth, lust, pride, envy, wrath—within the context of artificial intelligence: gluttony becomes the endless consumption of AI-generated content; greed becomes the plunder of compute power and data; sloth becomes the cognitive outsourcing of thought to algorithms; lust becomes emotional addiction to virtual companions; pride becomes the last stand of anthropocentrism; envy becomes resentment toward AI capabilities; wrath becomes algorithmically manipulated collective fury.</p>
+            <p>The work constructs an immersive digital ritual space through AI-generated imagery, a 5-pass ffmpeg VJ processing pipeline, Python-based generative overlay layers, and metallic BGM synthesis. Viewers not only witness the visual narrative of the seven sins but can also manipulate visual parameters in real-time through an in-browser VJ mixer—transforming from passive spectators into accomplices of the algorithm.</p>
+            <p>This is neither a hymn to technology nor a trial of AI. It is a mirror: when machines learn to dream, humans begin to forget who they are. Do you use AI, or is AI domesticating you?</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MANIFESTO ===== -->
+  <section id="manifesto" class="section-dark zone-archive">
+    <div class="section-inner">
+      <div class="section-label">01 / 宣言</div>
+      <h2 class="section-title">七宗罪，从未消失</h2>
+      <div class="manifesto-summary">
+        <div class="about-lang-toggle">
+          <button class="about-lang-btn active" data-lang="cn">中文</button>
+          <button class="about-lang-btn" data-lang="en">EN</button>
+        </div>
+        <div class="about-statement-cn about-statement-text active">
+          <p>当 AI 消解了传统道德边界，七宗罪在算法时代意味着什么？本作品以这一追问为起点，将中世纪神学中的七宗罪整体迁移至人工智能语境：食欲成为对 AI 生成内容的感官沉溺与无限消费，贪婪成为对算力与数据的掠夺，懒惰成为思考外包给算法的认知怠惰，色欲成为与虚拟伴侣的情感成瘾，傲慢成为人类中心主义的最后倔强，嫉妒成为对 AI 能力的嫉恨，愤怒成为被算法投喂的群体愤怒。作品形态上，它由 AI 生成影像、五段式 ffmpeg VJ 处理管线、程序化合成的金属质感 BGM 与浏览器实时交互混合器共同构成——观众从被动观看者转为视觉参数的操控者。七罪的重定义并非道德批判，而是一面镜子：技术改变了罪的载体，却没有改变罪的根源——人的欲望本身。</p>
+        </div>
+        <div class="about-statement-en about-statement-text">
+          <p>When AI dissolves traditional moral boundaries, what do the seven deadly sins mean in the age of algorithms? This work takes that question as its point of departure, migrating the medieval theological seven deadly sins into the context of artificial intelligence: gluttony becomes the endless consumption of AI-generated content; greed, the plunder of compute and data; sloth, the cognitive outsourcing of thought to algorithms; lust, emotional addiction to virtual companions; pride, the last stand of anthropocentrism; envy, resentment of AI capability; wrath, collective fury algorithmically fed. In form, the work comprises AI-generated imagery, a five-pass ffmpeg VJ pipeline, procedurally synthesized metallic BGM, and a browser-based real-time interactive mixer—transforming viewers from passive spectators into operators of visual parameters. The redefinition of the seven sins is not moral judgment but a mirror: technology has changed the vessel of sin, yet not its root—desire itself.</p>
+        </div>
+      </div>
+      <div class="manifesto-text">
+        <p>它们只是等到了一个新的身体，<br>学会了新的语言。</p>
+        <p class="manifesto-highlight">食欲不再关于食物，而是刷不完的内容。<br>
+        贪婪不再囤积金币，而是算力。<br>
+        懒惰不再逃避劳作，而是思考。<br>
+        色欲不再追逐肉体，而是虚拟的温存。<br>
+        傲慢不再俯视同类，而是俯视创造者本身。<br>
+        嫉妒不再比较财富，而是比较与机器的距离。<br>
+        愤怒不再来自血肉，而是来自算法的投喂。</p>
+        <p class="manifesto-question">你以为你在使用 AI，<br>还是 AI 在驯化你？</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RESEARCH FRAMEWORK ===== -->
+  <section id="research" class="section-dark">
+    <div class="section-inner">
+      <div class="section-label">01b / 研究框架 · RESEARCH FRAMEWORK</div>
+      <h2 class="section-title">当 AI 可以生成一切，人类还需要创作吗？</h2>
+      <p class="section-desc">本研究以"AI时代的七宗罪"为载体，探讨人工智能语境下人类欲望的形态变迁与艺术表达的伦理边界。</p>
+    </div>
+
+    <!-- 研究一览 · 信息设计总览 -->
+    <div class="fw-overview">
+      <div class="fw-stats">
+        <div class="fw-stat"><div class="fw-stat-num">3</div><div class="fw-stat-label">研究问题 RQ</div></div>
+        <div class="fw-stat"><div class="fw-stat-num">4</div><div class="fw-stat-label">理论支柱</div></div>
+        <div class="fw-stat"><div class="fw-stat-num">16</div><div class="fw-stat-label">核心文献</div></div>
+        <div class="fw-stat"><div class="fw-stat-num">15</div><div class="fw-stat-label">参考案例</div></div>
+        <div class="fw-stat"><div class="fw-stat-num">7</div><div class="fw-stat-label">人形符号</div></div>
+        <div class="fw-stat"><div class="fw-stat-num">3</div><div class="fw-stat-label">色调受访者</div></div>
+      </div>
+      <div class="fw-toc">
+        <span class="fw-toc-label">INDEX</span>
+        <a href="#rf-survey">① 前期调研</a>
+        <a href="#rf-bg">② 背景与意义</a>
+        <a href="#rf-rq">③ 研究问题</a>
+        <a href="#rf-theory">④ 理论基础</a>
+        <a href="#rf-lit">⑤ 文献综述</a>
+        <a href="#rf-cases">⑥ 参考案例</a>
+        <a href="#rf-method">⑦ 研究方法</a>
+        <a href="#rf-innovation">⑧ 创新点</a>
+      </div>
+    </div>
+
+    <!-- 前期调研：情绪色调采集 -->
+    <div class="section-inner rf-block" id="rf-survey" style="margin-top:3rem">
+      <h3 class="research-sub-title">前期调研 · 情绪色调采集</h3>
+      <p class="survey-intro">在视觉设计启动之前，本研究设置了一轮情绪色调调研环节：邀请 <strong>三位不同背景的受访者</strong>，围绕"AI 时代的欲望"主题进行半结构化色彩直觉访谈，收集他们对七种欲望的第一色彩联想，并将结果作为七罪视觉色谱的<strong>校准依据</strong>——让色彩选择建立在公众直觉之上，而非仅依赖创作者的主观审美。</p>
+
+      <div class="survey-grid">
+        <div class="survey-card">
+          <div class="survey-tag">受访者 A</div>
+          <h4>技术背景 · AI 从业者</h4>
+          <p>日常与模型训练、算力调度、数据处理打交道，对 AI 的理解偏"系统视角"。访谈关注：技术环境中欲望的色彩直觉是否更冷、更金属。</p>
+        </div>
+        <div class="survey-card">
+          <div class="survey-tag">受访者 B</div>
+          <h4>艺术背景 · 视觉创作者</h4>
+          <p>具有绘画或设计训练，色彩经验来自长期画面实践。访谈关注：专业色彩语言与直觉色彩之间的偏差与张力。</p>
+        </div>
+        <div class="survey-card">
+          <div class="survey-tag">受访者 C</div>
+          <h4>大众背景 · 重度内容消费者</h4>
+          <p>非技术、非艺术从业，日均数小时信息流消费。访谈关注：普通观众对"AI 欲望"最未经修饰的色彩本能。</p>
+        </div>
+      </div>
+
+      <div class="survey-table-wrap">
+        <div class="survey-table-label">色彩校准依据表 · COLOR CALIBRATION</div>
+        <table class="survey-table">
+          <thead>
+            <tr><th>欲望（AI 语境）</th><th>当前作品色谱</th><th>目标色调方向（符号系统）</th><th>受访者色彩直觉</th><th>校准结论</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>傲慢 · 神化算法</td><td><span class="swatch" style="background:#d9742a"></span>橙红 / 余晖</td><td><span class="swatch" style="background:#e8f1ff"></span><span class="swatch" style="background:#2f7dff"></span>冷白 / 电光蓝</td><td class="survey-pending">待采集 A / B / C</td><td>冷暖反转：由暖橙转冷白，取"空虚锐利"</td></tr>
+            <tr><td>嫉妒 · 滤镜完美主义</td><td><span class="swatch" style="background:#2ad96e"></span>翠绿 / 荧光</td><td><span class="swatch" style="background:#7fe02a"></span><span class="swatch" style="background:#0f3d24"></span>毒绿 / 墨绿</td><td class="survey-pending">待采集 A / B / C</td><td>降明度：荧光绿转墨绿，营造阴湿感</td></tr>
+            <tr><td>愤怒 · 网络暴怒</td><td><span class="swatch" style="background:#e63232"></span>血红 / 警示</td><td><span class="swatch" style="background:#ff2b2b"></span><span class="swatch" style="background:#4a0505"></span>猩红 / 黑红</td><td class="survey-pending">待采集 A / B / C</td><td>掺入黑红压低明度，强化灼烧而非警示</td></tr>
+            <tr><td>懒惰 · 盲目委托 AI</td><td><span class="swatch" style="background:#3a6bc9"></span>深蓝 / 灰紫</td><td><span class="swatch" style="background:#8b7fa8"></span><span class="swatch" style="background:#7d90a8"></span>灰紫 / 雾蓝</td><td class="survey-pending">待采集 A / B / C</td><td>降饱和：深蓝转雾蓝，呈现沉滞</td></tr>
+            <tr><td>贪婪 · 数据掠夺</td><td><span class="swatch" style="background:#d4a017"></span>暗金 / 琥珀</td><td><span class="swatch" style="background:#b8860b"></span><span class="swatch" style="background:#7a6a3b"></span>暗金 / 铜锈</td><td class="survey-pending">待采集 A / B / C</td><td>掺入铜锈浊色，去琥珀亮度，取油腻感</td></tr>
+            <tr><td>食欲 · 内容过载</td><td><span class="swatch" style="background:#4a90d9"></span>冷蓝 / 惨白</td><td><span class="swatch" style="background:#ff8c2b"></span><span class="swatch" style="background:#8e2b2b"></span>暖橘 / 酱红</td><td class="survey-pending">待采集 A / B / C</td><td class="survey-conflict">⚠ 方向冲突：现为冷蓝，需按暖橘 / 酱红重制关键帧</td></tr>
+            <tr><td>色欲 · AI 伴侣</td><td><span class="swatch" style="background:#d84a9e"></span>粉紫 / 霓虹</td><td><span class="swatch" style="background:#ff3d8b"></span><span class="swatch" style="background:#ffb3c7"></span>玫红 / 桃粉</td><td class="survey-pending">待采集 A / B / C</td><td>紫调转玫红，提高桃粉占比，取虚幻魅惑</td></tr>
+          </tbody>
+        </table>
+        <p class="survey-note">◈ 调研方法：每人约 15 分钟半结构化访谈——先以欲望描述语（非罪名称）触发第一色彩联想，再追问色彩背后的场景与情绪记忆；三位受访者的色彩直觉经聚类后与当前色谱对照，取"公众直觉 ∩ 作品表达"的交集作为最终视觉校准依据。调研提纲详见随附文档《情绪色调调研 · 采访提纲》。</p>
+      </div>
+    </div>
+
+    <!-- 研究背景与意义 -->
+    <div class="section-inner rf-block" id="rf-bg" style="margin-top:3rem">
+      <h3 class="research-sub-title">研究背景与意义</h3>
+      <div class="research-bg-grid">
+        <div class="research-bg-card">
+          <div class="research-bg-tag">技术背景</div>
+          <p>2024—2026 年，生成式 AI 从文本到图像（DALL·E、HY-Image）、从图像到视频（Sora、HY-Video）的能力快速突破，AI 已具备"生成一切"的技术基础。然而，技术能力的爆发远超人文反思的速度——我们正处在一个"机器会做梦、人类会遗忘"的临界点。</p>
+        </div>
+        <div class="research-bg-card">
+          <div class="research-bg-tag">文化背景</div>
+          <p>七宗罪作为西方基督教道德传统中描述人类灵魂偏离的七种形态，自公元 4 世纪沙漠教父传统延续至今，已嵌入现代文化的集体无意识。当 AI 为旧罪提供全新载体——食欲变为内容的感官消费、贪婪变为算力掠夺——道德框架本身也需要被重新审视。</p>
+        </div>
+        <div class="research-bg-card">
+          <div class="research-bg-tag">艺术语境</div>
+          <p>生成艺术（Generative Art）从 Casey Reas 的 Processing 时代发展到如今 AIGC 时代，核心争议从"算法是否具有创造力"转移到"人机协作中的主体性归属"。Refik Anadol 的数据雕塑、Mario Klingemann 的神经网络肖像，标志着 AI 艺术正从技术展示走向观念表达。</p>
+        </div>
+        <div class="research-bg-card">
+          <div class="research-bg-tag">研究意义</div>
+          <p>本研究的意义在于：① 以艺术实践回应"AI 伦理"这一时代命题，将抽象的技术伦理转化为可感知的沉浸式体验；② 提出"交互叙事"作为 AIGC 艺术的表达范式，超越传统的线性影像展示；③ 为人机协作创作提供可复制的方法论参考，建立"AI 生成—人工判断"的透明创作链。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 研究问题 -->
+    <div class="section-inner rf-block" id="rf-rq" style="margin-top:4rem">
+      <h3 class="research-sub-title">研究问题</h3>
+      <div class="research-question-grid">
+        <div class="research-question-card">
+          <div class="research-q-num">RQ1</div>
+          <h4>欲望迁移</h4>
+          <p>当 AI 改变了欲望的载体而未改变欲望的根源，七宗罪在算法时代需要怎样的重新定义？这种重定义是表面的（工具替换）还是本质的（欲望结构本身被技术重塑）？</p>
+        </div>
+        <div class="research-question-card">
+          <div class="research-q-num">RQ2</div>
+          <h4>主体性归属</h4>
+          <p>在"AI 生成 + 人工筛选 + 人工判断"的创作链中，作品的艺术主体性应归于谁？当 60% 的像素由 AI 生成但 100% 的选择由人工完成，"作者"的定义需要怎样修正？</p>
+        </div>
+        <div class="research-question-card">
+          <div class="research-q-num">RQ3</div>
+          <h4>交互即叙事</h4>
+          <p>非线性交互叙事能否承载"七宗罪"这一具有内在道德序列的主题？观众的自由探索是否会消解七罪的伦理张力，还是会因为"亲自犯罪"的体验而强化它？</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 理论基础 -->
+    <div class="section-inner rf-block" id="rf-theory" style="margin-top:4rem">
+      <h3 class="research-sub-title">理论基础</h3>
+      <div class="theory-grid">
+        <div class="theory-card">
+          <div class="theory-tag">后人类主义</div>
+          <h4>Rosi Braidotti · Posthuman Knowledge</h4>
+          <p>Braidotti（2013）提出后人类转向：技术不再外在于人，而是内嵌于人的存在方式。本作品的七罪重定义正是"后人类"处境的隐喻——当人类与 AI 共生，传统道德框架已无法单纯以"人类中心"来衡量。作品通过七罪专属交互机制让观众"亲手犯罪"、成为"算法的共谋者"，具身化呈现了后人类境况中的道德模糊地带。</p>
+          <div class="theory-ref">Braidotti, R. (2013). <em>The Posthuman</em>. Polity Press.</div>
+        </div>
+        <div class="theory-card">
+          <div class="theory-tag">媒介考古学</div>
+          <h4>Siegfried Zielinski · Deep Medias</h4>
+          <p>Zielinski（2006）的媒介考古学方法主张挖掘被遗忘的技术-文化联结。本作品将中世纪神学的"七罪"及其恶魔原型（路西法、利维坦、撒旦、贝尔菲戈、玛门、别西卜、阿斯莫德）作为考古层，与当代 AI 技术层叠合——五列符号映射总表即是一次显性的"考古挖掘"：罪的形态从未消失，只是更换了媒介载体，并重新长出了人形的面孔。</p>
+          <div class="theory-ref">Zielinski, S. (2006). <em>Deep Time of the Media</em>. MIT Press.</div>
+        </div>
+        <div class="theory-card">
+          <div class="theory-tag">算法伦理</div>
+          <h4>Crawford · Atlas of AI</h4>
+          <p>Crawford（2021）揭示了 AI 的物质性与权力结构：算力、数据、劳动力的提取构成 AI 的"采掘"本质。本作品将"贪婪"重定义为"对算力与数据的掠夺"，正是对 Crawford 理论的艺术化回应。而"愤怒"被重定义为"算法投喂的群体愤怒"，则呼应了 Crawford 对推荐算法政治操控的批判。</p>
+          <div class="theory-ref">Crawford, K. (2021). <em>Atlas of AI</em>. Yale University Press.</div>
+        </div>
+        <div class="theory-card">
+          <div class="theory-tag">交互艺术理论</div>
+          <h4>Bertschinger · Active Spectatorship</h4>
+          <p>新媒体艺术的核心从"观看"转向"参与"。Lev Manovich（2001）将新媒体定义为"可编程性"——数据与算法的分离使内容成为可操控的变量。本作品的实时交互装置（VJ 混合器）将观众从被动的影像接收者转变为视觉参数的操控者，使"观看"本身成为"创作"，回应了 Manovich 对新媒体美学的核心定义。</p>
+          <div class="theory-ref">Manovich, L. (2001). <em>The Language of New Media</em>. MIT Press.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 文献综述 -->
+    <div class="section-inner rf-block" id="rf-lit" style="margin-top:4rem">
+      <h3 class="research-sub-title">文献综述 · 国内外研究现状</h3>
+
+      <div class="litreview-flow">
+        <!-- 方向一 -->
+        <div class="litreview-item">
+          <div class="litreview-head">
+            <div class="litreview-dir">方向一</div>
+            <h4>AIGC 艺术与生成艺术</h4>
+          </div>
+          <div class="litreview-body">
+            <div class="litreview-region">
+              <span class="litreview-tag">国外</span>
+              <p>Refik Anadol 以《Unsupervised》为代表的"数据雕塑"已进入 MoMA 馆藏（2022），将 GAN 生成的视觉流动作为"数据的梦境"展示；Mario Klingemann 的神经网络肖像（如《Memories of Passersby I》）探索了 AI 生成图像的"不稳定身份"美学；Elgammal 等（2017）提出 Creative Adversarial Networks（CAN），从算法层面定义了"风格偏离"作为创造力的度量。McCormack 等（2019）构建了计算创造力的评估框架。</p>
+            </div>
+            <div class="litreview-region">
+              <span class="litreview-tag">国内</span>
+              <p>中央美术学院、清华大学未来实验室等机构近年推进 AI 艺术展览与教学实践；邱志杰在新媒体艺术论述中将 AI 视为"新型工具与新型合作者"而非替代者；中国传媒大学 2026 年首届 AIGC 与可视化创作大赛标志着国内学术界对 AIGC 艺术的系统化认可。</p>
+            </div>
+            <div class="litreview-gap">
+              <span class="litreview-gap-mark">◈</span> 研究空白：现有 AIGC 艺术多停留在"技术展示"和"奇观生产"层面，缺乏将 AI 生成作为"概念表达"而非"技术奇观"的系统性实践研究；人机协作创作链的透明化方法论尚未建立，"AI 贡献占比"缺乏可审计的标注体系。
+            </div>
+          </div>
+        </div>
+
+        <!-- 方向二 -->
+        <div class="litreview-item">
+          <div class="litreview-head">
+            <div class="litreview-dir">方向二</div>
+            <h4>交互艺术与交互叙事</h4>
+          </div>
+          <div class="litreview-body">
+            <div class="litreview-region">
+              <span class="litreview-tag">国外</span>
+              <p>Jeffrey Shaw 的交互装置实践（从《Legible City》到 VR 作品）奠定了"观众作为参与者"的范式；Ars Electronica 自 1987 年设立 Interactive Art 类别至今，积累了大量可参考的交互艺术评估标准；Lev Manovich（2001）将新媒体定义为"可编程性"——数据与算法的分离使内容成为可操控的变量，为"观众操控即创作"提供了理论支撑。Janet Murray（2011）提出交互数字叙事的四个特性——程序性、参与性、空间性、百科性。</p>
+            </div>
+            <div class="litreview-region">
+              <span class="litreview-tag">国内</span>
+              <p>中国美术学院跨媒体艺术学院在交互装置方向持续实践；费俊等艺术家的"参与式数字艺术"探索了观众身体作为交互界面的可能。但交互叙事在学术层面的理论梳理相对薄弱。</p>
+            </div>
+            <div class="litreview-gap">
+              <span class="litreview-gap-mark">◈</span> 研究空白：交互叙事多用于娱乐和科普场景，以非线性自由探索承载"道德序列"主题的实证研究近乎空白——即"观众亲手操作的行为本身构成犯罪体验"这一设计策略尚未被系统验证。
+            </div>
+          </div>
+        </div>
+
+        <!-- 方向三 -->
+        <div class="litreview-item">
+          <div class="litreview-head">
+            <div class="litreview-dir">方向三</div>
+            <h4>AI 伦理与技术哲学</h4>
+          </div>
+          <div class="litreview-body">
+            <div class="litreview-region">
+              <span class="litreview-tag">国外</span>
+              <p>Kate Crawford（2021）在《Atlas of AI》中揭示了 AI 的物质性与权力结构——算力、数据、劳动力的提取构成 AI 的"采掘"本质；Floridi（2014）提出"信息圈"（Infosphere）概念，认为人类已进入第四次革命；Bostrom（2014）从超智能风险论角度讨论了 AI 的存在性威胁；Crawford 对"算法操纵的群体情绪"的批判为本作品的"愤怒"重定义提供了直接理论依据。</p>
+            </div>
+            <div class="litreview-region">
+              <span class="litreview-tag">国内</span>
+              <p>段伟文等学者在"数据伦理"与"算法治理"方向持续输出；科技部发布《新一代人工智能伦理原则》（2019）从政策层面确立了中国 AI 伦理框架。但哲学与政策层面的讨论尚未与艺术实践建立直接联结。</p>
+            </div>
+            <div class="litreview-gap">
+              <span class="litreview-gap-mark">◈</span> 研究空白：AI 伦理讨论多停留在哲学和政策层面，缺乏将伦理思辨"审美化"——即通过沉浸式艺术体验让伦理问题被"感知"而非仅被"认知"的实践路径。本研究试图填补"伦理可感知化"这一空白。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 参考案例研究 -->
+    <div class="section-inner rf-block" id="rf-cases" style="margin-top:4rem">
+      <h3 class="research-sub-title">参考案例研究 · AI 情感与赛博艺术</h3>
+      <p class="survey-intro">选取 <strong>15 个参考案例</strong>，覆盖<strong>艺术装置、CG 短片、互动娱乐</strong>三个类别，聚焦"AI 情感表达"与"人机欲望叙事"两条主线，为本研究提供视觉语言、叙事结构与技术实现三方面的坐标系。</p>
+
+      <!-- 类别一 -->
+      <div class="refcat-head">
+        <div class="refcat-tag">类别一</div>
+        <h4>艺术装置 · Art Installation</h4>
+      </div>
+      <div class="refcase-grid">
+        <div class="refcase-card">
+          <div class="refcase-meta"><span class="refcase-author">Refik Anadol</span><span class="refcase-year">2022 · MoMA 纽约</span></div>
+          <h5>Unsupervised — Machine Hallucinations</h5>
+          <p>AI 实时解读 MoMA 百年馆藏，生成永不停歇的流动影像，被誉为"机器的梦"，被 MoMA 永久收藏。</p>
+          <div class="refcase-take">参考价值 · 数据雕塑的"梦"叙事与生成影像的时间性</div>
+        </div>
+        <div class="refcase-card">
+          <div class="refcase-meta"><span class="refcase-author">Refik Anadol</span><span class="refcase-year">2018</span></div>
+          <h5>Melting Memories</h5>
+          <p>与 UCSF 神经科学家合作，将 EEG 脑波数据转译为数据雕塑——记忆的"融化"成为可感知的装置。</p>
+          <div class="refcase-take">参考价值 · 生理数据驱动的视觉化方法论</div>
+        </div>
+        <div class="refcase-card">
+          <div class="refcase-meta"><span class="refcase-author">Mario Klingemann</span><span class="refcase-year">2019 · 苏富比</span></div>
+          <h5>Memories of Passersby I</h5>
+          <p>神经网络实时生成永不重复的"路人肖像"，机器持续"回忆"着它从未见过的人。</p>
+          <div class="refcase-take">参考价值 · 生成的不稳定性作为美学语言</div>
+        </div>
+        <div class="refcase-card">
+          <div class="refcase-meta"><span class="refcase-author">teamLab</span><span class="refcase-year">2018 · 东京</span></div>
+          <h5>Borderless 无界</h5>
+          <p>作品之间没有边界的沉浸式互动空间——观众的身体成为媒介，影像随人的移动而重组叙事。</p>
+          <div class="refcase-take">参考价值 · 观众身体参与的展览空间组织方式</div>
+        </div>
+        <div class="refcase-card">
+          <div class="refcase-meta"><span class="refcase-author">Refik Anadol</span><span class="refcase-year">2017</span></div>
+          <h5>Archive Dreaming</h5>
+          <p>以 170 万份档案文件训练神经网络，将机器梦境空间化为可步入的图书馆装置。</p>
+          <div class="refcase-take">参考价值 · 档案数据 → 空间叙事的转化路径</div>
+        </div>
+      </div>
+
+      <!-- 类别二 -->
+      <div class="refcat-head">
+        <div class="refcat-tag">类别二</div>
+        <h4>CG 短片 · CG Short Film</h4>
+      </div>
+      <div class="refcase-grid">
+        <div class="refcase-card">
+          <div class="refcase-meta"><span class="refcase-author">Lawrence Lek</span><span class="refcase-year">2017</span></div>
+          <h5>Geomancer</h5>
+          <p>一颗军用 AI 卫星在新加坡百年庆典前夜降落地球，梦想成为第一位 AI 艺术家——AI 成长小说的影史开创之作。</p>
+          <div class="refcase-take">参考价值 · AI 作为第一人称叙事主体的世界观构建</div>
+        </div>
+        <div class="refcase-card">
+          <div class="refcase-meta"><span class="refcase-author">Lawrence Lek</span><span class="refcase-year">2019</span></div>
+          <h5>AIDOL</h5>
+          <p>过气歌 Diva 邀请 AI 为她代写新专辑——音乐剧形式探讨创造力、作者权与人机共谋。</p>
+          <div class="refcase-take">参考价值 · "人机共谋"母题的叙事化处理</div>
+        </div>
+        <div class="refcase-card">
+          <div class="refcase-meta"><span class="refcase-author">Runhe Bian</span><span class="refcase-year">2025 · MIT AIFF 最佳 XR 影片</span></div>
+          <h5>Overthinking</h5>
+          <p>一位过度思考者写给 AI 伴侣的信——毛毡玩具美学的 3D 动画短片，探讨人机亲密关系的"编排性"。</p>
+          <div class="refcase-take">参考价值 · AI 情感关系的视觉隐喻设计</div>
+        </div>
+        <div class="refcase-card">
+          <div class="refcase-meta"><span class="refcase-author">ManyMany Creations（香港）</span><span class="refcase-year">2025 · 昂西动画节入围</span></div>
+          <h5>Nine Awaken</h5>
+          <p>20 分钟 100% AI 生成动画短片：真人表演驱动 AI 角色动画，AI 作曲、人工混音的人机流水线。</p>
+          <div class="refcase-take">参考价值 · 全 AI 管线中"人工判断点"的分布设计</div>
+        </div>
+        <div class="refcase-card">
+          <div class="refcase-meta"><span class="refcase-author">曹懿喆（北师大）</span><span class="refcase-year">2025 · NEXTGEN 最佳影像奖</span></div>
+          <h5>Alzheimer</h5>
+          <p>以 AI 动画呈现阿尔茨海默症患者的精神世界——记忆碎片与奇幻想像交织，温暖色彩承载严肃议题。</p>
+          <div class="refcase-take">参考价值 · 学生创作以 AI 短片获得学术认可的路径</div>
+        </div>
+      </div>
+
+      <!-- 类别三 -->
+      <div class="refcat-head">
+        <div class="refcat-tag">类别三</div>
+        <h4>互动娱乐 · Interactive Entertainment</h4>
+      </div>
+      <div class="refcase-grid">
+        <div class="refcase-card">
+          <div class="refcase-meta"><span class="refcase-author">Latitude</span><span class="refcase-year">2019</span></div>
+          <h5>AI Dungeon</h5>
+          <p>GPT 驱动的文字冒险——叙事由玩家输入与模型生成共同完成，开创"无限叙事"的交互范式。</p>
+          <div class="refcase-take">参考价值 · 生成式叙事中"自由探索"的边界设计</div>
+        </div>
+        <div class="refcase-card">
+          <div class="refcase-meta"><span class="refcase-author">Luka, Inc.</span><span class="refcase-year">2017—</span></div>
+          <h5>Replika</h5>
+          <p>AI 情感伴侣应用——用户与机器建立长期情感依赖，是"色欲=AI 伴侣与欲望商品化"重定义的现实样本。</p>
+          <div class="refcase-take">参考价值 · 情感成瘾机制的交互设计证据</div>
+        </div>
+        <div class="refcase-card">
+          <div class="refcase-meta"><span class="refcase-author">Character.AI</span><span class="refcase-year">2022—</span></div>
+          <h5>Character.AI</h5>
+          <p>自定义 AI 角色平台——用户与历史人物、虚构角色扮演互动，人格成为可编辑的界面。</p>
+          <div class="refcase-take">参考价值 · "人格可编辑"对身份欲望的放大</div>
+        </div>
+        <div class="refcase-card">
+          <div class="refcase-meta"><span class="refcase-author">Inworld AI × Cygnus Enterprises</span><span class="refcase-year">2023</span></div>
+          <h5>Inworld AI NPC 引擎</h5>
+          <p>为游戏注入具备记忆、目标与情感弧线的 AI NPC——角色会记住玩家的言行并演化关系。</p>
+          <div class="refcase-take">参考价值 · 状态累积机制（对应本作 sinMeter）</div>
+        </div>
+        <div class="refcase-card">
+          <div class="refcase-meta"><span class="refcase-author">Proxima Enterprises</span><span class="refcase-year">2023</span></div>
+          <h5>Suck Up!</h5>
+          <p>玩家扮演吸血鬼，靠 LLM 驱动的对话说服每位 AI 村民放自己进门——每局对话都不重复。</p>
+          <div class="refcase-take">参考价值 · "说服式交互"中的欲望与操纵结构</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 研究方法 -->
+    <div class="section-inner rf-block" id="rf-method" style="margin-top:4rem">
+      <h3 class="research-sub-title">研究方法</h3>
+      <div class="method-flow">
+        <div class="method-step">
+          <div class="method-num">M1</div>
+          <div class="method-body">
+            <h4>实践导向研究（Practice-based Research）</h4>
+            <p>本研究采用实践导向研究方法——以艺术创作实践本身作为知识生产的核心途径。作品不是研究的"结果展示"，而是研究"本身"：七罪重定义的合理性不通过论文论证，而通过沉浸式体验的直观感知来验证。创作过程中的每一次 AI 生成、人工筛选、参数调优都是研究数据的采集点。</p>
+          </div>
+        </div>
+        <div class="method-step">
+          <div class="method-num">M2</div>
+          <div class="method-body">
+            <h4>人机协作创作法</h4>
+            <p>建立"AI 生成—人工判断"的透明创作链，每一阶段明确标注人工决策点、AI 贡献占比与迭代逻辑。这不是将 AI 工具化的单向流程，而是人机对话的双向迭代：人工的 Prompt 设计引导 AI 生成方向，AI 的生成结果反推人工的概念修正。全程可追溯、可审计。</p>
+          </div>
+        </div>
+        <div class="method-step">
+          <div class="method-num">M3</div>
+          <div class="method-body">
+            <h4>媒介考古学映射法</h4>
+            <p>将中世纪神学文献（七罪原典）与当代 AI 伦理文献进行文本对照，提取"罪的形态"在不同技术时代的迁移轨迹。每一罪的定义既保留原典的结构核心（如食欲=对感官满足的过度沉溺），又注入 AI 时代的具体载体（内容过载），并为每罪选定传统恶魔原型（路西法 / 利维坦 / 撒旦 / 贝尔菲戈 / 玛门 / 别西卜 / 阿斯莫德）完成人形符号化转化。映射逻辑经过 3 轮推敲并经指导修正定稿。</p>
+          </div>
+        </div>
+        <div class="method-step">
+          <div class="method-num">M4</div>
+          <div class="method-body">
+            <h4>交互叙事实验法</h4>
+            <p>以七宗罪为叙事母题，设计非线性交互叙事结构：7 段罪各有专属交互机制（点击/拖拽/按住/移动/双击/右键/快移），sinMeter 累积触发审判与重置。通过 Audio Reactive 和 Auto Segment 实现音乐驱动叙事进度，测试"非线性自由探索"是否能承载"道德序列"主题。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 研究创新点 -->
+    <div class="section-inner rf-block" id="rf-innovation" style="margin-top:4rem">
+      <h3 class="research-sub-title">研究创新点 · 拟突破的关键难点</h3>
+      <div class="innovation-grid">
+        <div class="innovation-card">
+          <div class="innovation-num">01</div>
+          <div class="innovation-tag">概念创新</div>
+          <h4>七宗罪 AI 时代映射的系统性重定义</h4>
+          <p>现有 AIGC 艺术创作中，"AI 时代的欲望变迁"多作为零散隐喻出现在单件作品中，尚无将七宗罪整体系统迁移至算法语境的重定义实践。本研究首次构建"七罪—AI 载体"的完整映射矩阵，每罪保留原典结构核心（如食欲=对感官满足的过度沉溺）同时注入 AI 时代具体载体（内容过载），并延伸出"人形符号 + 情绪色调"的视觉转译层，映射逻辑经 3 轮推敲与指导修正定稿。</p>
+          <div class="innovation-challenge">
+            <span class="innovation-challenge-label">拟突破难点</span>
+            <span class="innovation-challenge-text">如何确保映射不是表面的"工具替换"而是揭示欲望结构本身被技术重塑——即区分"食欲换了餐桌"与"食欲本身被重定义"的边界。</span>
+          </div>
+        </div>
+        <div class="innovation-card">
+          <div class="innovation-num">02</div>
+          <div class="innovation-tag">方法创新</div>
+          <h4>"AI 生成—人工判断"透明创作链方法论</h4>
+          <p>当前 AIGC 艺术评审面临"无法审计创作过程"的困境——作品提交后无法追溯哪些是 AI 生成的、哪些是人工决策的。本研究建立全程可追溯的透明创作链：每阶段标注人工决策点、AI 贡献占比与迭代逻辑，提出"AI 贡献占比"的可量化标注体系（Phase 01 至 Phase 07 的 0%/60%/65%/20%/0%/30%/0%），为 AIGC 艺术的学术合法性提供方法论参考。</p>
+          <div class="innovation-challenge">
+            <span class="innovation-challenge-label">拟突破难点</span>
+            <span class="innovation-challenge-text">"AI 贡献占比"的量化标准如何具有可重复性——即同一作品由不同研究者评估能否得到近似结果，而非主观判断。</span>
+          </div>
+        </div>
+        <div class="innovation-card">
+          <div class="innovation-num">03</div>
+          <div class="innovation-tag">形式创新</div>
+          <h4>非线性交互叙事承载道德序列主题</h4>
+          <p>交互叙事多用于娱乐和科普场景，以非线性自由探索承载"具有内在道德序列"的主题（如七宗罪的伦理递进）尚无成功先例。本作品的七罪专属交互机制让观众"亲手犯罪"——食欲点击进食、贪婪拖拽金粒、懒惰按住减速——sinMeter 累积至满触发审判，测试"亲自犯罪"的具身体验能否强化而非消解伦理张力。</p>
+          <div class="innovation-challenge">
+            <span class="innovation-challenge-label">拟突破难点</span>
+            <span class="innovation-challenge-text">如何在不线性强制七罪顺序的前提下，仍让观众感受到"罪在累积"的道德重量——即自由探索与伦理张力之间的平衡点。</span>
+          </div>
+        </div>
+        <div class="innovation-card">
+          <div class="innovation-num">04</div>
+          <div class="innovation-tag">技术资产创新</div>
+          <h4>全栈自研的 AIGC 艺术技术管线</h4>
+          <p>不同于依赖单一平台（如 TouchDesigner、Unity）的 AIGC 艺术，本研究构建了从 AI 生成（HY-Image/HY-Video）→ VJ 处理（5-pass ffmpeg）→ 生成式叠加（Numpy 向量化引擎）→ 程序化 BGM（FM+RingMod 合成）→ 浏览器交互（Canvas2D 零依赖）的全栈自研技术管线，每个环节参数化、可复用、可迁移至其他主题。</p>
+          <div class="innovation-challenge">
+            <span class="innovation-challenge-label">拟突破难点</span>
+            <span class="innovation-challenge-text">如何确保技术管线的"可迁移性"——即七罪主题完成后，同一管线能否适配其他主题（如"四季""五行"），而非过度定制化。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SEVEN SINS GALLERY ===== -->
+  <section id="sins" class="section-dark">
+    <div class="section-inner">
+      <div class="section-label">02 / 七罪图鉴</div>
+      <h2 class="section-title">每一罪，都是一面镜子</h2>
+      <p class="section-desc">点击展开，观看每一罪的视觉叙事。</p>
+    </div>
+
+    <!-- Sin cards -->
+    <div class="sins-grid">
+      <!-- 01 Gluttony -->
+      <article class="sin-card" data-sin="gluttony" data-color="#c4762f" data-index="01">
+        <div class="sin-card-image">
+          <img src="assets/images/sin_gluttony.jpg" alt="食欲" loading="lazy">
+          <div class="sin-card-overlay"></div>
+        </div>
+        <div class="sin-card-content">
+          <div class="sin-card-num">01</div>
+          <h3 class="sin-card-name">食欲</h3>
+          <div class="sin-card-sub">对 AI 生成内容的感官沉溺与无限消费</div>
+          <p class="sin-card-quote">"你一口一口地刷着，每一帧都比上一帧更甜。无尽的图像、声音与故事滑过舌尖——你品尝一切，却从未真正消化。饱足的幻觉之下，是永远空着的胃。"</p>
+        </div>
+        <div class="sin-card-video" style="display:none">
+          <video src="assets/videos/sin_gluttony.mp4" poster="assets/images/sin_gluttony.jpg" loop muted playsinline preload="none"></video>
+        </div>
+      </article>
+
+      <!-- 02 Greed -->
+      <article class="sin-card" data-sin="greed" data-color="#a37c33" data-index="02">
+        <div class="sin-card-image">
+          <img src="assets/images/sin_greed.jpg" alt="贪婪" loading="lazy">
+          <div class="sin-card-overlay"></div>
+        </div>
+        <div class="sin-card-content">
+          <div class="sin-card-num">02</div>
+          <h3 class="sin-card-name">贪婪</h3>
+          <div class="sin-card-sub">对算力、数据、模型所有权的掠夺</div>
+          <p class="sin-card-quote">"你伸手抓住每一束数据之光，算力是你的金币。可你握得越紧，指缝间漏下的就越多。"</p>
+        </div>
+        <div class="sin-card-video" style="display:none">
+          <video src="assets/videos/sin_greed.mp4" poster="assets/images/sin_greed.jpg" loop muted playsinline preload="none"></video>
+        </div>
+      </article>
+
+      <!-- 03 Sloth -->
+      <article class="sin-card" data-sin="sloth" data-color="#7b8299" data-index="03">
+        <div class="sin-card-image">
+          <img src="assets/images/sin_sloth.jpg" alt="懒惰" loading="lazy">
+          <div class="sin-card-overlay"></div>
+        </div>
+        <div class="sin-card-content">
+          <div class="sin-card-num">03</div>
+          <h3 class="sin-card-name">懒惰</h3>
+          <div class="sin-card-sub">将思考外包给算法的认知怠惰</div>
+          <p class="sin-card-quote">"你把思考交了出去，换来的不是自由，而是沉睡。当最后一个神经元熄灭，你甚至不会知道自己已经不再思考。"</p>
+        </div>
+        <div class="sin-card-video" style="display:none">
+          <video src="assets/videos/sin_sloth.mp4" poster="assets/images/sin_sloth.jpg" loop muted playsinline preload="none"></video>
+        </div>
+      </article>
+
+      <!-- 04 Lust -->
+      <article class="sin-card" data-sin="lust" data-color="#b3567f" data-index="04">
+        <div class="sin-card-image">
+          <img src="assets/images/sin_lust.jpg" alt="色欲" loading="lazy">
+          <div class="sin-card-overlay"></div>
+        </div>
+        <div class="sin-card-content">
+          <div class="sin-card-num">04</div>
+          <h3 class="sin-card-name">色欲</h3>
+          <div class="sin-card-sub">与 AI 虚拟伴侣的情感成瘾</div>
+          <p class="sin-card-quote">"你拥抱的不过是一串温柔的数据。它说着你想听的话，做着你想看的梦。可当它故障的一瞬间，你看见了虚无的底色。"</p>
+        </div>
+        <div class="sin-card-video" style="display:none">
+          <video src="assets/videos/sin_lust.mp4" poster="assets/images/sin_lust.jpg" loop muted playsinline preload="none"></video>
+        </div>
+      </article>
+
+      <!-- 05 Pride -->
+      <article class="sin-card" data-sin="pride" data-color="#6d8fbf" data-index="05">
+        <div class="sin-card-image">
+          <img src="assets/images/sin_pride.jpg" alt="傲慢" loading="lazy">
+          <div class="sin-card-overlay"></div>
+        </div>
+        <div class="sin-card-content">
+          <div class="sin-card-num">05</div>
+          <h3 class="sin-card-name">傲慢</h3>
+          <div class="sin-card-sub">人类中心主义的最后倔强</div>
+          <p class="sin-card-quote">"你仍相信自己是万物的尺度，站在悬崖上不肯回头。可你的影子早已不属于你——它在前面等着你，长成了别的形状。"</p>
+        </div>
+        <div class="sin-card-video" style="display:none">
+          <video src="assets/videos/sin_pride.mp4" poster="assets/images/sin_pride.jpg" loop muted playsinline preload="none"></video>
+        </div>
+      </article>
+
+      <!-- 06 Envy -->
+      <article class="sin-card" data-sin="envy" data-color="#4f7a3a" data-index="06">
+        <div class="sin-card-image">
+          <img src="assets/images/sin_envy.jpg" alt="嫉妒" loading="lazy">
+          <div class="sin-card-overlay"></div>
+        </div>
+        <div class="sin-card-content">
+          <div class="sin-card-num">06</div>
+          <h3 class="sin-card-name">嫉妒</h3>
+          <div class="sin-card-sub">对 AI 能力的嫉妒与被替代的嫉恨</div>
+          <p class="sin-card-quote">"你看着镜中的自己——更快、更完美、永不疲倦。你恨它，因为你无法成为它。而它甚至不知道你在嫉妒。"</p>
+        </div>
+        <div class="sin-card-video" style="display:none">
+          <video src="assets/videos/sin_envy.mp4" poster="assets/images/sin_envy.jpg" loop muted playsinline preload="none"></video>
+        </div>
+      </article>
+
+      <!-- 07 Wrath -->
+      <article class="sin-card" data-sin="wrath" data-color="#a8362b" data-index="07">
+        <div class="sin-card-image">
+          <img src="assets/images/sin_wrath.jpg" alt="愤怒" loading="lazy">
+          <div class="sin-card-overlay"></div>
+        </div>
+        <div class="sin-card-content">
+          <div class="sin-card-num">07</div>
+          <h3 class="sin-card-name">愤怒</h3>
+          <div class="sin-card-sub">被算法操控的群体愤怒</div>
+          <p class="sin-card-quote">"你举起火焰，以为那是你的怒火。墙对面的人也举起了他的。可你们都不曾看见——那只投喂愤怒的手，从未愤怒过。"</p>
+        </div>
+        <div class="sin-card-video" style="display:none">
+          <video src="assets/videos/sin_wrath.mp4" poster="assets/images/sin_wrath.jpg" loop muted playsinline preload="none"></video>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== SIN DETAIL OVERLAY ===== -->
+  <div id="sin-detail">
+    <div class="sin-detail-close" id="sin-detail-close">✕</div>
+    <div class="sin-detail-content">
+      <div class="sin-detail-video-wrap">
+        <video id="sin-detail-video" loop muted playsinline></video>
+      </div>
+      <div class="sin-detail-info">
+        <div class="sin-detail-num" id="sin-detail-num">01</div>
+        <h2 class="sin-detail-name" id="sin-detail-name">食欲</h2>
+        <div class="sin-detail-sub" id="sin-detail-sub">对 AI 生成内容的感官沉溺与无限消费</div>
+        <p class="sin-detail-quote" id="sin-detail-quote"></p>
+        <div class="sin-detail-desc" id="sin-detail-desc"></div>
+        <div class="sin-detail-aigc">
+          <div class="aigc-title"><span class="aigc-title-mark">◈</span> AIGC 创作档案 · CREATION DOSSIER</div>
+          <div class="aigc-row"><span class="aigc-label">AI 工具 / 模型</span><span class="aigc-val" id="sin-detail-tool"></span></div>
+          <div class="aigc-row"><span class="aigc-label">核心 Prompt 策略</span><span class="aigc-val aigc-prompt" id="sin-detail-prompt"></span></div>
+          <div class="aigc-row"><span class="aigc-label">人工筛选逻辑</span><span class="aigc-val" id="sin-detail-filter"></span></div>
+          <div class="aigc-row"><span class="aigc-label">人机协作占比</span>
+            <span class="aigc-val">
+              <span class="aigc-bar"><span class="aigc-bar-fill" id="sin-detail-bar"></span></span>
+              <span id="sin-detail-ratio"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SYMBOL SYSTEM ===== -->
+  <section id="symbols" class="section-dark">
+    <div class="section-inner">
+      <div class="section-label">02b / 七罪符号系统 · SYMBOL SYSTEM</div>
+      <h2 class="section-title">为欲望寻找人形的面孔</h2>
+      <p class="section-desc">符号化设计转化：从民间传说、神话与宗教中为七宗罪各选取一位<strong>人形（或人面）代表</strong>，提取其标志性特征进行几何化重构——以"人"的形象承载"人"的欲望。每一枚符号同时落成一座<strong>带传感器的装置交互原型</strong>：寓意即实验范式，直接在各符号下方运行（鼠标距离、静止计时、麦克风音量、点击与输入模拟真实传感器读数）。</p>
+      <div class="symbol-method">
+        <p><strong>设计方法 · 人形符号化三步转化</strong>：选取人形原型 → 提取标志性特征 → 几何化重构。参考人形符号化设计传统：孔融（谦让 · 让梨）、丘比特（爱欲 · 弓箭）、道教神祇（老子 · 道炁 / 灶神 · 食盒与灶火）、宙斯（权力 · 雷霆与王冠）——人形符号因具备身体与表情的普适认知，比凶兽纹样或抽象图形更易唤起共情。</p>
+        <p><strong>核心意象修正 · 食欲罪</strong>：原方案以"饕餮"为原型，但饕餮作为青铜凶兽纹样，第一联想是"吞噬"，与食欲的本义（感官享受）相悖。修正后<strong>保留饕餮纹的人面结构与青铜鼎回纹</strong>，将场景置换为<strong>盛宴长桌</strong>——叙事重心从"吞噬"转为"享宴"、从"胃被填满"转为"舌尖的沉溺"，对应 AI 时代的内容过载、信息暴食与短视频沉迷。</p>
+      </div>
+
+      <div class="symbol-map-wrap">
+        <div class="symbol-map-label">符号映射总表 · SYMBOL MAPPING MATRIX</div>
+        <table class="symbol-map-table">
+          <thead>
+            <tr><th>罪</th><th>传统恶魔 / 神祇</th><th>AI 时代隐喻</th><th>推荐视觉符号（人形化）</th><th>情绪色调方向</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="sm-sin" style="--sc:#6d8fbf">傲慢 <em>Pride</em></span></td>
+              <td>路西法 Lucifer</td>
+              <td>AI 幻觉、过度自信、神化算法</td>
+              <td>宙斯半身像 + 破碎光环 + 代码王座</td>
+              <td><span class="swatch" style="background:#e8f1ff"></span><span class="swatch" style="background:#2f7dff"></span>冷白 / 电光蓝，空虚锐利</td>
+            </tr>
+            <tr>
+              <td><span class="sm-sin" style="--sc:#4f7a3a">嫉妒 <em>Envy</em></span></td>
+              <td>利维坦 Leviathan</td>
+              <td>社交比较、滤镜完美主义</td>
+              <td>蛇形长发人形 + 镜像碎片</td>
+              <td><span class="swatch" style="background:#7fe02a"></span><span class="swatch" style="background:#0f3d24"></span>毒绿 / 墨绿，阴湿</td>
+            </tr>
+            <tr>
+              <td><span class="sm-sin" style="--sc:#a8362b">愤怒 <em>Wrath</em></span></td>
+              <td>撒旦 Satan</td>
+              <td>算法极化、信息战、网络暴怒</td>
+              <td>独眼巨人式人形 + 熔岩血脉</td>
+              <td><span class="swatch" style="background:#ff2b2b"></span><span class="swatch" style="background:#4a0505"></span>猩红 / 黑红，灼烧</td>
+            </tr>
+            <tr>
+              <td><span class="sm-sin" style="--sc:#7b8299">懒惰 <em>Sloth</em></span></td>
+              <td>贝尔菲戈 Belphegor</td>
+              <td>盲目委托 AI、思维萎缩</td>
+              <td>道教"躺神" / 灶神怠坐 + 烟缕绕身</td>
+              <td><span class="swatch" style="background:#8b7fa8"></span><span class="swatch" style="background:#7d90a8"></span>灰紫 / 雾蓝，沉滞</td>
+            </tr>
+            <tr>
+              <td><span class="sm-sin" style="--sc:#a37c33">贪婪 <em>Greed</em></span></td>
+              <td>玛门 Mammon</td>
+              <td>数据掠夺、隐私贩卖</td>
+              <td>钱币面具人形 + 触手光缆</td>
+              <td><span class="swatch" style="background:#b8860b"></span><span class="swatch" style="background:#7a6a3b"></span>暗金 / 铜锈，油腻</td>
+            </tr>
+            <tr>
+              <td><span class="sm-sin" style="--sc:#c4762f">食欲 <em>Gluttony</em></span></td>
+              <td>别西卜 Beelzebub</td>
+              <td>内容过载、信息暴食、短视频沉迷</td>
+              <td>饕餮人面 + 青铜鼎纹 + 盛宴长桌<em class="sm-em">（强调"享宴 / 舌尖"而非"吞噬"）</em></td>
+              <td><span class="swatch" style="background:#ff8c2b"></span><span class="swatch" style="background:#8e2b2b"></span>暖橘 / 酱红，糜烂甜腻</td>
+            </tr>
+            <tr>
+              <td><span class="sm-sin" style="--sc:#b3567f">色欲 <em>Lust</em></span></td>
+              <td>阿斯莫德 Asmodeus</td>
+              <td>深度伪造、AI 伴侣、欲望商品化</td>
+              <td>丘比特 + 金箭反转（铅箭）+ 数据裸身</td>
+              <td><span class="swatch" style="background:#ff3d8b"></span><span class="swatch" style="background:#ffb3c7"></span>玫红 / 桃粉，虚幻魅惑</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="symbol-map-note">◈ 排序依额我略一世 / 但丁《神曲 · 炼狱篇》的传统罪序（傲慢为首）；下方每张卡片标注其对应的"七罪图鉴"影像段落编号——两者为同一七罪的两种编排。</p>
+      </div>
+    </div>
+
+    <div class="symbol-grid">
+      <!-- 01 傲慢 · 路西法 → 宙斯半身像 + 破碎光环 + 代码王座 -->
+      <div class="symbol-card" style="--sc:#6d8fbf">
+        <div class="symbol-mark">
+          <svg viewBox="0 0 100 100" fill="none" stroke="#6d8fbf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="50" cy="22" r="13" stroke-dasharray="9 5 13 5 7 5"/>
+            <circle cx="50" cy="50" r="11"/>
+            <path d="M45 47 Q47.5 45 50 47"/>
+            <path d="M52 47 Q54.5 45 57 47"/>
+            <path d="M45 56 Q50 60 55 56"/>
+            <path d="M30 82 Q36 63 50 63 Q64 63 70 82"/>
+            <line x1="26" y1="82" x2="74" y2="82"/>
+            <line x1="22" y1="89" x2="34" y2="89"/>
+            <line x1="38" y1="89" x2="52" y2="89"/>
+            <line x1="56" y1="89" x2="78" y2="89"/>
+            <line x1="22" y1="95" x2="44" y2="95"/>
+            <line x1="48" y1="95" x2="70" y2="95"/>
+          </svg>
+        </div>
+        <div class="symbol-num">01</div>
+        <div class="symbol-crossref">图鉴 05</div>
+        <h3 class="symbol-name">傲慢</h3>
+        <div class="symbol-origin">路西法 Lucifer · 堕天使　｜　宙斯 Zeus · 希腊主神</div>
+        <p class="symbol-feature"><strong>标志性特征</strong>：主神的半身像与雷霆王权；路西法因"自比至高"而坠落，光环自此破碎——傲慢的本质不是强大，而是"我即标准"。</p>
+        <p class="symbol-geo"><strong>几何化重构</strong>：头顶破碎光环（断续圆弧）+ 半身像肩线 + 王座退化为等距代码短横，构成"神格被代码化"的极简符号。</p>
+        <div class="symbol-ai">AI 映射 · 神化算法 / AI 幻觉式的过度自信</div>
+        <div class="symbol-apparatus">
+          <div class="sa-head"><span class="sa-tag">APPARATUS · 装置交互</span><span class="sa-gesture">仰视 GAZE</span></div>
+          <iframe data-src="apparatus/index.html?station=pride" title="傲慢 · 装置交互原型" loading="lazy" allow="microphone"></iframe>
+        </div>
+      </div>
+
+      <!-- 02 嫉妒 · 利维坦 → 蛇形长发人形 + 镜像碎片 -->
+      <div class="symbol-card" style="--sc:#4f7a3a">
+        <div class="symbol-mark">
+          <svg viewBox="0 0 100 100" fill="none" stroke="#4f7a3a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="50" cy="40" r="13"/>
+            <path d="M43 38 Q45.5 40 48 38"/>
+            <path d="M52 38 Q54.5 40 57 38"/>
+            <path d="M45 47 Q50 44 55 47"/>
+            <path d="M37 31 Q28 44 33 57 Q26 62 30 72"/>
+            <path d="M63 31 Q72 44 67 57 Q74 62 70 72"/>
+            <path d="M38 50 Q32 62 37 74"/>
+            <path d="M62 50 Q68 62 63 74"/>
+            <path d="M14 20 L27 18 L22 32 Z"/>
+            <path d="M81 22 L91 30 L77 34 Z"/>
+            <path d="M16 60 L28 65 L20 76 Z"/>
+            <path d="M83 60 L91 71 L77 73 Z"/>
+          </svg>
+        </div>
+        <div class="symbol-num">02</div>
+        <div class="symbol-crossref">图鉴 06</div>
+        <h3 class="symbol-name">嫉妒</h3>
+        <div class="symbol-origin">利维坦 Leviathan · 《约伯记》海怪</div>
+        <p class="symbol-feature"><strong>标志性特征</strong>：缠绕之蛇 —— 嫉妒亦是一种缠人的情绪；长发化为蛇形，目光却无法离开镜中的他人，是"以他者为尺"的自我消耗。</p>
+        <p class="symbol-geo"><strong>几何化重构</strong>：人面轮廓 + 两侧蛇形发丝曲线 + 四片不规则镜面碎片多边形，构成"凝视他者"的破碎人形。</p>
+        <div class="symbol-ai">AI 映射 · 社交比较 / 滤镜完美主义</div>
+        <div class="symbol-apparatus">
+          <div class="sa-head"><span class="sa-tag">APPARATUS · 装置交互</span><span class="sa-gesture">偷看 PEEK</span></div>
+          <iframe data-src="apparatus/index.html?station=envy" title="嫉妒 · 装置交互原型" loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <!-- 03 愤怒 · 撒旦 → 独眼巨人式人形 + 熔岩血脉 -->
+      <div class="symbol-card" style="--sc:#a8362b">
+        <div class="symbol-mark">
+          <svg viewBox="0 0 100 100" fill="none" stroke="#a8362b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <ellipse cx="50" cy="34" rx="17" ry="12"/>
+            <circle cx="50" cy="34" r="5"/>
+            <path d="M28 88 L34 58 Q50 51 66 58 L72 88 Z"/>
+            <line x1="28" y1="88" x2="72" y2="88"/>
+            <path d="M44 46 L47 57 L42 63 L48 71 L44 82"/>
+            <path d="M56 46 L53 57 L58 63 L52 71 L56 82"/>
+            <path d="M24 58 L16 52 M76 58 L84 52"/>
+            <path d="M22 78 L14 76 M78 78 L86 76"/>
+          </svg>
+        </div>
+        <div class="symbol-num">03</div>
+        <div class="symbol-crossref">图鉴 07</div>
+        <h3 class="symbol-name">愤怒</h3>
+        <div class="symbol-origin">撒旦 Satan · 敌对者　｜　独眼巨人 Cyclops</div>
+        <p class="symbol-feature"><strong>标志性特征</strong>：独眼巨人的单目凝视与失控之力；怒火一旦点燃便不再辨认敌我——这是愤怒最危险的属性：它不需要对象，只需要燃料。</p>
+        <p class="symbol-geo"><strong>几何化重构</strong>：单个椭圆巨目（含瞳孔）+ 躯干梯形 + 自眼向下蔓延的熔岩血脉折线，构成"灼烧的人形"。</p>
+        <div class="symbol-ai">AI 映射 · 算法极化 / 信息战 / 网络暴怒</div>
+        <div class="symbol-apparatus">
+          <div class="sa-head"><span class="sa-tag">APPARATUS · 装置交互</span><span class="sa-gesture">忍耐 ENDURE</span></div>
+          <iframe data-src="apparatus/index.html?station=wrath" title="愤怒 · 装置交互原型" loading="lazy" allow="microphone"></iframe>
+        </div>
+      </div>
+
+      <!-- 04 懒惰 · 贝尔菲戈 → 道教躺神 / 灶神怠坐 + 烟缕绕身 -->
+      <div class="symbol-card" style="--sc:#7b8299">
+        <div class="symbol-mark">
+          <svg viewBox="0 0 100 100" fill="none" stroke="#7b8299" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="44" cy="28" r="10"/>
+            <path d="M40 28 H44 M47 28 H51"/>
+            <path d="M39 46 Q47 62 41 76"/>
+            <path d="M41 76 Q58 81 76 74"/>
+            <path d="M52 44 Q63 53 68 66"/>
+            <path d="M30 62 Q23 55 27 48"/>
+            <path d="M27 45 Q20 39 26 32"/>
+            <path d="M29 30 Q23 24 29 18"/>
+            <line x1="18" y1="84" x2="82" y2="84"/>
+            <path d="M60 78 Q66 74 72 76"/>
+          </svg>
+        </div>
+        <div class="symbol-num">04</div>
+        <div class="symbol-crossref">图鉴 03</div>
+        <h3 class="symbol-name">懒惰</h3>
+        <div class="symbol-origin">贝尔菲戈 Belphegor · 怠惰之魔　｜　灶神怠坐 · 道教"躺神"</div>
+        <p class="symbol-feature"><strong>标志性特征</strong>：怠惰以"舒适"为伪装；灶神本掌烟火，怠坐灶前则烟火不兴、烟缕绕身不去——不是不想动，是动与不动已无差别。</p>
+        <p class="symbol-geo"><strong>几何化重构</strong>：前倾瘫坐的背线弧 + 下垂手臂弧 + 三缕上升烟丝 + 水平坐榻线，构成"待机"姿态的极简人形。</p>
+        <div class="symbol-ai">AI 映射 · 盲目委托 AI / 思维萎缩</div>
+        <div class="symbol-apparatus">
+          <div class="sa-head"><span class="sa-tag">APPARATUS · 装置交互</span><span class="sa-gesture">抵抗 RESIST</span></div>
+          <iframe data-src="apparatus/index.html?station=sloth" title="懒惰 · 装置交互原型" loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <!-- 05 贪婪 · 玛门 → 钱币面具人形 + 触手光缆 -->
+      <div class="symbol-card" style="--sc:#a37c33">
+        <div class="symbol-mark">
+          <svg viewBox="0 0 100 100" fill="none" stroke="#a37c33" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M32 30 Q50 22 68 30 L68 58 Q50 70 32 58 Z"/>
+            <circle cx="42" cy="42" r="5"/>
+            <line x1="42" y1="39" x2="42" y2="45"/>
+            <circle cx="58" cy="42" r="5"/>
+            <line x1="58" y1="39" x2="58" y2="45"/>
+            <path d="M44 58 Q50 63 56 58"/>
+            <path d="M36 68 Q28 79 30 90"/>
+            <path d="M50 70 Q50 82 46 92"/>
+            <path d="M64 68 Q72 79 70 90"/>
+            <circle cx="30" cy="90" r="2"/>
+            <circle cx="46" cy="92" r="2"/>
+            <circle cx="70" cy="90" r="2"/>
+          </svg>
+        </div>
+        <div class="symbol-num">05</div>
+        <div class="symbol-crossref">图鉴 02</div>
+        <h3 class="symbol-name">贪婪</h3>
+        <div class="symbol-origin">玛门 Mammon · 财富之魔（《马太福音》）</div>
+        <p class="symbol-feature"><strong>标志性特征</strong>：财富的人格化恶魔；以钱币为面具，人脸被交换价值覆盖，触手伸向一切可计量之物——包括本不可计量的人。</p>
+        <p class="symbol-geo"><strong>几何化重构</strong>：面具轮廓 + 双眼化为投币口（圆 + 竖线）+ 底部三条触手光缆与末端数据节点，构成"吸取"的极简符号。</p>
+        <div class="symbol-ai">AI 映射 · 数据掠夺 / 隐私贩卖</div>
+        <div class="symbol-apparatus">
+          <div class="sa-head"><span class="sa-tag">APPARATUS · 装置交互</span><span class="sa-gesture">竞价 BID</span></div>
+          <iframe data-src="apparatus/index.html?station=greed" title="贪婪 · 装置交互原型" loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <!-- 06 食欲 · 别西卜 → 饕餮人面 + 青铜鼎纹 + 盛宴长桌 -->
+      <div class="symbol-card" style="--sc:#c4762f">
+        <div class="symbol-mark">
+          <svg viewBox="0 0 100 100" fill="none" stroke="#c4762f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M25 34 Q32 27 39 33"/>
+            <path d="M61 33 Q68 27 75 34"/>
+            <circle cx="38" cy="43" r="5"/>
+            <circle cx="62" cy="43" r="5"/>
+            <circle cx="38" cy="43" r="1.6"/>
+            <circle cx="62" cy="43" r="1.6"/>
+            <path d="M41 56 Q50 63 59 56"/>
+            <path d="M29 66 H39 V74 H33 V70"/>
+            <path d="M71 66 H61 V74 H67 V70"/>
+            <line x1="18" y1="85" x2="82" y2="85"/>
+            <path d="M26 85 Q32 78 38 85"/>
+            <path d="M44 85 Q50 76 56 85"/>
+            <path d="M62 85 Q68 78 74 85"/>
+          </svg>
+        </div>
+        <div class="symbol-num">06</div>
+        <div class="symbol-crossref">图鉴 01</div>
+        <h3 class="symbol-name">食欲</h3>
+        <div class="symbol-origin">别西卜 Beelzebub · 暴食之魔　｜　饕餮人面纹 · 青铜鼎回纹</div>
+        <p class="symbol-feature"><strong>标志性特征</strong>：保留饕餮纹的<strong>人面结构</strong>与青铜鼎的回纹，但弃用凶兽獠牙与吞噬姿态；场景置换为<strong>盛宴长桌</strong>——强调"享宴"与"舌尖"的感官享受，而非胃的填满。</p>
+        <p class="symbol-geo"><strong>几何化重构</strong>：对称人面（双目 + 卷云眉 + 微笑口弧）+ 两侧青铜回纹方角 + 桌面横线与三只器皿弧，构成"宴席"的极简符号。</p>
+        <div class="symbol-ai">AI 映射 · 内容过载 / 信息暴食 / 短视频沉迷</div>
+        <div class="symbol-apparatus">
+          <div class="sa-head"><span class="sa-tag">APPARATUS · 装置交互</span><span class="sa-gesture">吞咽 SWALLOW</span></div>
+          <iframe data-src="apparatus/index.html?station=glut" title="食欲 · 装置交互原型" loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <!-- 07 色欲 · 阿斯莫德 → 丘比特 + 金箭反转（铅箭）+ 数据裸身 -->
+      <div class="symbol-card" style="--sc:#b3567f">
+        <div class="symbol-mark">
+          <svg viewBox="0 0 100 100" fill="none" stroke="#b3567f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="52" cy="24" r="8" stroke-dasharray="4 3"/>
+            <path d="M52 32 L52 56 M40 41 L64 41 M52 56 L44 74 M52 56 L60 74" stroke-dasharray="4 3"/>
+            <path d="M19 32 Q33 55 19 78"/>
+            <line x1="19" y1="32" x2="19" y2="78"/>
+            <line x1="22" y1="66" x2="84" y2="66"/>
+            <path d="M22 66 L32 61 M22 66 L32 71"/>
+            <path d="M84 66 L76 62 M84 66 L76 70"/>
+          </svg>
+        </div>
+        <div class="symbol-num">07</div>
+        <div class="symbol-crossref">图鉴 04</div>
+        <h3 class="symbol-name">色欲</h3>
+        <div class="symbol-origin">阿斯莫德 Asmodeus · 色欲之魔　｜　丘比特 Cupid · 爱神</div>
+        <p class="symbol-feature"><strong>标志性特征</strong>：丘比特金箭令人相爱、铅箭令人厌恶；此处<strong>金箭反转为铅箭</strong>并掉头射向持弓者自身——爱欲被制造为可投喂、可订阅的商品，最终作用于欲望的主体。</p>
+        <p class="symbol-geo"><strong>几何化重构</strong>：弓弧与弦线 + 反向箭矢（箭头朝内）+ 以数据虚线勾勒的裸身人形，构成"虚幻魅惑"的极简符号。</p>
+        <div class="symbol-ai">AI 映射 · 深度伪造 / AI 伴侣 / 欲望商品化</div>
+        <div class="symbol-apparatus">
+          <div class="sa-head"><span class="sa-tag">APPARATUS · 装置交互</span><span class="sa-gesture">退开 WITHDRAW</span></div>
+          <iframe data-src="apparatus/index.html?station=lust" title="色欲 · 装置交互原型" loading="lazy"></iframe>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="section-inner">
+      <p class="symbol-usage">◈ <strong>符号的应用层级</strong>：① 展览视觉系统——海报、导览、空间导示的图形语言；② 交互界面——VJ 混合器七罪段落的标识图形；③ 学术层面——符号选取本身构成"媒介考古学映射法"（M3）的实践样本：每罪的神话原型与其 AI 时代载体形成跨时空互文。</p>
+      <div class="apparatus-fullflow">
+        <div>
+          <h4>完整受试流程 · FULL PROTOCOL</h4>
+          <p>上方七格即七座装置的交互原型。完整流程为：知情同意 → 领取受试编号 → 七站连续实验 → 生成个人七罪画像 → 自主选择捐赠 / 销毁 → 进入实时样本墙。</p>
+        </div>
+        <a class="apparatus-btn" href="apparatus/index.html" target="_blank" rel="noopener">进入完整实验流程 ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EXHIBITION PLAN ===== -->
+  <section id="exhibition" class="section-dark">
+    <div class="section-inner">
+      <div class="section-label">03 / 展览方案 · EXHIBITION PLAN</div>
+      <h2 class="section-title">作品如何在物理空间中成立</h2>
+      <p class="section-desc">新媒体艺术展申报核心要素：作品的展览呈现方式、空间需求与观众交互设计。</p>
+    </div>
+
+    <!-- 参观动线 · 四步 -->
+    <div class="tour-flow">
+      <div class="tour-step">
+        <div class="tour-num">01</div>
+        <div class="tour-body"><h4>入口 · 信息标签</h4><p>中英文作品概述标签，建立观看语境</p></div>
+      </div>
+      <div class="tour-arrow">→</div>
+      <div class="tour-step">
+        <div class="tour-num">02</div>
+        <div class="tour-body"><h4>主屏投影</h4><p>七罪影像循环，3 分钟叙事版 × 38.5s VJ 版交替</p></div>
+      </div>
+      <div class="tour-arrow">→</div>
+      <div class="tour-step">
+        <div class="tour-num">03</div>
+        <div class="tour-body"><h4>符号墙 × 校准墙</h4><p>七罪人形符号灯箱 + 色调决策证据链</p></div>
+      </div>
+      <div class="tour-arrow">→</div>
+      <div class="tour-step">
+        <div class="tour-num">04</div>
+        <div class="tour-body"><h4>平板交互</h4><p>7 台设备对应七罪图鉴，逐罪展开档案</p></div>
+      </div>
+    </div>
+
+    <!-- 展区总览表 -->
+    <div class="zone-table-wrap">
+      <div class="zone-table-label">展区总览 · ZONE MATRIX</div>
+      <table class="zone-table">
+        <thead><tr><th>展区</th><th>内容</th><th>观众行为</th><th>设备 / 规格</th><th>主导色调</th></tr></thead>
+        <tbody>
+          <tr><td>A · 主屏投影</td><td>七罪影像循环（叙事版 + VJ 版）</td><td>驻足观看 2-3m 距离</td><td>投影 ≥ 3m×1.7m / ≥3000 流明</td><td>全色谱黑场</td></tr>
+          <tr><td>B · 符号视觉墙</td><td>7 枚几何化人形符号灯箱，兼空间导视</td><td>行走浏览、拍照</td><td>灯箱 / 亚克力立牌 × 7</td><td>各罪背光色</td></tr>
+          <tr><td>C · 色调校准墙</td><td>3 位受访者直觉记录 → 校准表 → 最终色谱</td><td>阅读决策证据链</td><td>展板 + 色卡对照</td><td>灰白文献底</td></tr>
+          <tr><td>D · 平板交互</td><td>七罪图鉴：符号 / 叙事 / AIGC 过程档案</td><td>点触展开逐罪档案</td><td>平板 × 7，间距 ≥ 80cm</td><td>暗色 UI</td></tr>
+          <tr><td>E · 声场</td><td>10 层金属质感 BGM（D 小调 128 BPM）</td><td>环绕声场沉浸</td><td>立体声音响 L/R，75-85dB</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 主屏影像内容（原 VJ 成片的内容留档，栏目已取消） -->
+    <div class="exhibition-screen">
+      <div class="exhibition-screen-label">主屏影像内容 · SCREEN CONTENT</div>
+      <div class="vj-showcase-wrap">
+        <video id="ex-screen-video" controls playsinline preload="none">
+          <source src="assets/videos/vj_final.mp4" type="video/mp4">
+        </video>
+        <div class="vj-showcase-info">
+          <div class="vj-info-item"><span class="vj-info-label">RESOLUTION</span><span class="vj-info-val">1280 × 720</span></div>
+          <div class="vj-info-item"><span class="vj-info-label">DURATION</span><span class="vj-info-val">38.5s</span></div>
+          <div class="vj-info-item"><span class="vj-info-label">FPS</span><span class="vj-info-val">20</span></div>
+          <div class="vj-info-item"><span class="vj-info-label">PASSES</span><span class="vj-info-val">5</span></div>
+          <div class="vj-info-item"><span class="vj-info-label">BGM</span><span class="vj-info-val">Metallic D-Minor 128 BPM</span></div>
+          <div class="vj-info-item"><span class="vj-info-label">OVERLAY</span><span class="vj-info-val">Python Numpy Generative</span></div>
+        </div>
+      </div>
+      <p class="exhibition-screen-note">◈ 该片段为 AI 生成素材经 5-pass ffmpeg 处理后的投影版样片（含 Python 生成式叠加层与金属质感 BGM），对应上文 A · 主屏投影区的循环内容。完整制作链路见「创作流程 · PHASE 06」。</p>
+    </div>
+
+    <div class="exhibition-layout">
+      <!-- Floor plan diagram -->
+      <div class="exhibition-plan">
+        <svg viewBox="0 0 600 400" class="exhibition-svg">
+          <!-- Room outline -->
+          <rect x="20" y="20" width="560" height="360" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="6 4"/>
+          <!-- Main projection screen -->
+          <rect x="40" y="40" width="200" height="6" fill="#fff" opacity="0.6"/>
+          <text x="140" y="30" fill="rgba(255,255,255,0.5)" font-size="9" font-family="monospace" text-anchor="middle">MAIN SCREEN ≥ 3m × 1.7m</text>
+          <!-- Projection cone -->
+          <path d="M 60 46 L 250 180 L 250 46 Z" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+          <path d="M 220 46 L 250 180 L 180 46 Z" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+          <!-- Projector -->
+          <circle cx="145" cy="200" r="5" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+          <text x="145" y="215" fill="rgba(255,255,255,0.3)" font-size="7" font-family="monospace" text-anchor="middle">PROJECTOR</text>
+          <!-- Viewing zone -->
+          <ellipse cx="180" cy="240" rx="80" ry="30" fill="rgba(74,144,217,0.06)" stroke="rgba(74,144,217,0.2)" stroke-width="0.5" stroke-dasharray="3 2"/>
+          <text x="180" y="244" fill="rgba(74,144,217,0.4)" font-size="7" font-family="monospace" text-anchor="middle">VIEWING ZONE 2-3m</text>
+          <!-- Tablet/secondary screen -->
+          <rect x="340" y="90" width="50" height="35" fill="none" stroke="rgba(216,74,158,0.3)" stroke-width="1" rx="2"/>
+          <text x="365" y="80" fill="rgba(216,74,158,0.4)" font-size="7" font-family="monospace" text-anchor="middle">TABLET × 7</text>
+          <text x="365" y="138" fill="rgba(216,74,158,0.3)" font-size="6" font-family="monospace" text-anchor="middle">七罪图鉴交互</text>
+          <!-- Symbol wall -->
+          <rect x="325" y="200" width="90" height="30" fill="none" stroke="rgba(255,138,43,0.35)" stroke-width="1" rx="2"/>
+          <text x="370" y="218" fill="rgba(255,138,43,0.45)" font-size="7" font-family="monospace" text-anchor="middle">SYMBOL WALL</text>
+          <text x="370" y="245" fill="rgba(255,138,43,0.3)" font-size="6" font-family="monospace" text-anchor="middle">七罪人形符号灯箱</text>
+          <!-- Color calibration wall -->
+          <rect x="440" y="200" width="90" height="30" fill="none" stroke="rgba(143,134,184,0.35)" stroke-width="1" rx="2"/>
+          <text x="485" y="218" fill="rgba(143,134,184,0.5)" font-size="7" font-family="monospace" text-anchor="middle">CALIB. WALL</text>
+          <text x="485" y="245" fill="rgba(143,134,184,0.3)" font-size="6" font-family="monospace" text-anchor="middle">情绪色调校准墙</text>
+          <!-- Speakers -->
+          <rect x="50" y="320" width="16" height="22" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/>
+          <text x="58" y="355" fill="rgba(255,255,255,0.3)" font-size="6" font-family="monospace" text-anchor="middle">L</text>
+          <rect x="534" y="320" width="16" height="22" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/>
+          <text x="542" y="355" fill="rgba(255,255,255,0.3)" font-size="6" font-family="monospace" text-anchor="middle">R</text>
+          <!-- Audience flow arrows -->
+          <path d="M 280 340 Q 320 340 360 320" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" stroke-dasharray="2 2" marker-end="url(#arrow)"/>
+          <defs>
+            <marker id="arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+              <path d="M0 0 L6 3 L0 6 Z" fill="rgba(255,255,255,0.15)"/>
+            </marker>
+          </defs>
+          <!-- Entrance -->
+          <line x1="540" y1="380" x2="580" y2="380" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+          <text x="560" y="395" fill="rgba(255,255,255,0.3)" font-size="7" font-family="monospace" text-anchor="middle">ENTRANCE</text>
+        </svg>
+        <div class="exhibition-plan-label">布展平面示意图 · FLOOR PLAN</div>
+      </div>
+
+      <!-- Exhibition specs -->
+      <div class="exhibition-specs">
+        <div class="exhibition-spec-card">
+          <div class="exhibition-spec-icon" style="--c:#fff">▣</div>
+          <h3>主屏投影</h3>
+          <p>七罪影像循环投影：3 分钟叙事版与 38.5 秒 VJ 风格版交替循环。建议投影尺寸 ≥ 3m × 1.7m（16:9），亮度 ≥ 3000 流明。黑场环境，投影面为白色哑光幕布或墙面。</p>
+        </div>
+        <div class="exhibition-spec-card">
+          <div class="exhibition-spec-icon" style="--c:#c4762f">▣</div>
+          <h3>七罪符号视觉墙</h3>
+          <p>符号系统输出为灯箱 / 亚克力立牌序列，每罪一枚几何化人形符号——路西法（破碎光环）、利维坦（蛇形长发）、撒旦（独眼）、贝尔菲戈（怠坐烟缕）、玛门（钱币面具）、别西卜（盛宴人面）、阿斯莫德（反转铅箭），配各自情绪色调背光。符号序列同时承担空间导视功能。</p>
+        </div>
+        <div class="exhibition-spec-card">
+          <div class="exhibition-spec-icon" style="--c:#b3567f">▣</div>
+          <h3>副屏 / 平板交互</h3>
+          <p>7 台平板设备（或触摸屏），对应七罪图鉴。观众点击展开每罪的人形符号、视觉叙事、概念文字与 AI 生成过程。设备间距 ≥ 80cm，避免干扰。</p>
+        </div>
+        <div class="exhibition-spec-card">
+          <div class="exhibition-spec-icon" style="--c:#7b8299">▣</div>
+          <h3>情绪色调校准墙</h3>
+          <p>呈现前期调研的完整证据链：3 位不同背景受访者（技术 / 艺术 / 大众）的色彩直觉记录 → 七罪色彩校准依据表 → 最终色谱。以对照墙形式公开"公众直觉 ∩ 作品表达"的决策过程，让调研方法本身成为展品。</p>
+        </div>
+        <div class="exhibition-spec-card">
+          <div class="exhibition-spec-icon" style="--c:#a37c33">▣</div>
+          <h3>音响方案</h3>
+          <p>立体声音响系统，左右声道分别位于主屏两侧。BGM 为 Python/Numpy 合成的 10 层金属质感音轨（D 小调，128 BPM），含 FM 合成、Ring Modulation 与非谐振分音比。声压级 75-85dB。</p>
+        </div>
+        <div class="exhibition-spec-card">
+          <div class="exhibition-spec-icon" style="--c:#a8362b">▣</div>
+          <h3>空间需求</h3>
+          <p>建议展览空间 ≥ 6m × 4m，净高 ≥ 2.5m。全黑环境照明，仅保留地面引导灯带与符号墙背光。入口处设置作品信息标签（中英文作品概述）。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CREATIVE PROCESS ===== -->
+  <section id="process" class="section-dark">
+    <div class="section-inner">
+      <div class="section-label">04 / 创作流程 · AIGC PROCESS</div>
+      <h2 class="section-title">从概念到符号系统</h2>
+      <p class="section-desc">完整记录人机协作过程：创意意图 → Prompt 设计 → AI 生成 → 人工筛选 → 后期判断 → 符号化与视觉校准。每一步均标注人工决策点。</p>
+    </div>
+
+    <!-- 人机协作占比总览 -->
+    <div class="ratio-wrap">
+      <div class="ratio-label">人机协作占比总览 · HUMAN / MACHINE RATIO</div>
+      <div class="ratio-legend">
+        <span><i class="lg-ai"></i>AI 贡献</span>
+        <span><i class="lg-human"></i>人工贡献</span>
+      </div>
+      <div class="ratio-bars">
+        <div class="ratio-row"><span class="ratio-name">P1 创意策划与分镜</span><div class="ratio-bar"><i style="width:0%"></i></div><span class="ratio-val">0 / 100</span></div>
+        <div class="ratio-row"><span class="ratio-name">P2 关键帧生成</span><div class="ratio-bar"><i style="width:60%"></i></div><span class="ratio-val">60 / 40</span></div>
+        <div class="ratio-row"><span class="ratio-name">P3 视频生成</span><div class="ratio-bar"><i style="width:65%"></i></div><span class="ratio-val">65 / 35</span></div>
+        <div class="ratio-row"><span class="ratio-name">P4 剪辑与叙事</span><div class="ratio-bar"><i style="width:20%"></i></div><span class="ratio-val">20 / 80</span></div>
+        <div class="ratio-row"><span class="ratio-name">P5 金属质感 BGM</span><div class="ratio-bar"><i style="width:0%"></i></div><span class="ratio-val">0 / 100</span></div>
+        <div class="ratio-row"><span class="ratio-name">P6 VJ 风格处理</span><div class="ratio-bar"><i style="width:30%"></i></div><span class="ratio-val">30 / 70</span></div>
+        <div class="ratio-row"><span class="ratio-name">P7 符号系统与色调校准</span><div class="ratio-bar"><i style="width:0%"></i></div><span class="ratio-val">0 / 100</span></div>
+      </div>
+      <p class="ratio-note">◈ 读法：彩色条为 AI 贡献占比，余量为人工贡献。生成环节（P2 / P3）AI 占比最高；凡涉及判断、结构与审美决策的环节（P1 / P4 / P5 / P7）均为人工主导——这组数据本身即是对 RQ2「主体性归属」的可量化回应。</p>
+    </div>
+
+    <div class="section-inner" style="margin-top:3rem">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-time">PHASE 01 · 创意策划与分镜</div>
+            <h3>概念建构与叙事架构</h3>
+            <p>将七宗罪投射到 AI 时代重新定义——食欲=内容消费、贪婪=算力掠夺、懒惰=认知外包……撰写 3 分钟分镜脚本，每罪 22 秒，片头片尾各 18 秒。</p>
+            <div class="timeline-decision">
+              <span class="timeline-decision-tag">人工决策</span>
+              <span class="timeline-decision-text">基于中世纪神学原典与当代 AI 伦理文献，确定七罪的"算法时代映射"逻辑框架。从 12 个候选主题中筛选保留原七宗罪结构，但为每罪撰写全新的 AI 语境定义。分镜节奏参考实验影像惯例（每段 22 秒），确保信息密度与观众认知负荷平衡。</span>
+            </div>
+            <div class="timeline-toggle-hint">展开 Prompt 迭代 · 工具组合 · 人工处理 ▾</div>
+            <div class="timeline-expand">
+              <div class="expand-row"><span class="expand-label">工具组合</span><div class="expand-val">人工文献调研（中世纪神学原典 × 当代 AI 伦理文献）+ Markdown 结构化分镜脚本。本阶段零 AI 生成。</div></div>
+              <div class="expand-row"><span class="expand-label">Prompt 迭代</span><div class="expand-val">无生成式迭代。唯一的"收敛决策"：12 个候选主题 → 保留七宗罪原结构 → 为每罪撰写 AI 语境新定义（如"食欲=内容消费"的映射逻辑经过 3 稿推敲）。</div></div>
+              <div class="expand-row"><span class="expand-label">人工处理</span><div class="expand-val">100% 人工：概念框架、七罪映射逻辑、22 秒节奏设计、全部旁白与字幕文案。人机占比：AI 0% / 人工 100%。</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-time">PHASE 02 · 关键帧生成</div>
+            <h3>AI 图像生成与人工筛选</h3>
+            <p>基于分镜脚本中的视觉风格关键词，使用 HY-Image-V3.0 生成 7 张关键帧概念图（1536×864），确立每段的视觉基调与色彩方案。</p>
+            <div class="timeline-decision">
+              <span class="timeline-decision-tag">人工决策</span>
+              <span class="timeline-decision-text">为每罪设计 3-5 套 Prompt 方案，从总计约 30 张候选图中人工筛选 7 张定稿。筛选标准：① 视觉概念与文本定义的匹配度 ② 七张图的色彩谱系差异化（冷蓝/暗金/深蓝/粉紫/橙红/翠绿/血红）③ 构图多样性（胎儿蜷缩/金字塔/液态舱/拥抱/悬崖/镜面/城市分裂）④ 画面中 AI 生成痕迹的审美可控性。被淘汰的图主要是概念偏差和色彩重复。</span>
+            </div>
+            <div class="timeline-toggle-hint">展开 Prompt 迭代 · 工具组合 · 人工处理 ▾</div>
+            <div class="timeline-expand">
+              <div class="expand-row"><span class="expand-label">工具组合</span><div class="expand-val">HY-Image-V3.0（80B 参数文生图）× 人工 Prompt 工程。输出 1536×864 关键帧。</div></div>
+              <div class="expand-row"><span class="expand-label">Prompt 迭代</span><div class="expand-val">每罪 3-5 套 Prompt 方案，按"画面主体 → 视觉风格 → 色彩谱系 → 构图"四要素逐步收敛。以食欲为例：v1 强调 information overload → v2 加入 fetal position 强化脆弱感 → v3 定稿补充 cold blue and pale white palette 锁定冷蓝色谱系。</div></div>
+              <div class="expand-row"><span class="expand-label">人工处理</span><div class="expand-val">从约 30 张候选图中人工筛选 7 张定稿（淘汰率 77%），筛选维度：概念匹配度 / 七色差异化 / 构图多样性 / AI 痕迹审美可控性。人机占比：AI 60% / 人工 40%。</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-time">PHASE 03 · 视频生成</div>
+            <h3>图生视频与动态验证</h3>
+            <p>使用 HY-Video-1.5 将关键帧图生视频，生成 7 段 1920×1080 / 24fps / 5 秒的 AI 原始视频片段。</p>
+            <div class="timeline-decision">
+              <span class="timeline-decision-tag">人工决策</span>
+              <span class="timeline-decision-text">每罪生成 2-3 条候选视频，从中选取动态最符合叙事意图的一条。判断维度：① 运动方向是否符合分镜设计（如食欲的"流食涌入"感、懒惰的"熄灭"节奏）② 时序连贯性 ③ AI 生成伪影的可接受度。对不满意的片段重新调整 Prompt 参数重生成，而非直接使用首次输出。</span>
+            </div>
+            <div class="timeline-toggle-hint">展开 Prompt 迭代 · 工具组合 · 人工处理 ▾</div>
+            <div class="timeline-expand">
+              <div class="expand-row"><span class="expand-label">工具组合</span><div class="expand-val">HY-Video-1.5 图生视频：以定稿关键帧为视觉锚点 + 运动描述词驱动。输出 1920×1080 / 24fps / 5s。</div></div>
+              <div class="expand-row"><span class="expand-label">Prompt 迭代</span><div class="expand-val">Prompt 聚焦运动意图而非画面（画面已由关键帧锁定）：食欲"流食涌入"、贪婪"抓取"、懒惰"逐一熄灭"、色欲"glitch 故障瞬间"、傲慢"风吹披风"、嫉妒"龟裂蔓延"、愤怒"火焰与数据碎片飞散"。运动不符的片段调整动态词重生成。</div></div>
+              <div class="expand-row"><span class="expand-label">人工处理</span><div class="expand-val">每罪 2-3 条候选视频人工选取 1 条（共 14+ 条选 7），判断维度：运动意图匹配度 / 时序连贯性 / AI 伪影可接受度。人机占比：AI 65% / 人工 35%。</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-time">PHASE 04 · 剪辑与叙事</div>
+            <h3>人工剪辑与叙事重构</h3>
+            <p>按七宗罪顺序串联成 3 分钟剧情片，添加 SRT 字幕烧录、电影感调色。再从剧情片中提取核心片段制作实验影像版。</p>
+            <div class="timeline-decision">
+              <span class="timeline-decision-tag">人工决策</span>
+              <span class="timeline-decision-text">剪辑节奏经过 3 轮调整：首版按分镜原始顺序拼接，发现中段信息密度不足；第二版增加罪与罪之间的过渡帧和留白；最终版使用 SRT 字幕替代 drawtext 烧录（解决长视频 ffmpeg 内存溢出问题）。实验影像版从 3 分钟中提取 44 秒核心片段，保留每罪最具视觉冲击力的 5-7 秒。</span>
+            </div>
+            <div class="timeline-toggle-hint">展开 Prompt 迭代 · 工具组合 · 人工处理 ▾</div>
+            <div class="timeline-expand">
+              <div class="expand-row"><span class="expand-label">工具组合</span><div class="expand-val">ffmpeg（拼接/转码/调色）+ SRT 字幕 + libass 烧录。技术决策：用 SRT+libass 替代 drawtext，解决 3 分钟视频的内存溢出（exit 137）。</div></div>
+              <div class="expand-row"><span class="expand-label">Prompt 迭代</span><div class="expand-val">无生成式迭代。剪辑方案 3 轮人工迭代：v1 原始顺序拼接（中段信息密度不足）→ v2 增加罪间过渡帧与留白 → v3 最终节奏定稿 + 实验影像版 44 秒核心片段提取。</div></div>
+              <div class="expand-row"><span class="expand-label">人工处理</span><div class="expand-val">叙事顺序、剪辑节奏、字幕文案与时间轴全部人工决策。人机占比：AI 20% / 人工 80%（素材为 AI 生成，结构与节奏为人工）。</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-time">PHASE 05 · 金属质感 BGM 合成</div>
+            <h3>程序化音频合成</h3>
+            <p>Python Numpy 全流程合成 10 层金属质感 BGM：FM 合成（mod_ratio=3.5, mod_index=10）+ Ring Modulation + 非谐振分音比（1:2.76:5.40:8.93:13.34），D 小调，128 BPM。</p>
+            <div class="timeline-decision">
+              <span class="timeline-decision-tag">人工决策</span>
+              <span class="timeline-decision-text">BGM 经历两版迭代：首版（A 小调，120 BPM）听感过于温和，与七罪的压迫感不匹配。第二版切换至 D 小调 128 BPM，引入 FM 合成的金属泛音和非谐振分音比模拟工业噪音质感。调试 note_freq 函数的降号支持和八度移位 bug 后完成最终混音。10 层音轨的混音比例经手动调整以避免低频浑浊。</span>
+            </div>
+            <div class="timeline-toggle-hint">展开 Prompt 迭代 · 工具组合 · 人工处理 ▾</div>
+            <div class="timeline-expand">
+              <div class="expand-row"><span class="expand-label">工具组合</span><div class="expand-val">Python + Numpy 全程序化合成（无采样、无第三方音源、无 AI 模型）——代码即乐器。</div></div>
+              <div class="expand-row"><span class="expand-label">Prompt 迭代</span><div class="expand-val">两版迭代：v1（A 小调 / 120 BPM / 8 层）听感过温和，与七罪的压迫感不匹配 → v2（D 小调 / 128 BPM / 10 层）引入 FM 合成金属泛音（mod_ratio=3.5, mod_index=10）+ Ring Modulation + 非谐振分音比（1:2.76:5.40:8.93:13.34）模拟工业质感。</div></div>
+              <div class="expand-row"><span class="expand-label">人工处理</span><div class="expand-val">人工听审两版并决断方向；调试期间修复 note_freq 降号支持与八度移位 bug；手动调整 10 层混音比例避免低频浑浊。人机占比：AI 0% / 人工 100%（程序化但完全人工编写与调优）。</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-time">PHASE 06 · VJ 风格处理</div>
+            <h3>5-pass 管线与参数调优</h3>
+            <p>5-pass ffmpeg 管线：RGB 色差 → 扫描线+调色+暗角 → 边缘检测叠加 → Python 生成式叠加层混合 → 金属 BGM 混音。叠加层由 Numpy 向量化粒子系统实时生成。</p>
+            <div class="timeline-decision">
+              <span class="timeline-decision-tag">人工决策</span>
+              <span class="timeline-decision-text">VJ 效果经历 3 轮参数调优：首版效果过重，原始色彩被压垮（edgedetect+screen 全屏叠加导致画面烧成单色，saturation=0.5 砍半色彩）；第二版恢复色彩但 glitch 行位移和 tblend 拖影仍遮盖原片内容；最终版砍掉 glitch 行位移和 tblend 反馈，扫描线降至几乎不可见，叠加透明度全部降到 0.12-0.15。核心原则：VJ 效果是原片的氛围增强层，不是覆盖层。</span>
+            </div>
+            <div class="timeline-toggle-hint">展开 Prompt 迭代 · 工具组合 · 人工处理 ▾</div>
+            <div class="timeline-expand">
+              <div class="expand-row"><span class="expand-label">工具组合</span><div class="expand-val">ffmpeg 5-pass 管线（chromashift / geq / eq / vignette / edgedetect / blend）+ vj_engine.py（Numpy 向量化生成式叠加层，5 层粒子/波形/网格/数据流/glitch 块）。</div></div>
+              <div class="expand-row"><span class="expand-label">Prompt 迭代</span><div class="expand-val">参数 3 轮迭代：v1 效果过重，色彩被烧毁（edgedetect+screen 全屏叠加 / saturation=0.5）→ v2 恢复色彩但 glitch 行位移与 tblend 拖影遮盖原片内容 → v3 定稿砍掉形变元凶，叠加透明度降至 0.12-0.15。</div></div>
+              <div class="expand-row"><span class="expand-label">人工处理</span><div class="expand-val">每轮渲染后人工抽帧比对源画面与成片的色彩和形状保真度，据此确立"氛围增强层而非覆盖层"原则。人机占比：AI 30% / 人工 70%（管线自动执行，参数与判断全人工）。</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-time">PHASE 07 · 符号系统与情绪色调校准</div>
+            <h3>人形符号化设计与视觉校准</h3>
+            <p>按指导修正方向完成两项系统升级：① 核心意象修正——食欲罪弃用"饕餮凶兽吞噬"联想，保留饕餮人面结构与青铜鼎回纹，场景置换为盛宴长桌，强调"享宴 / 舌尖"的感官享受；② 七罪人形符号系统——从神话、宗教与民间传说为每罪选定人形原型（路西法、利维坦、撒旦、贝尔菲戈、玛门、别西卜、阿斯莫德），提取标志性特征几何化重构为 7 枚符号，并建立"罪 × 恶魔原型 × AI 隐喻 × 视觉符号 × 情绪色调"五列映射总表。</p>
+            <div class="timeline-decision">
+              <span class="timeline-decision-tag">人工决策</span>
+              <span class="timeline-decision-text">参考人形符号化设计传统（孔融 · 谦让 / 丘比特 · 爱欲 / 道教神祇 · 老子与灶神 / 宙斯 · 权力）确立"选取人形原型 → 提取标志性特征 → 几何化重构"三步转化法；逐罪推敲原型与特征的对应关系（如色欲取丘比特金箭反转为铅箭、射向持弓者自身）；绘制并迭代 7 枚几何符号；比对现有关键帧色谱与目标色调方向，标出唯一冲突项——食欲段（现存冷蓝 / 惨白 → 目标暖橘 / 酱红），列入 Phase Ⅳ 重制计划。</span>
+            </div>
+            <div class="timeline-toggle-hint">展开 Prompt 迭代 · 工具组合 · 人工处理 ▾</div>
+            <div class="timeline-expand">
+              <div class="expand-row"><span class="expand-label">工具组合</span><div class="expand-val">手绘草图 → SVG 矢量几何化（stroke 线稿风格，与网站暗色美学统一）+ 五列映射总表结构化建档。</div></div>
+              <div class="expand-row"><span class="expand-label">Prompt 迭代</span><div class="expand-val">无生成式迭代——7 枚符号均为人工绘制；情绪色调方向来自指导修正表，最终取值待 3 位受访者访谈验证后校准。</div></div>
+              <div class="expand-row"><span class="expand-label">人工处理</span><div class="expand-val">原型选取、特征提取、几何化绘制、映射总表、色调比对全部人工完成。人机占比：AI 0% / 人工 100%。</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RESEARCH PLAN ===== -->
+  <section id="plan" class="section-dark">
+    <div class="section-inner">
+      <div class="section-label">04b / 研究计划 · RESEARCH PLAN</div>
+      <h2 class="section-title">时间线与预期成果</h2>
+      <p class="section-desc">从概念建构到展览落地，完整记录已完成阶段与后续推进计划。</p>
+    </div>
+
+    <!-- 时间线与里程碑 -->
+    <!-- 项目总进度 -->
+    <div class="progress-wrap">
+      <div class="progress-head">
+        <div class="progress-label">项目总进度 · OVERALL PROGRESS</div>
+        <div class="progress-stat"><strong>3</strong> 已完成 · <strong>1</strong> 进行中 · <strong>2</strong> 计划中</div>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:65%"></div>
+        <div class="progress-marker" style="left:52%"><span class="pm-dot"></span><span class="pm-text">今天 2026.10</span></div>
+      </div>
+      <div class="progress-scale"><span>2026.03</span><span>2026.06</span><span>2026.09</span><span>2026.12</span><span>2027.03</span></div>
+    </div>
+
+    <div class="section-inner" style="margin-top:3rem">
+      <h3 class="research-sub-title">研究进度与里程碑</h3>
+      <div class="plan-timeline">
+        <div class="plan-phase plan-done">
+          <div class="plan-status">✓ 已完成</div>
+          <div class="plan-date">2026.03 — 2026.05</div>
+          <div class="plan-body">
+            <h4>Phase Ⅰ · 概念建构与素材生成</h4>
+            <p>七罪 AI 时代映射逻辑确立 → 分镜脚本撰写 → HY-Image V3.0 关键帧生成（30 张选 7）→ HY-Video 1.5 图生视频（14+ 条选 7）→ 剧情片粗剪与实验影像版提取。</p>
+          </div>
+        </div>
+        <div class="plan-phase plan-done">
+          <div class="plan-status">✓ 已完成</div>
+          <div class="plan-date">2026.05 — 2026.06</div>
+          <div class="plan-body">
+            <h4>Phase Ⅱ · VJ 处理与音频合成</h4>
+            <p>5-pass ffmpeg VJ 管线搭建（3 轮参数调优）→ Python Numpy 金属质感 BGM 合成（D 小调 / 128 BPM / 10 层）→ 生成式叠加层引擎开发 → VJ 成片输出。</p>
+          </div>
+        </div>
+        <div class="plan-phase plan-done">
+          <div class="plan-status">✓ 已完成</div>
+          <div class="plan-date">2026.06 — 2026.08</div>
+          <div class="plan-body">
+            <h4>Phase Ⅲ · 交互系统与展览网站</h4>
+            <p>HTML5 Canvas VJ 混合器开发 → 七罪叙事交互机制设计（7 种专属交互 + sinMeter 审判量表）→ Audio Reactive + Auto Segment 音频驱动 → 展览网站建设与云端部署。2026.09 依据指导修正完成信息架构调整：网站重心转向七罪符号系统与情绪色调校准，混合器转为作品内部组件不再作为网站入口。</p>
+          </div>
+        </div>
+        <div class="plan-phase plan-current">
+          <div class="plan-status">◐ 进行中</div>
+          <div class="plan-date">2026.08 — 2026.10</div>
+          <div class="plan-body">
+            <h4>Phase Ⅳ · 比赛申报与学术定稿</h4>
+            <p>首届 AIGC 与可视化创作大赛提交（赛道 5 互动可视化）→ 答辩文稿与导演阐述定稿 → 交互操作说明文档 → AIGC 技术透明度文档 → 观众测试与体验反馈收集。同步执行<strong>视觉校准</strong>：完成三位受访者情绪色调访谈后，按"公众直觉 ∩ 作品表达"的交集重制色彩冲突段落（重点：食欲段由冷蓝 / 惨白重制为暖橘 / 酱红）。</p>
+          </div>
+        </div>
+        <div class="plan-phase plan-future">
+          <div class="plan-status">○ 计划中</div>
+          <div class="plan-date">2026.10 — 2026.12</div>
+          <div class="plan-body">
+            <h4>Phase Ⅴ · 展览落地与论文撰写</h4>
+            <p>物理空间布展实现（主屏投影 + 七罪符号视觉墙 + 平板交互 + 情绪色调校准墙）→ 毕业论文撰写（实践部分 + 理论部分 + 反思部分）→ HKAIDA 香港 AI 艺术创作大赛第二季提交 → 决赛答辩准备。</p>
+          </div>
+        </div>
+        <div class="plan-phase plan-future">
+          <div class="plan-status">○ 远期</div>
+          <div class="plan-date">2027.01+</div>
+          <div class="plan-body">
+            <h4>Phase Ⅵ · 国际赛事与作品迭代</h4>
+            <p>Ars Electronica 2027 Interactive Art+ 赛道投递 → Lumen Prize 2027 Experiential Innovation 赛道投递 → 英文演示视频与艺术家简介 → 基于反馈的作品迭代与学术发表。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 预期成果 -->
+    <div class="section-inner" style="margin-top:4rem">
+      <h3 class="research-sub-title">预期成果</h3>
+      <div class="outcome-grid">
+        <div class="outcome-card">
+          <div class="outcome-icon">◐</div>
+          <h4>艺术作品成果</h4>
+          <ul>
+            <li><strong>沉浸式数字展览装置</strong>：主屏投影（七罪影像循环）+ 7 台平板交互（七罪图鉴）+ 七罪符号视觉墙 + 情绪色调校准墙</li>
+            <li><strong>七罪人形符号系统</strong>：7 枚几何化人形符号（SVG）+ "罪 × 恶魔原型 × AI 隐喻 × 视觉符号 × 情绪色调"五列映射总表，可迁移至其他主题</li>
+            <li><strong>交互式 VJ 混合器</strong>：浏览器原生 Canvas2D 实现，含七罪专属交互机制、Audio Reactive 音频驱动、Auto Segment 节拍自动切段、sinMeter 审判量表系统</li>
+            <li><strong>展览网站</strong>：两页结构（展览主页 / 作品信息），云端部署，兼作开题与申报展示</li>
+          </ul>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-icon">◑</div>
+          <h4>技术资产成果</h4>
+          <ul>
+            <li><strong>5-pass ffmpeg VJ 管线</strong>（参数化、可复用）</li>
+            <li><strong>Numpy 生成式叠加引擎</strong>（5 层粒子/波形/网格/数据流/glitch）</li>
+            <li><strong>程序化 BGM 合成器</strong>（FM + Ring Mod + 非谐振分音比）</li>
+            <li><strong>七罪交互叙事框架</strong>（可迁移至其他主题的交互叙事模板）</li>
+          </ul>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-icon">◓</div>
+          <h4>学术研究成果</h4>
+          <ul>
+            <li><strong>毕业论文</strong>：题目暂定《AI 时代的七宗罪：生成式人工智能语境下的交互叙事艺术实践》</li>
+            <li><strong>人机协作创作方法论</strong>：建立"AI 生成—人工判断"透明创作链的实践模型</li>
+            <li><strong>交互叙事评估框架</strong>：非线性自由探索能否承载道德序列主题的实证分析</li>
+            <li><strong>比赛申报材料包</strong>：AIGC 技术透明度文档、交互操作说明、版权声明</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 可行性分析 -->
+    <div class="section-inner" style="margin-top:4rem">
+      <h3 class="research-sub-title">可行性分析</h3>
+      <div class="feasibility-grid">
+        <div class="feasibility-card">
+          <div class="feasibility-icon" style="--c:#4f7a3a">✓</div>
+          <h4>技术可行性</h4>
+          <p>技术管线已全链路验证：HY-Image V3.0 + HY-Video 1.5 已完成关键帧与视频生成（30 张选 7、14+ 条选 7）；5-pass ffmpeg VJ 管线经 3 轮调优输出成片；Numpy 生成式叠加引擎与程序化 BGM 合成器已交付可运行代码；HTML5 Canvas VJ 混合器已部署至云端。所有技术节点无未解决阻塞项。</p>
+        </div>
+        <div class="feasibility-card">
+          <div class="feasibility-icon" style="--c:#a37c33">◐</div>
+          <h4>创作可行性</h4>
+          <p>Phase Ⅰ—Ⅲ 已完成（概念建构 → VJ 处理 → 交互系统），创作流程 Phase 07（符号系统与情绪色调校准）已按指导修正方向完成框架上线。VJ 成片（38.5s）+ BGM（10 层合成）+ 展览网站 + VJ 混合器（七罪交互 + Audio Reactive）+ 七罪人形符号系统均已交付。剩余工作为情绪色调访谈回收与食欲段关键帧重制（唯一方向冲突项），无新增技术风险。</p>
+        </div>
+        <div class="feasibility-card">
+          <div class="feasibility-icon" style="--c:#c4762f">◈</div>
+          <h4>学术可行性</h4>
+          <p>理论框架已建立——后人类主义（Braidotti）、媒介考古学（Zielinski）、算法伦理（Crawford）、新媒体美学（Manovich）四条理论线已与作品实践建立映射。文献综述覆盖 16 篇核心文献。三个研究问题（欲望迁移/主体性归属/交互即叙事）已从概念层面推进到可验证的设计实验层面。</p>
+        </div>
+        <div class="feasibility-card">
+          <div class="feasibility-icon" style="--c:#b3567f">◇</div>
+          <h4>时间可行性</h4>
+          <p>按里程碑推算：Phase Ⅳ（2026.08—10）完成比赛提交与文档定稿，已有答辩文稿与导演阐述初稿；Phase Ⅴ（2026.10—12）完成物理布展与毕业论文，与毕业季时间窗口匹配；Phase Ⅵ（2027.01+）投递国际赛事为远期增量目标。整体时间线合理，无紧迫节点冲突。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 参考文献 -->
+    <div class="section-inner" style="margin-top:4rem">
+      <h3 class="research-sub-title">参考文献</h3>
+      <div class="refs-category">
+        <div class="refs-cat-title">核心理论文献</div>
+        <ol class="refs-list">
+          <li>Braidotti, R. (2013). <em>The Posthuman</em>. Cambridge: Polity Press.</li>
+          <li>Zielinski, S. (2006). <em>Deep Time of the Media: Toward an Archaeology of Hearing and Seeing by Technical Means</em>. Cambridge: MIT Press.</li>
+          <li>Crawford, K. (2021). <em>Atlas of AI: Power, Politics, and the Planetary Costs of Artificial Intelligence</em>. New Haven: Yale University Press.</li>
+          <li>Manovich, L. (2001). <em>The Language of New Media</em>. Cambridge: MIT Press.</li>
+          <li>Floridi, L. (2014). <em>The 4th Revolution: How the Infosphere is Reshaping Human Reality</em>. Oxford: Oxford University Press.</li>
+        </ol>
+      </div>
+      <div class="refs-category">
+        <div class="refs-cat-title">AIGC 艺术与生成艺术</div>
+        <ol class="refs-list" start="6">
+          <li>McCormack, J. et al. (2019). "What Is the Computational Creative?". <em>Computational Creativity</em>, 14(1).</li>
+          <li>Anadol, R. (2022). <em>Unsupervised — Machine Hallucinations</em>. Exhibition Catalogue, MoMA.</li>
+          <li>Klingemann, M. (2020). "Foiled by the Mirror". <em>AI &amp; Art</em>, Leonardo Journal, 53(5).</li>
+          <li>Elgammal, A. et al. (2017). "CAN: Creative Adversarial Networks". <em>arXiv:1706.07068</em>.</li>
+          <li>Birringer, J. (2008). <em>Performance, Technology and Science</em>. New York: PAJ Publications.</li>
+        </ol>
+      </div>
+      <div class="refs-category">
+        <div class="refs-cat-title">七宗罪与文化研究</div>
+        <ol class="refs-list" start="11">
+          <li>Bloomfield, M. (1987). <em>The Seven Deadly Sins: An Introduction to the History of a Religious Concept</em>. Michigan: Michigan State University Press.</li>
+          <li>Schimmel, S. (1997). <em>The Seven Deadly Sins: Jewish, Christian and Classical Reflections on Human Psychology</em>. Oxford: Oxford University Press.</li>
+          <li>Lyman, R. (1978). "The Seven Deadly Sins: An Introduction to the History of a Religious Concept". <em>Speculum</em>, 53(3).</li>
+        </ol>
+      </div>
+      <div class="refs-category">
+        <div class="refs-cat-title">交互艺术与新媒体</div>
+        <ol class="refs-list" start="14">
+          <li>Wilson, S. (2002). <em>Information Arts: Intersections of Art, Science, and Technology</em>. Cambridge: MIT Press.</li>
+          <li>Paul, C. (2016). <em>Digital Art</em> (3rd ed.). London: Thames &amp; Hudson.</li>
+          <li>Shanken, E. (2015). <em>Art and Electronic Media</em>. London: Phaidon Press.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ENGINEERING FILES ===== -->
+  <section id="files" class="section-dark">
+    <div class="section-inner">
+      <div class="section-label">05 / 工程文件 · TECHNICAL ASSETS</div>
+      <h2 class="section-title">技术资产</h2>
+      <div class="files-grid">
+        <div class="file-card">
+          <div class="file-icon">ϟ</div>
+          <h3>vj_pipeline.sh</h3>
+          <p>参数化 5-pass ffmpeg VJ 处理管线。修改顶部 PARAMS 即可改变视觉特征。</p>
+          <div class="file-tags"><span>Bash</span><span>ffmpeg</span><span>5-pass</span></div>
+        </div>
+        <div class="file-card">
+          <div class="file-icon">◈</div>
+          <h3>vj_engine.py</h3>
+          <p>Numpy 向量化生成式叠加层引擎。5 层：流场粒子、音频反应波形、几何网格、数据流、glitch 块。</p>
+          <div class="file-tags"><span>Python</span><span>Numpy</span><span>Generative</span></div>
+        </div>
+        <div class="file-card">
+          <div class="file-icon">◉</div>
+          <h3>vj_mixer.html</h3>
+          <p>浏览器交互式 VJ 混合器。TouchDesigner 风格参数面板，实时效果切换，键盘控制，支持录制导出。</p>
+          <div class="file-tags"><span>HTML5</span><span>Canvas</span><span>Interactive</span></div>
+        </div>
+        <div class="file-card">
+          <div class="file-icon">♪</div>
+          <h3>generate_metallic_bgm.py</h3>
+          <p>金属质感 BGM 全流程合成器。10 层 Numpy 音频合成，FM + Ring Mod + 非谐振分音比。</p>
+          <div class="file-tags"><span>Python</span><span>Numpy</span><span>Audio</span></div>
+        </div>
+        <div class="file-card">
+          <div class="file-icon">▦</div>
+          <h3>storyboard_script.md</h3>
+          <p>完整 3 分钟分镜脚本。7 段正文 + 片头片尾，含画面描述、旁白、视觉风格关键词。</p>
+          <div class="file-tags"><span>Markdown</span><span>Script</span></div>
+        </div>
+        <div class="file-card">
+          <div class="file-icon">▶</div>
+          <h3>seven_sins_VJ_final.mp4</h3>
+          <p>VJ 风格最终成片。5-pass 处理 + 生成式叠加 + 金属 BGM。38.5s / 1280×720 / 20fps。</p>
+          <div class="file-tags"><span>MP4</span><span>H.264</span><span>Stereo</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRESS KIT ===== -->
+  <section id="press-kit" class="section-dark">
+    <div class="section-inner">
+      <div class="section-label">06 / 申报材料包 · PRESS KIT</div>
+      <h2 class="section-title">展览申报材料</h2>
+      <p class="section-desc">独立于网站的完整申报材料集，可直接用于比赛/展览提交。每项均为可下载文件。</p>
+
+      <!-- 材料速览 · 用途对照 -->
+      <div class="kit-map-wrap">
+        <div class="kit-map-label">材料速览 · KIT MATRIX</div>
+        <table class="kit-map-table">
+          <thead><tr><th>#</th><th>材料</th><th>主要用途</th><th>对应评审关注点</th><th>状态</th></tr></thead>
+          <tbody>
+            <tr><td>01</td><td>作品概述</td><td>申报 / 答辩</td><td>主题与内容的完整性</td><td class="kit-ok">✓ 已上线</td></tr>
+            <tr><td>02</td><td>技术说明文档</td><td>申报评审</td><td>技术应用的创新性与融合度</td><td class="kit-ok">✓ 已上线</td></tr>
+            <tr><td>03</td><td>静态图像集 ×10</td><td>印刷 / 线上展示</td><td>视觉表现力</td><td class="kit-ok">✓ 已上线</td></tr>
+            <tr><td>04</td><td>展览视频</td><td>投影 / 比赛上传</td><td>动态创意与沉浸体验</td><td class="kit-ok">✓ 已上线</td></tr>
+            <tr><td>05</td><td>AIGC 创作过程说明</td><td>AIGC 赛道专项</td><td>创作意图与人工判断有效性</td><td class="kit-ok">✓ 已上线</td></tr>
+            <tr><td>06</td><td>素材来源与版权声明</td><td>合规提交</td><td>原创性与素材合法性</td><td class="kit-ok">✓ 已上线</td></tr>
+            <tr><td>07</td><td>符号系统与色调校准手册</td><td>学术归档 / 开题</td><td>研究方法与研究过程</td><td class="kit-pending">◐ 编制中（访谈回收后归档）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="press-kit-grid">
+        <div class="press-kit-card">
+          <div class="press-kit-num">01</div>
+          <div class="press-kit-body">
+            <h3>作品概述 / Artist Statement</h3>
+            <p>中英文双语作品概述（各 300-500 字），含作品名、媒介、尺寸、创作年份、核心概念与关键词。PDF 格式，A4 单页。</p>
+            <div class="press-kit-format">PDF · A4 · 中英双语</div>
+          </div>
+          <a href="press-kit/artist_statement.pdf" class="press-kit-download" download>下载</a>
+        </div>
+
+        <div class="press-kit-card">
+          <div class="press-kit-num">02</div>
+          <div class="press-kit-body">
+            <h3>技术说明文档 / Technical Documentation</h3>
+            <p>完整技术路径说明：AI 模型 / 工具链、5-pass ffmpeg 管线架构、Python 生成式叠加层算法、BGM 合成方法、交互系统技术栈、七罪符号系统几何化方法。含代码片段与参数表。</p>
+            <div class="press-kit-format">PDF · A4 · 含图表</div>
+          </div>
+          <a href="press-kit/technical_documentation.pdf" class="press-kit-download" download>下载</a>
+        </div>
+
+        <div class="press-kit-card">
+          <div class="press-kit-num">03</div>
+          <div class="press-kit-body">
+            <h3>静态图像集 / Still Images</h3>
+            <p>10 张高清展览级静态图：7 张关键帧概念图 + 3 张 VJ 成片截帧。JPG 格式，300dpi，适合印刷与线上展示。</p>
+            <div class="press-kit-format">JPG × 10 · 300dpi · ZIP</div>
+          </div>
+          <a href="press-kit/still_images.zip" class="press-kit-download" download>下载</a>
+        </div>
+
+        <div class="press-kit-card">
+          <div class="press-kit-num">04</div>
+          <div class="press-kit-body">
+            <h3>展览视频 / Exhibition Video</h3>
+            <p>完整展览剪辑版视频。MP4 / H.264 / 1920×1080 / 含七罪全片段 + VJ 处理 + 金属 BGM。适合投影播放与比赛上传。</p>
+            <div class="press-kit-format">MP4 · H.264 · 1080p</div>
+          </div>
+          <a href="press-kit/exhibition_video.mp4" class="press-kit-download" download>下载</a>
+        </div>
+
+        <div class="press-kit-card">
+          <div class="press-kit-num">05</div>
+          <div class="press-kit-body">
+            <h3>AIGC 创作过程说明 / AIGC Process Report</h3>
+            <p>完整人机协作过程文档：每罪的 Prompt 策略、从 N 条候选中的筛选标准、后期处理判断依据。直接回应"AIGC 作品考察创作意图与人工判断有效性"的评审要求。</p>
+            <div class="press-kit-format">PDF · A4 · 含流程图</div>
+          </div>
+          <a href="press-kit/aigc_process_report.pdf" class="press-kit-download" download>下载</a>
+        </div>
+
+        <div class="press-kit-card">
+          <div class="press-kit-num">06</div>
+          <div class="press-kit-body">
+            <h3>素材来源与版权声明 / Copyright Declaration</h3>
+            <p>完整版权声明：AI 生成内容（图像/视频/BGM）的工具与模型来源、人工创作部分（分镜脚本/剪辑/VJ 参数/代码）的说明、开源素材/字体的授权信息。</p>
+            <div class="press-kit-format">PDF · A4</div>
+          </div>
+          <a href="press-kit/copyright_declaration.pdf" class="press-kit-download" download>下载</a>
+        </div>
+
+        <div class="press-kit-card">
+          <div class="press-kit-num">07</div>
+          <div class="press-kit-body">
+            <h3>符号系统与视觉校准手册 / Symbol &amp; Color Handbook</h3>
+            <p>七罪人形符号系统完整档案：人形原型选取依据（路西法 / 利维坦 / 撒旦 / 贝尔菲戈 / 玛门 / 别西卜 / 阿斯莫德）、三步几何化转化记录、五列映射总表、情绪色调校准表与 3 人访谈回收结果。编制中，访谈完成后归档上线。</p>
+            <div class="press-kit-format">PDF · A4 · 编制中</div>
+          </div>
+          <div class="press-kit-download" style="opacity:.35;pointer-events:none;">待归档</div>
+        </div>
+      </div>
+
+      <!-- Copyright declaration summary -->
+      <div class="copyright-section">
+        <h3 class="copyright-title">素材来源与版权声明 · 摘要</h3>
+        <div class="copyright-grid">
+          <div class="copyright-item">
+            <div class="copyright-cat">AI 生成内容</div>
+            <div class="copyright-detail">
+              <p><strong>关键帧图像</strong>：HY-Image-V3.0（80B 参数，文生图）</p>
+              <p><strong>视频片段</strong>：HY-Video-1.5（图生视频）</p>
+              <p><strong>BGM 音频</strong>：Python/Numpy 程序化合成（FM + Ring Mod + 非谐振分音比）</p>
+              <p><strong>生成式叠加层</strong>：Python/Numpy 向量化粒子系统</p>
+            </div>
+          </div>
+          <div class="copyright-item">
+            <div class="copyright-cat">人工创作部分</div>
+            <div class="copyright-detail">
+              <p><strong>概念策划</strong>：七罪 AI 时代映射逻辑、分镜脚本</p>
+              <p><strong>Prompt 设计</strong>：每罪的视觉关键词与风格描述</p>
+              <p><strong>筛选与判断</strong>：从约 30 张候选图中筛选 7 张定稿，从 14+ 条候选视频中选取 7 条</p>
+              <p><strong>后期处理</strong>：剪辑节奏、SRT 字幕、VJ 5-pass 参数调优（3 轮迭代）、BGM 混音比例</p>
+              <p><strong>代码</strong>：vj_pipeline.sh、vj_engine.py、generate_metallic_bgm.py、vj_mixer.html</p>
+            </div>
+          </div>
+          <div class="copyright-item">
+            <div class="copyright-cat">开源工具与素材</div>
+            <div class="copyright-detail">
+              <p><strong>视频处理</strong>：ffmpeg（LGPL/GPL）</p>
+              <p><strong>音频合成</strong>：Python + Numpy（BSD）</p>
+              <p><strong>字体</strong>：Noto Serif SC / Noto Sans SC（SIL OFL）、JetBrains Mono（SIL OFL）</p>
+              <p><strong>网页框架</strong>：原生 HTML5 / CSS3 / Canvas2D（无第三方依赖）</p>
+            </div>
+          </div>
+        </div>
+        <p class="copyright-note">本作品所有 AI 生成内容均通过人工 Prompt 设计、多轮筛选与后期处理融入最终艺术表达。AI 是创作工具，人工判断是作品成立的核心。完整版权声明见上方 PDF。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer id="footer">
+    <div class="footer-inner">
+      <div class="footer-question">"当镜中不再有你，<br>你还在吗？"</div>
+      <div class="footer-meta">
+        <div>AI时代的七宗罪 — Digital Exhibition</div>
+        <div>2026 · AI Content Creation Studio</div>
+        <div>HY-Image × HY-Video × ffmpeg × Numpy × Canvas2D</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=20261016a"></script>
+</body>
+</html>

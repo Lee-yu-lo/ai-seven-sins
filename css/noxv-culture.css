@@ -1,0 +1,885 @@
+/* ════════════════════════════════════════════════════════════════════════
+   NO·XV —— 文化适配层 / Cultural Layer
+   ────────────────────────────────────────────────────────────────────────
+   目的：让全站的 颜色 / 字体 / 扉页 / 标签 / 正文排版，与本研究的文化背景
+        与意义表述同构，而不是一套通用的「暗色科技感」皮肤。
+
+   文化来源（四层，逐层落到具体选择器）：
+     ① 苦路十四站 Via Dolorosa —— 属于四旬期 / 圣周礼仪，礼仪色为紫（基督受难紫袍）
+     ② 圣灰星期三 Dies Cinerum —— 灰烬色作为次级信息色
+     ③ 拜占庭 / 巴洛克圣像 —— 镀金地色、（暖褐而非纯黑）的 proplasmos 打底
+     ④ 中世纪泥金手抄本 + 档案制度 —— 羊皮纸内页、铁胆墨、朱红封印
+
+   两条排版轨互不干扰：
+     · 礼仪题记轨 RUBRIC：拉丁小型大写 + 宽字距 + 镀金，用于标题 / 编号 / 引言 / 诗句
+     · 学术正文轨 CORPUS：宋体 + 首行缩进 + 编号层级 + 注释体，用于阐述与论证段落
+
+   明暗分区：
+     · 展厅暗区（放映）仪式图像
+     · 羊皮纸档案区（阅读）研究意义 / 文献 / 申报 —— 由 --pq-* 令牌整体翻转
+   全站字体为系统自带，零网络依赖，离线与展厅弱网环境可用。
+   ════════════════════════════════════════════════════════════════════════ */
+
+
+/* ─────────────────────────────────────────────────────────────────
+   0. 全局基底
+   ───────────────────────────────────────────────────────────────── */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-kerning: normal;
+  cursor: auto;                       /* 基线：恢复系统光标 */
+}
+/* 仅在真实指针设备上启用「烛光双环」光标；触屏 / 手写笔保持系统光标 */
+@media (hover: hover) and (pointer: fine) {
+  body { cursor: none; }
+}
+@media not all and (hover: hover) {
+  #cursor, #cursor-dot { display: none; }
+}
+
+::selection { background: rgba(178,52,40,0.3); color: var(--wax); }
+
+/* 统一所有水平分隔线的气质：由中性线改为烛金细线 */
+hr { border: 0; border-top: 1px solid rgba(178,52,40,0.2); }
+
+/* 中西混排：给拉丁片段留出呼吸，避免中英紧贴（CJK 标点压缩交由浏览器） */
+:lang(en), [lang="en"] { letter-spacing: 0.02em; }
+
+
+/* ─────────────────────────────────────────────────────────────────
+   1. 顶部导航 —— 苦路站牌
+   ───────────────────────────────────────────────────────────────── */
+#nav {
+  background: rgba(8,6,4,0.78);
+  border-bottom: 1px solid rgba(178,52,40,0.16);
+  box-shadow: 0 1px 0 rgba(178,52,40,0.06), 0 18px 40px -30px rgba(0,0,0,0.9);
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.16em;
+  font-size: 1.05rem;
+  color: var(--wax);
+}
+.nav-links a {
+  font-family: var(--serif);
+  font-variant-caps: all-small-caps;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  color: var(--text-faint);
+  padding-bottom: 2px;
+}
+.nav-links a::after { background: var(--blood-bright); height: 1px; bottom: 0; }
+.nav-links a:hover { color: var(--blood-bright); }
+.nav-page-link {
+  font-family: var(--serif) !important;
+  font-variant-caps: all-small-caps;
+  font-size: 0.8rem !important;
+  letter-spacing: 0.14em;
+  color: var(--blood-bright) !important;
+}
+.nav-time { font-size: 0.66rem; letter-spacing: 0.22em; color: var(--ash-dim); }
+
+
+/* ─────────────────────────────────────────────────────────────────
+   2. 扉页 —— 泥金手抄本扉页 / 祭坛画题记
+   ───────────────────────────────────────────────────────────────── */
+#hero {
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(178,52,40,0.055) 0%, transparent 58%),
+    radial-gradient(ellipse at 50% 42%, #181209 0%, #0c0906 48%, #060403 100%);
+}
+.hero-content {
+  max-width: 66rem;
+  padding: 2.9rem 2.4rem 2.2rem;
+}
+/* 双层版框 + 四角铆钉（古籍包背装的护页边框） */
+.hero-content::before {
+  border: 1px solid rgba(178,52,40,0.26);
+}
+.hero-content::after {
+  inset: 7px;
+  border: 1px solid rgba(178,52,40,0.11);
+}
+/* 身份行：改为题记体，压到最弱，避免抢主标题 */
+.hero-identity {
+  font-family: var(--serif);
+  font-variant-caps: all-small-caps;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--ash);
+  background: rgba(var(--shade), 0.45);
+  border: 1px solid rgba(178,52,40,0.12);
+  border-radius: 0;
+  margin-bottom: 1.1rem;
+}
+.hero-tag {
+  font-variant-caps: all-small-caps;
+  font-size: 0.74rem;
+  letter-spacing: 0.32em;
+  color: var(--ash-dim);
+  margin-bottom: 1.1rem;
+}
+.hero-eyebrow {
+  font-variant-caps: all-small-caps;
+  font-size: 0.76rem;
+  letter-spacing: var(--track-ritual);
+  border-top: 1px solid rgba(178,52,40,0.4);
+  border-bottom: 1px solid rgba(178,52,40,0.4);
+  margin-bottom: 1.9rem;
+}
+.hero-title-line {
+  letter-spacing: 0.12em;
+  color: #e7dfd0;
+  text-shadow: 0 1px 0 rgba(94,26,20,0.95),
+               0 0 2px rgba(245,234,209,0.35),
+               0 0 34px rgba(178,52,40,0.34),
+               0 0 110px rgba(0,0,0,0.95);
+}
+.hero-title-num i {
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.42em;
+  color: rgba(178,52,40,0.8);
+}
+.hero-title-en {
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.24em;
+  color: var(--blood-bright);
+  max-width: 48rem;
+}
+.hero-subtitle {
+  font-size: clamp(1.02rem, 2vw, 1.4rem);
+  letter-spacing: 0.3em;
+  color: #e2dac9;
+  text-indent: 0.3em;
+}
+/* 十四站轨道：改为念珠串，两端出线表示「之外无站」 */
+.hero-rail {
+  border-top: 1px solid rgba(178,52,40,0.2);
+  border-bottom: 1px solid rgba(178,52,40,0.2);
+  padding: 0.8rem 0;
+  font-variant-caps: all-small-caps;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  gap: 0.7rem;
+}
+.hero-rail span { color: var(--ash); opacity: 0.6; }
+.hero-rail .rail-end { color: var(--blood-bright); opacity: 1; text-shadow: 0 0 14px rgba(178,52,40,0.45); }
+.hero-rail-note { font-variant-caps: all-small-caps; letter-spacing: 0.3em; }
+.hero-overview { max-width: var(--measure-wide); color: #bcb3a1; }
+.hero-sins-label { font-variant-caps: all-small-caps; letter-spacing: 0.3em; font-size: 0.64rem; }
+.hero-sins-row { letter-spacing: 0.22em; }
+.hero-sin {
+  font-variant-caps: all-small-caps;
+  font-size: 0.92rem;
+  letter-spacing: 0.2em;
+  padding: 0.15rem 0.1rem;
+  border-bottom: 1px solid transparent;
+}
+.hero-sin:hover {
+  color: var(--accent-color, var(--blood-bright));
+  border-bottom-color: var(--accent-color, var(--blood-bright));
+  text-shadow: 0 0 14px rgba(255,255,255,0.12);
+}
+.hero-scroll-line { background: linear-gradient(to bottom, transparent, var(--blood-bright), transparent); }
+
+
+/* ─────────────────────────────────────────────────────────────────
+   3. 标签系统 A —— 板块编号铜牌
+        「00 / 作品信息 · ARTWORK STATEMENT」统一为一块錾刻铜牌
+   ───────────────────────────────────────────────────────────────── */
+.section-label {
+  display: inline-block;
+  font-family: var(--serif);
+  font-variant-caps: all-small-caps;
+  font-size: 0.86rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  line-height: 1;
+  color: var(--blood-bright);
+  background: linear-gradient(180deg,
+              rgba(178,52,40,0.11) 0%,
+              rgba(178,52,40,0.03) 100%);
+  border: 1px solid rgba(178,52,40,0.2);
+  border-left: 3px solid var(--blood-deep);
+  border-radius: 1px;
+  padding: 0.62rem 1.15rem 0.68rem;
+  margin-bottom: 1.5rem;
+  box-shadow: inset 0 1px 0 rgba(178,52,40,0.14);
+}
+.section-label::before {
+  content: '\2720';            /* ✠ MARGINAL CROSS，手抄本页边的注记十字 */
+  margin-right: 0.7em;
+  font-size: 0.9em;
+  color: var(--blood-bright);
+  opacity: 0.78;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   4. 标签系统 B —— 中文 / EN 选项卡
+        由方块按钮改为礼仪标签条：主标 + 拉丁注 SINICE / ANGLICE
+   ───────────────────────────────────────────────────────────────── */
+.about-lang-toggle {
+  display: inline-flex;
+  align-items: stretch;
+  margin: 0 0 1.7rem;
+  border: 1px solid rgba(178,52,40,0.2);
+  border-radius: 1px;
+  background: rgba(var(--tint), 0.03);
+  box-shadow: inset 0 1px 0 rgba(178,52,40,0.08);
+  overflow: hidden;
+}
+.about-lang-btn {
+  padding: 0.5rem 1.25rem 0.6rem;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--serif);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  line-height: 1.1;
+  color: var(--text-faint);
+  text-align: center;
+  transition: color 0.35s var(--ease), background 0.35s var(--ease);
+}
+.about-lang-btn + .about-lang-btn { border-left: 1px solid rgba(178,52,40,0.18); }
+/* 拉丁注：中世纪弥撒用「本地话」的概念 —— SINICE（用中文）/ ANGLICE（用英文） */
+.about-lang-btn::after {
+  content: 'SINICE';
+  display: block;
+  margin-top: 0.22rem;
+  font-size: 0.5rem;
+  font-weight: 400;
+  letter-spacing: 0.32em;
+  text-indent: 0.32em;
+  color: var(--blood-deep);
+  opacity: 0.6;
+  transition: opacity 0.35s, color 0.35s;
+}
+.about-lang-btn[data-lang="en"]::after { content: 'ANGLICE'; }
+.about-lang-btn:hover { color: var(--text); background: rgba(var(--tint), 0.045); }
+.about-lang-btn.active {
+  color: var(--wax);
+  background: linear-gradient(180deg,
+              rgba(178,52,40,0.22) 0%,
+              rgba(178,52,40,0.05) 100%);
+  box-shadow: inset 0 -2px 0 var(--blood-bright);
+}
+.about-lang-btn.active::after { color: var(--blood-bright); opacity: 1; }
+
+
+/* ─────────────────────────────────────────────────────────────────
+   5. 标签系统 C —— 七罪铭牌（图鉴卡 / 符号卡统一）
+        每罪一块铭牌：站号 + 中文罪名 + 拉丁/恶魔原型小注
+   ───────────────────────────────────────────────────────────────── */
+/* 5-1 七罪图鉴卡 */
+.sin-card { border-radius: 2px; }
+.sin-card-content { padding: 1.6rem 1.6rem 1.7rem; }
+.sin-card-num {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(var(--tint), 0.1);
+  font-family: var(--serif);
+  font-variant-caps: all-small-caps;
+  font-size: 0.82rem;
+  letter-spacing: 0.3em;
+  color: var(--sin-color, var(--blood-bright));
+}
+.sin-card-num::before {
+  content: 'STATION';
+  font-family: var(--mono);
+  font-size: 0.62em;
+  letter-spacing: 0.24em;
+  opacity: 0.55;
+}
+.sin-card-name {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-indent: 0.18em;
+  line-height: 1.25;
+  color: var(--wax);
+  margin-bottom: 0;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.7), 0 0 26px rgba(178,52,40,0.1);
+}
+.sin-card-name::after {
+  content: '';
+  display: block;
+  width: 2.4rem;
+  height: 1px;
+  margin-top: 0.7rem;
+  background: var(--sin-color, var(--blood-bright));
+  opacity: 0.6;
+}
+.sin-card-sub {
+  margin-top: 0.85rem;
+  font-family: var(--serif);
+  font-size: 0.82rem;
+  line-height: 1.75;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+}
+.sin-card-quote {
+  margin-top: 0.9rem;
+  padding-left: 0.9rem;
+  border-left: 1px solid rgba(var(--tint), 0.14);
+  font-family: var(--serif);
+  font-size: 0.82rem;
+  line-height: 1.95;
+  font-style: italic;
+  opacity: 0.62;
+  letter-spacing: 0.03em;
+}
+.sin-card:hover .sin-card-quote { opacity: 1; }
+
+/* 5-2 七罪符号卡 */
+.symbol-card {
+  --sc: var(--blood-bright);
+  background: linear-gradient(180deg, var(--bg-light) 0%, var(--bg-mid) 100%);
+  border-radius: 2px;
+  border-top-width: 3px;
+}
+.symbol-num {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--serif);
+  font-variant-caps: all-small-caps;
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  color: var(--sc);
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid rgba(var(--tint), 0.1);
+  margin-bottom: 0.8rem;
+}
+.symbol-crossref {
+  float: right;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  color: var(--text-faint);
+  border: 1px solid rgba(var(--tint), 0.14);
+  border-radius: 1px;
+  padding: 0.14rem 0.4rem;
+  margin-top: 0.1rem;
+}
+.symbol-name {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-indent: 0.2em;
+  color: var(--wax);
+  margin-bottom: 0.5rem;
+}
+.symbol-origin {
+  font-family: var(--serif);
+  font-variant-caps: all-small-caps;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  line-height: 1.7;
+  color: var(--text-dim);
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid rgba(var(--tint), 0.1);
+  margin-bottom: 0.9rem;
+}
+.symbol-card .symbol-feature,
+.symbol-card .symbol-geo {
+  font-family: var(--serif);
+  font-size: 0.8rem;
+  line-height: 1.95;
+  text-align: justify;
+}
+.symbol-ai {
+  font-family: var(--serif);
+  font-variant-caps: all-small-caps;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--sc);
+  background: rgba(var(--tint), 0.04);
+  border: 1px solid rgba(var(--tint), 0.1);
+  border-left: 2px solid var(--sc);
+  border-radius: 0 1px 1px 0;
+  padding: 0.45rem 0.7rem;
+  margin-top: 0.8rem;
+}
+.sa-tag, .sa-gesture {
+  font-family: var(--serif);
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.16em;
+}
+.sa-tag { color: var(--text-faint); }
+.sa-gesture { color: var(--sc); }
+
+
+/* ─────────────────────────────────────────────────────────────────
+   6. 研究框架 INDEX 总览 —— 卷宗目录
+   ───────────────────────────────────────────────────────────────── */
+.fw-overview {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--blood-deep);
+  background: linear-gradient(180deg, rgba(178,52,40,0.06), rgba(178,52,40,0.015));
+  border-radius: 1px;
+  padding: 1.6rem 1.8rem;
+  margin-top: 2.4rem;
+}
+.fw-stat-num {
+  font-family: var(--serif);
+  font-variant-caps: all-small-caps;
+  color: var(--blood-bright);
+  text-shadow: 0 0 18px rgba(178,52,40,0.3);
+}
+.fw-stat-label {
+  font-family: var(--serif);
+  letter-spacing: 0.1em;
+  font-size: 0.7rem;
+  color: var(--text-faint);
+}
+.fw-toc {
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+  gap: 0.5rem 1.3rem;
+}
+.fw-toc-label {
+  font-family: var(--serif);
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.3em;
+  color: var(--blood-deep);
+}
+.fw-toc a {
+  font-family: var(--serif);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  padding: 0.2rem 0.55rem;
+  border: 1px solid transparent;
+  border-radius: 1px;
+  transition: color 0.3s, border-color 0.3s, background 0.3s;
+}
+.fw-toc a:hover {
+  color: var(--blood-bright);
+  border-color: rgba(178,52,40,0.35);
+  background: rgba(178,52,40,0.07);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   7. 双轨排版 —— 题记轨 RUBRIC ／ 正文轨 CORPUS
+   ───────────────────────────────────────────────────────────────── */
+/* 7-1 礼仪题记轨：章节标题 */
+.section-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  color: var(--wax);
+  margin-bottom: 1.1rem;
+}
+.section-title::after {
+  content: '';
+  display: block;
+  width: 3.2rem;
+  height: 1px;
+  margin-top: 1.1rem;
+  background: linear-gradient(90deg, var(--blood-bright), transparent);
+  opacity: 0.7;
+}
+.research-sub-title {
+  font-family: var(--serif);
+  font-variant-caps: all-small-caps;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--wax);
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--border-bright);
+  margin-bottom: 1.4rem;
+}
+
+/* 7-2 学术正文轨：阐述段落 */
+.section-desc {
+  font-family: var(--serif);
+  font-size: 0.9rem;
+  line-height: var(--lead-body);
+  letter-spacing: 0.03em;
+  text-indent: 2em;
+  text-align: justify;
+  color: var(--text-dim);
+  max-width: var(--measure-wide);
+}
+/* 编号 / 脚注式小标题：◎ ◈ ▸ 类标记条 */
+.refcat-head {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.7rem;
+  margin: 2.6rem 0 1.3rem;
+}
+.refcat-tag {
+  font-family: var(--serif);
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.2em;
+  color: var(--blood-bright);
+  border-color: rgba(178,52,40,0.3);
+  border-radius: 1px;
+  padding: 0.24rem 0.6rem;
+  background: rgba(178,52,40,0.06);
+}
+.refcat-head h4 { font-family: var(--serif); letter-spacing: 0.12em; color: var(--wax); }
+
+/* 7-3 参考文献：学术悬挂缩进 + 序号 */
+.refs-list { list-style: none; counter-reset: ref; }
+.refs-list li {
+  position: relative;
+  padding-left: 2.6em;
+  text-indent: 0;
+  font-family: var(--serif);
+  font-size: 0.8rem;
+  line-height: 1.95;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+}
+.refs-list li::before {
+  counter-increment: ref;
+  content: '[' counter(ref, decimal-leading-zero) ']';
+  position: absolute;
+  left: 0;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: var(--blood-deep);
+  line-height: 2.3;
+}
+.refs-list em { font-style: italic; color: var(--text); }
+
+/* 7-4 卡片内的小标签统一为小型大写刻度体 */
+.research-bg-tag, .theory-tag, .innovation-tag,
+.survey-tag, .refcat-tag, .file-tags span,
+.exhibition-screen-label, .survey-table-label,
+.symbol-map-label, .zone-table-label, .kit-map-table-label,
+.ratio-label, .progress-label, .am-k, .vj-info-label,
+.press-kit-format, .sa-tag {
+  font-family: var(--serif);
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.16em;
+  border-radius: 1px;
+}
+.theory-tag, .innovation-tag, .research-bg-tag {
+  color: var(--blood-bright);
+  border: 1px solid rgba(178,52,40,0.3);
+  background: rgba(178,52,40,0.07);
+}
+/* 「拟突破难点」条目：改用朱红铆钉式标签，符合"难点"语义 */
+.innovation-challenge-label {
+  font-family: var(--serif);
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.18em;
+  color: var(--crimson-lit);
+}
+
+/* 7-5 表格：表头改为小型大写 + 双线（账簿式） */
+.survey-table, .symbol-map-table, .zone-table, .kit-map-table {
+  font-family: var(--serif);
+}
+.survey-table th, .symbol-map-table th, .zone-table th, .kit-map-table th {
+  font-family: var(--serif);
+  font-variant-caps: all-small-caps;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--blood-bright);
+  border-bottom: 1px solid var(--border-bright);
+}
+.survey-table td, .symbol-map-table td, .zone-table td, .kit-map-table td {
+  font-size: 0.8rem;
+  line-height: 1.75;
+  border-bottom: 1px solid var(--border);
+}
+.survey-table tbody tr:hover,
+.zone-table tbody tr:hover,
+.kit-map-table tbody tr:hover,
+.symbol-map-table tbody tr:hover { background: rgba(var(--tint), 0.035); }
+
+/* 7-6 引文 / 按语 */
+blockquote, .sin-quote, .manifesto-quote, .sin-detail-quote, .exhibition-screen-note {
+  font-family: var(--serif);
+  font-style: italic;
+  line-height: 1.95;
+  border-left: 2px solid rgba(178,52,40,0.45);
+  padding-left: 1.1rem;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   8. 羊皮纸档案区 —— 研究意义 / 文献 / 申报
+        由 00 令牌整体翻转：正文变铁胆墨，卡片变浅色纸面，
+        --tint 翻转为墨褐，使所有半透明叠加层由"提亮"变"压暗"
+   ───────────────────────────────────────────────────────────────── */
+#research,
+#plan,
+#press-kit {
+  --text: var(--pq-ink);
+  --text-dim: var(--pq-ink-soft);
+  --text-faint: var(--pq-ink-faint);
+  --wax: var(--pq-ink);
+  --warm: var(--pq-ink);
+  --accent: var(--pq-gold);
+  --gold: var(--pq-gold);
+  --gold-deep: #6d5222;
+  --ash: var(--pq-ink-faint);
+  --ash-dim: #9c8f78;
+  --border: var(--pq-rule);
+  --border-bright: var(--pq-rule-strong);
+  --bg-light: #f2ead9;
+  --bg-mid: #eae1cd;
+  --ember: var(--pq-seal);
+  --crimson: var(--pq-seal);
+  --ok: #5f6b33;
+  --pending: #8a6612;
+  --tint: 44,34,24;
+
+  color: var(--pq-ink);
+  background-color: var(--pq-bg);
+  /* 纸张： bookshelf 老化 + 纤维颗粒 + 两侧阴影，无需外部图片 */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23p)' opacity='0.09'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 70% 45% at 15% 0%, rgba(255,252,242,0.6) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 50% at 85% 100%, rgba(163,144,110,0.22) 0%, transparent 62%),
+    radial-gradient(ellipse 60% 40% at 50% 50%, transparent 40%, rgba(120,98,64,0.09) 100%);
+  background-attachment: scroll;
+  box-shadow:
+    inset 0 30px 50px -40px rgba(74,58,36,0.42),
+    inset 0 -30px 50px -40px rgba(74,58,36,0.42),
+    0 0 0 1px rgba(74,58,36,0.16);
+  border-top: 1px solid var(--pq-rule-strong);
+  border-bottom: 1px solid var(--pq-rule-strong);
+  position: relative;
+}
+/* 页眉压印线：档案页的天头 */
+#research::before,
+#plan::before,
+#press-kit::before {
+  content: '';
+  position: absolute;
+  top: 2.6rem;
+  left: 2rem; right: 2rem;
+  height: 1px;
+  background: var(--pq-rule);
+  pointer-events: none;
+}
+
+/* 档案区内的板块编号铜牌 → 改为朱线抬头 + 蜡封 */
+#research .section-label,
+#plan .section-label,
+#press-kit .section-label {
+  color: var(--pq-ink);
+  background: transparent;
+  border-color: transparent;
+  border-bottom: 1px solid var(--pq-rule-strong);
+  border-left: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0.5rem 0 0.8rem;
+  letter-spacing: 0.18em;
+  width: 100%;
+  max-width: none;
+  display: block;
+  margin-bottom: 1.6rem;
+}
+#research .section-label::before,
+#plan .section-label::before,
+#press-kit .section-label::before {
+  content: '\25C9';            /* ◉ 压印朱记 */
+  color: var(--pq-seal);
+  opacity: 0.8;
+  margin-right: 0.5em;
+}
+/* 档案区标题之下不再用金色描边 */
+#research .section-title,
+#plan .section-title,
+#press-kit .section-title { color: var(--pq-ink); }
+#research .section-title::after,
+#plan .section-title::after,
+#press-kit .section-title::after {
+  background: linear-gradient(90deg, var(--pq-seal), transparent);
+}
+
+/* 卡片 → 浅色纸面 + 墨线 */
+#research .survey-card,
+#research .research-bg-card,
+#research .research-question-card,
+#research .theory-card,
+#research .refcase-card,
+#research .innovation-card,
+#research .feasibility-card,
+#research .method-step,
+#plan .plan-phase,
+#plan .progress-wrap,
+#press-kit .press-kit-card,
+#press-kit .copyright-section {
+  background: rgba(255,252,244,0.5);
+  border-color: var(--pq-rule);
+  border-radius: 1px;
+}
+#research .research-question-card:hover,
+#research .refcase-card:hover,
+#research .survey-card:hover,
+#research .research-bg-card:hover,
+#research .theory-card:hover,
+#research .feasibility-card:hover,
+#press-kit .press-kit-card:hover {
+  border-color: var(--pq-rule-strong);
+  box-shadow: 0 14px 30px -22px rgba(74,58,36,0.5);
+}
+#research .method-flow,
+#plan .plan-timeline,
+#research .apparatus-meta { background: var(--pq-rule); }
+#research .apparatus-meta-item { background: rgba(255,252,244,0.5); }
+
+/* 表格当前行 */
+#plan .plan-phase:hover,
+#research .method-step:hover { background: rgba(255,252,244,0.75); }
+
+/* 下载 / 链接：由描边按钮改为文件标签 */
+#press-kit .press-kit-download {
+  color: var(--pq-ink-soft);
+  border: 1px solid var(--pq-rule-strong);
+  border-radius: 1px;
+  background: rgba(255,252,244,0.6);
+  font-family: var(--serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+}
+#press-kit .press-kit-download:hover {
+  color: var(--pq-ink);
+  border-color: var(--pq-seal);
+  background: rgba(142,43,34,0.07);
+}
+#press-kit .press-kit-num {
+  font-family: var(--serif);
+  font-variant-caps: all-small-caps;
+  color: var(--pq-gold);
+  opacity: 0.6;
+}
+#press-kit .press-kit-body h3 { color: var(--pq-ink); letter-spacing: 0.06em; }
+
+/* 进度条：在纸面上改为统一的墨线 + 橄榄填充 */
+#plan .progress-track { background: rgba(44,34,24,0.14); }
+#plan .progress-fill { background: linear-gradient(90deg, rgba(95,107,51,0.8), var(--pq-gold)); }
+#plan .pm-dot { background: var(--pq-bg-alt); border-color: var(--pq-seal); }
+#plan .pm-text, #plan .progress-scale { color: var(--pq-ink-faint); }
+#plan .progress-stat strong { color: var(--pq-gold); }
+
+/* 人机占比条 */
+.ratio-bar { background: rgba(44,34,24,0.14); }
+.ratio-bar i { background: var(--pq-gold); }
+.lg-ai { background: var(--pq-gold); }
+.lg-human { background: rgba(44,34,24,0.22); }
+.ratio-note { border-left: 2px solid var(--pq-rule); padding-left: 0.9rem; }
+
+/* 色彩校准表里的 swatch 加一圈墨线，避免在纸面上糊掉 */
+.swatch { border: 1px solid rgba(44,34,24,0.28); }
+.survey-conflict { color: #9a5a12 !important; }
+
+/* 表格行间隔（账簿式：每隔一行淡淡底色） */
+#research .survey-table tbody tr:nth-child(even),
+#research .symbol-map-table tbody tr:nth-child(even),
+#research .kit-map-table tbody tr:nth-child(even) {
+  background: rgba(255,252,244,0.35);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   9. 响应式修正
+   ───────────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .hero-content { padding: 2rem 1.3rem 1.6rem; }
+  .hero-content::after { inset: 5px; }
+  .hero-title-line { letter-spacing: 0.07em; }
+  .hero-subtitle { letter-spacing: 0.18em; }
+  .hero-rail { gap: 0.45rem; font-size: 0.66rem; letter-spacing: 0.12em; }
+  .section-label { font-size: 0.76rem; letter-spacing: 0.14em; padding: 0.5rem 0.85rem 0.56rem; }
+  .sin-card-name { font-size: 1.7rem; letter-spacing: 0.12em; }
+  .about-lang-btn { padding: 0.45rem 0.95rem 0.52rem; }
+  #research::before, #plan::before, #press-kit::before { top: 2rem; left: 1.2rem; right: 1.2rem; }
+  #research, #plan, #press-kit { box-shadow: inset 0 20px 40px -34px rgba(74,58,36,0.4); }
+}
+
+@media print {
+  #research, #plan, #press-kit { background-image: none; }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   10. 第二遍精修 · 2026-10-13
+   ───────────────────────────────────────────────────────────────── */
+
+/* 10.1 七罪卡图「老化颜料」统一滤镜：
+   原图是高饱和冷蓝 AI 帧，与烛光暗区打架。
+   静止时掺入羊皮纸暖调（sepia）并压饱和，悬停时恢复大半原色但保留
+   轻微老化层 —— 让影像始终像"经年褪色的档案影像"而非赛博屏。 */
+.sin-card-image img {
+  filter: sepia(0.16) saturate(0.82) brightness(0.84) contrast(1.03);
+}
+.sin-card:hover .sin-card-image img {
+  filter: sepia(0.07) saturate(0.94) brightness(0.98) contrast(1.02);
+}
+
+/* 卡片底部渐隐改接暖褐黑，替代中性的 #060606 */
+.sin-card-overlay {
+  background: linear-gradient(180deg, transparent 42%, rgba(10,8,6,0.92) 100%);
+}
+
+/* 10.2 关于区「NO XV」题头：蜡白 → 镀金的细腻纵向渐变，
+   与扉页主标题同一套泥金处理；拉丁副题升格为题记轨。 */
+.about-title-en {
+  background: linear-gradient(176deg, var(--wax) 30%, var(--blood-bright) 88%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.015em;
+}
+.about-title-sub {
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.34em;
+  color: var(--blood-deep);
+}
+.about-title-cn {
+  color: var(--text);
+  letter-spacing: 0.14em;
+  font-weight: 400;
+}
+
+/* 10.3 技术资产卡：图标改古典符号金调（HTML 中 ⚡ 已换为文本符号 ϟ），
+   卡名与标签维持 mono，但增加金色描边层级。 */
+.file-icon {
+  color: var(--blood-bright);
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  opacity: 0.78;
+  text-shadow: 0 0 14px rgba(178,52,40,0.25);
+}
+.file-card { border: 1px solid rgba(178,52,40,0.1); }
+.file-card:hover { border-color: rgba(178,52,40,0.26); }
+
+/* 10.4 展陈方案区（#exhibition）：流程步骤牌与表格标题行补礼仪轨 */
+#exhibition .section-desc { text-indent: 2em; }
+#exhibition table th {
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.18em;
+  color: var(--blood-deep);
+}
+
+/* 10.5 宣言区（#manifesto）竖排罪名单句：左缘加受难红刻线 */
+#manifesto .manifesto-summary {
+  border-left: 1px solid rgba(142,43,34,0.45);
+  padding-left: 1.2rem;
+}
+#manifesto .manifesto-highlight {
+  color: var(--blood-bright);
+}

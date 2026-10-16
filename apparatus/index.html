@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>七罪装置 · 交互演示 — AI时代的七宗罪</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<style>
+  .stage.shake{animation:sh .3s infinite}
+  @keyframes sh{0%{transform:translate(0,0)}25%{transform:translate(-3px,2px)}50%{transform:translate(3px,-2px)}75%{transform:translate(-2px,-1px)}100%{transform:translate(0,0)}}
+  #consentResult{display:none;margin-top:14px;font-size:13.5px;color:var(--accent)}
+  #consentResult.on{display:block}
+</style>
+
+<div class="top">
+  <div class="wrap">
+    <div class="brand">七罪装置 · 交互演示<small>SEVEN SINS · SENSOR INSTALLATION</small></div>
+    <div class="steps" id="topsteps" style="display:none">
+      <button class="dot">01 傲慢</button><button class="dot">02 嫉妒</button><button class="dot">03 愤怒</button>
+      <button class="dot">04 懒惰</button><button class="dot">05 贪婪</button><button class="dot">06 食欲</button>
+      <button class="dot">07 色欲</button>
+    </div>
+    <span class="idchip" id="idchip"></span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ── 入口 ── -->
+  <section id="gate" class="view on gate">
+    <div class="kicker">PARTICIPATORY RESEARCH · 受试说明</div>
+    <h2 class="big">你即将成为第 N 号样本</h2>
+    <p class="lead">七座雕塑是七台行为实验装置。你的走近、停留、触碰、声音与选择会被采集，实时驱动雕塑的光效，并在终点汇成一份个人七罪画像。你可以随时销毁自己的数据——<strong>拒绝本身也是一条样本</strong>。</p>
+    <div class="consent">
+      <ul>
+        <li>采集内容：与装置的距离、停留时长、触碰、音量、心率（模拟）、每站的选择</li>
+        <li>不与身份绑定，编号匿名，数据仅存于本机浏览器（localStorage）</li>
+        <li>随时可在终点选择「销毁」，销毁后不进入样本墙</li>
+        <li>交互所需：鼠标移动（距离）、鼠标点击（触碰）、可选麦克风（声音）</li>
+      </ul>
+    </div>
+    <div class="row">
+      <button class="btn primary" id="btnStart">同意并领取受试编号 →</button>
+      <button class="btn ghost" id="btnSkip">不同意，只参观</button>
+    </div>
+    <p class="muted" style="margin-top:18px">◈ 演示版：心率、称重、信息流为模拟值；麦克风为真实采集（可拒绝授权，改用按钮模拟）。</p>
+  </section>
+
+  <!-- ── 装置台（动态渲染） ── -->
+  <section id="station" class="view"></section>
+
+  <!-- ── 终点 ── -->
+  <section id="final" class="view final">
+    <div class="kicker">PERSONAL DOSSIER · 终点终端</div>
+    <h2 class="big">你的七罪测量报告</h2>
+    <div class="dossier">
+      <div class="dcard">
+        <div class="r-id mono" style="font-size:12px;color:var(--tx3);letter-spacing:.18em">SUBJECT <span id="mine">—</span></div>
+        <h3 style="margin-top:6px">逐站测量</h3>
+        <div id="dossier"></div>
+      </div>
+      <div class="dcard">
+        <h3>综合判读</h3>
+        <div id="verdict"></div>
+        <div style="margin-top:18px">
+          <h4 class="mono" style="font-size:11px;letter-spacing:.2em;color:var(--tx3);margin-bottom:10px">DATA CONSENT</h4>
+          <div class="row" style="margin-top:0">
+            <button class="btn primary" id="bDonate">捐赠数据</button>
+            <button class="btn ghost" id="bDestroy">销毁数据</button>
+          </div>
+          <div id="consentResult"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dcard wall">
+      <h3>集体罪相 · 实时样本墙</h3>
+      <div style="display:flex;align-items:flex-end;gap:22px;margin-bottom:18px">
+        <div><div class="bignum" id="wNum">1,284</div><div class="muted mono">TOTAL SAMPLES</div></div>
+        <div class="muted mono" id="wRate" style="padding-bottom:8px">数据捐赠率 —</div>
+      </div>
+      <div id="wallBars"></div>
+      <div class="ticker" id="ticker"></div>
+      <p class="muted" style="margin-top:14px">◈ 演示版以 1,284 份为基线样本，你的捐赠会实时加进去（存于本机 localStorage）。</p>
+    </div>
+  </section>
+
+</div>
+<script src="app.js"></script>
+</body>
+</html>

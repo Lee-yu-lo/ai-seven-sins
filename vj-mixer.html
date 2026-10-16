@@ -1,0 +1,2140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VJ MIXER — AI时代的七宗罪 | TouchDesigner Style</title>
+<style>
+/* ================================================================
+   VJ MIXER — Interactive Visual Engine
+   ================================================================
+   A browser-based VJ tool inspired by TouchDesigner / Resolume.
+   Load a video, apply real-time VJ effects, generate overlay graphics,
+   and mix audio-reactive visuals.
+
+   HOW TO USE:
+   1. Click "Load Video" and select your video file
+   2. Use the sliders and toggles to control effects
+   3. Press SPACE to play/pause
+   4. Press 1-7 to jump between sin segments
+   5. Press R to record output
+
+   This file IS a project file — modify the effect functions in
+   the <script> section to create your own visual character.
+   ================================================================ */
+
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --bg: #0a0a0f;
+  --panel: #12121a;
+  --panel-light: #1a1a26;
+  --border: #2a2a3e;
+  --text: #c8c8e0;
+  --text-dim: #606080;
+  --accent: #00ffcc;
+  --accent-dim: #00aa88;
+  --warn: #ff4466;
+  --glow: 0 0 10px;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'SF Mono','Monaco','Consolas',monospace;
+  font-size: 12px;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top bar */
+.topbar {
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 48px;
+  flex-shrink: 0;
+}
+.topbar h1 {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--accent);
+  text-shadow: var(--glow) var(--accent-dim);
+}
+.topbar .btn {
+  background: var(--panel-light);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 14px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 11px;
+  border-radius: 4px;
+  transition: all .15s;
+}
+.topbar .btn:hover { border-color: var(--accent); color: var(--accent); }
+.topbar .btn.active { background: var(--accent); color: #000; }
+.topbar .info { color: var(--text-dim); font-size: 10px; margin-left: auto; }
+
+/* Main layout */
+.main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Left panel — layers */
+.left-panel {
+  width: 200px;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  padding: 12px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+.panel-title {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.layer-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  margin-bottom: 4px;
+  background: var(--panel-light);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all .15s;
+  border: 1px solid transparent;
+}
+.layer-item:hover { border-color: var(--border); }
+.layer-item.active { border-color: var(--accent); }
+.layer-item .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  transition: all .15s;
+}
+.layer-item.active .dot { background: var(--accent); box-shadow: var(--glow) var(--accent); }
+.layer-item span { font-size: 11px; }
+
+/* Center — canvas */
+.canvas-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+}
+#vjCanvas {
+  max-width: 100%;
+  max-height: 100%;
+  background: #000;
+  box-shadow: 0 0 40px rgba(0,255,204,0.05);
+}
+#videoEl { display: none; }
+
+/* Overlay info on canvas */
+.canvas-overlay {
+  position: absolute;
+  top: 12px; left: 12px;
+  font-size: 10px;
+  color: var(--accent);
+  opacity: 0.6;
+  pointer-events: none;
+}
+.canvas-overlay .seg-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.canvas-overlay .seg-time { color: var(--text-dim); }
+
+/* Right panel — controls */
+.right-panel {
+  width: 280px;
+  background: var(--panel);
+  border-left: 1px solid var(--border);
+  padding: 12px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+.control-group {
+  margin-bottom: 16px;
+}
+.control-group .group-title {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.slider-row label {
+  width: 80px;
+  font-size: 10px;
+  color: var(--text-dim);
+}
+.slider-row input[type=range] {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  background: var(--panel-light);
+  border-radius: 2px;
+  outline: none;
+}
+.slider-row input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  box-shadow: var(--glow) var(--accent-dim);
+}
+.slider-row .val {
+  width: 36px;
+  text-align: right;
+  font-size: 10px;
+  color: var(--accent);
+}
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  padding: 4px 8px;
+  background: var(--panel-light);
+  border-radius: 4px;
+}
+.toggle-row label { font-size: 11px; }
+.toggle {
+  width: 36px; height: 18px;
+  background: var(--border);
+  border-radius: 9px;
+  position: relative;
+  cursor: pointer;
+  transition: all .2s;
+}
+.toggle.on { background: var(--accent-dim); }
+.toggle::after {
+  content: '';
+  position: absolute;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  top: 2px; left: 2px;
+  transition: all .2s;
+}
+.toggle.on::after { left: 20px; background: #fff; }
+
+/* Bottom bar — timeline */
+.bottom-bar {
+  background: var(--panel);
+  border-top: 1px solid var(--border);
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 56px;
+  flex-shrink: 0;
+}
+.transport-btn {
+  background: var(--panel-light);
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all .15s;
+}
+.transport-btn:hover { border-color: var(--accent); color: var(--accent); }
+.timeline {
+  flex: 1;
+  height: 28px;
+  background: var(--panel-light);
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+.timeline-seg {
+  position: absolute;
+  top: 0; bottom: 0;
+  border-right: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding-left: 6px;
+  font-size: 9px;
+  color: var(--text-dim);
+  transition: all .15s;
+}
+.timeline-seg.active { color: var(--accent); background: rgba(0,255,204,0.08); }
+.timeline-cursor {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  box-shadow: var(--glow) var(--accent);
+  z-index: 2;
+}
+.time-display {
+  font-size: 11px;
+  color: var(--accent);
+  min-width: 80px;
+  text-align: center;
+}
+
+/* Audio viz */
+#audioViz {
+  width: 120px;
+  height: 28px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* Hint */
+.hint {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+  color: var(--text-dim);
+  pointer-events: none;
+}
+.hint h2 { font-size: 18px; margin-bottom: 8px; color: var(--accent); }
+.hint p { font-size: 12px; }
+
+/* ================================================================
+   NARRATIVE INTERACTION — Seven Sins Theme
+   ================================================================ */
+
+/* Narrative text overlay — positioned to the right of top-left segment name */
+.sin-narrative {
+  position: absolute;
+  top: 10px;
+  left: 90px;
+  text-align: left;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.sin-narrative.visible { opacity: 1; }
+.sin-narrative .sin-title {
+  display: none; /* eliminated: segment name already shown in canvas-overlay */
+}
+.sin-narrative .sin-quote {
+  font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  font-style: normal;
+  color: #fff;
+  opacity: 0.92;
+  margin-bottom: 3px;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+}
+.sin-narrative .sin-hint {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  opacity: 0.75;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+}
+@keyframes sinGlow {
+  0% { text-shadow: 0 0 15px currentColor, 0 0 30px currentColor; }
+  100% { text-shadow: 0 0 25px currentColor, 0 0 50px currentColor; }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+/* Judgment meter */
+.judgment-meter {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 200px;
+  background: rgba(10,10,15,0.7);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  z-index: 5;
+  pointer-events: none;
+}
+.judgment-meter .fill {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, #ff4466, #ff8800, #ffcc00);
+  transition: height 0.5s ease;
+  border-radius: 3px;
+}
+.judgment-meter .label {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 7px;
+  letter-spacing: 1px;
+  color: var(--warn);
+  white-space: nowrap;
+}
+.judgment-meter .count {
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 8px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+/* Sin transition flash */
+.sin-flash {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0;
+}
+.sin-flash .flash-text {
+  font-size: 72px;
+  font-weight: 900;
+  letter-spacing: 8px;
+  color: #fff;
+  text-shadow: 0 0 30px #fff, 0 0 60px currentColor;
+}
+.sin-flash.active {
+  animation: flashSeq 0.8s ease-out forwards;
+}
+@keyframes flashSeq {
+  0% { opacity: 0; }
+  10% { opacity: 1; background: rgba(255,255,255,0.3); }
+  20% { opacity: 0.9; background: transparent; }
+  100% { opacity: 0; background: transparent; }
+}
+
+/* Judgment final flash */
+.judgment-final {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #fff;
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0;
+}
+.judgment-final.active {
+  animation: judgmentFlash 3s ease-out forwards;
+}
+@keyframes judgmentFlash {
+  0% { opacity: 0; }
+  5% { opacity: 1; }
+  15% { opacity: 1; }
+  40% { opacity: 0.8; background: #ff4466; }
+  100% { opacity: 0; background: #000; }
+}
+
+/* Interaction cursor aura */
+.cursor-aura {
+  position: absolute;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 4;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s;
+  opacity: 0;
+}
+.cursor-aura.active { opacity: 0.5; }
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:8px;">
+    <a href="index.html" style="text-decoration:none;color:var(--accent);font-size:11px;border:1px solid var(--border);padding:6px 12px;border-radius:4px;transition:all .15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">← 展览</a>
+    <a href="about.html" style="text-decoration:none;color:var(--text-dim);font-size:11px;border:1px solid var(--border);padding:6px 12px;border-radius:4px;transition:all .15s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-dim)'">关于作品</a>
+  </div>
+  <h1>VJ MIXER</h1>
+  <button class="btn" onclick="loadVideo()">Load Video</button>
+  <button class="btn" id="playBtn" onclick="togglePlay()">▶ Play</button>
+  <button class="btn" id="recBtn" onclick="toggleRecord()">● Record</button>
+  <span class="info">SPACE: play | 1-7: segments | R: record | 七宗罪叙事交互 — 操作即犯罪</span>
+</div>
+
+<!-- ============ MAIN LAYOUT ============ -->
+<div class="main">
+
+  <!-- LEFT: Layers -->
+  <div class="left-panel">
+    <div class="panel-title">Layers</div>
+    <div class="layer-item active" data-layer="base"><div class="dot"></div><span>Base Video</span></div>
+    <div class="layer-item active" data-layer="rgbshift"><div class="dot"></div><span>RGB Shift</span></div>
+    <div class="layer-item active" data-layer="scanlines"><div class="dot"></div><span>Scanlines</span></div>
+    <div class="layer-item active" data-layer="glitch"><div class="dot"></div><span>Glitch</span></div>
+    <div class="layer-item active" data-layer="noise"><div class="dot"></div><span>Noise</span></div>
+    <div class="layer-item active" data-layer="posterize"><div class="dot"></div><span>Posterize</span></div>
+    <div class="layer-item active" data-layer="feedback"><div class="dot"></div><span>Feedback</span></div>
+    <div class="layer-item active" data-layer="particles"><div class="dot"></div><span>Particles</span></div>
+    <div class="layer-item active" data-layer="grid"><div class="dot"></div><span>Geo Grid</span></div>
+    <div class="layer-item active" data-layer="waveform"><div class="dot"></div><span>Waveform</span></div>
+    <div class="layer-item active" data-layer="data"><div class="dot"></div><span>Data HUD</span></div>
+    <div class="layer-item" data-layer="vignette"><div class="dot"></div><span>Vignette</span></div>
+  </div>
+
+  <!-- CENTER: Canvas -->
+  <div class="canvas-wrap">
+    <canvas id="vjCanvas" width="1280" height="720"></canvas>
+    <video id="videoEl" muted playsinline></video>
+    <!-- BGM: cinematic / futuristic / metallic electronic score -->
+    <audio id="bgmEl" src="assets/audio/vj_bgm.mp3" loop preload="auto"></audio>
+    <div class="canvas-overlay">
+      <div class="seg-name" id="segName">INTRO</div>
+      <div class="seg-time" id="segTime">0.00s</div>
+    </div>
+    <div class="hint" id="hint">
+      <h2>VJ MIXER</h2>
+      <p>Loading source video…<br>Or click "Load Video" to use your own</p>
+    </div>
+    <!-- Narrative overlay -->
+    <div class="sin-narrative" id="sinNarrative">
+      <div class="sin-title" id="sinTitle"></div>
+      <div class="sin-quote" id="sinQuote"></div>
+      <div class="sin-hint" id="sinHint"></div>
+    </div>
+    <!-- Judgment meter -->
+    <div class="judgment-meter">
+      <div class="label">JUDGMENT</div>
+      <div class="fill" id="judgmentFill" style="height:0%"></div>
+      <div class="count" id="judgmentCount">0 / 7</div>
+    </div>
+    <!-- Sin transition flash -->
+    <div class="sin-flash" id="sinFlash">
+      <div class="flash-text" id="flashText"></div>
+    </div>
+    <!-- Judgment final flash -->
+    <div class="judgment-final" id="judgmentFinal"></div>
+    <!-- Cursor aura -->
+    <div class="cursor-aura" id="cursorAura"></div>
+  </div>
+
+  <!-- RIGHT: Controls -->
+  <div class="right-panel">
+
+    <div class="control-group">
+      <div class="group-title">RGB Shift</div>
+      <div class="slider-row">
+        <label>Amount</label>
+        <input type="range" id="rgbShiftAmt" min="0" max="20" value="6">
+        <span class="val" id="rgbShiftAmtVal">6</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="group-title">Scanlines</div>
+      <div class="slider-row">
+        <label>Intensity</label>
+        <input type="range" id="scanlineInt" min="0" max="100" value="50">
+        <span class="val" id="scanlineIntVal">50</span>
+      </div>
+      <div class="slider-row">
+        <label>Spacing</label>
+        <input type="range" id="scanlineSpace" min="2" max="8" value="3">
+        <span class="val" id="scanlineSpaceVal">3</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="group-title">Glitch</div>
+      <div class="slider-row">
+        <label>Intensity</label>
+        <input type="range" id="glitchInt" min="0" max="100" value="40">
+        <span class="val" id="glitchIntVal">40</span>
+      </div>
+      <div class="slider-row">
+        <label>Speed</label>
+        <input type="range" id="glitchSpeed" min="0" max="200" value="80">
+        <span class="val" id="glitchSpeedVal">80</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="group-title">Noise</div>
+      <div class="slider-row">
+        <label>Amount</label>
+        <input type="range" id="noiseAmt" min="0" max="80" value="25">
+        <span class="val" id="noiseAmtVal">25</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="group-title">Posterize</div>
+      <div class="slider-row">
+        <label>Levels</label>
+        <input type="range" id="posterizeLvl" min="2" max="32" value="8">
+        <span class="val" id="posterizeLvlVal">8</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="group-title">Feedback</div>
+      <div class="slider-row">
+        <label>Strength</label>
+        <input type="range" id="feedbackStr" min="0" max="100" value="30">
+        <span class="val" id="feedbackStrVal">30</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="group-title">Color Grade</div>
+      <div class="slider-row">
+        <label>Contrast</label>
+        <input type="range" id="contrast" min="50" max="200" value="140">
+        <span class="val" id="contrastVal">140</span>
+      </div>
+      <div class="slider-row">
+        <label>Saturation</label>
+        <input type="range" id="saturation" min="0" max="200" value="50">
+        <span class="val" id="saturationVal">50</span>
+      </div>
+      <div class="slider-row">
+        <label>Brightness</label>
+        <input type="range" id="brightness" min="-50" max="50" value="-5">
+        <span class="val" id="brightnessVal">-5</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="group-title">Particles</div>
+      <div class="slider-row">
+        <label>Count</label>
+        <input type="range" id="particleCount" min="0" max="500" value="200">
+        <span class="val" id="particleCountVal">200</span>
+      </div>
+      <div class="slider-row">
+        <label>Size</label>
+        <input type="range" id="particleSize" min="1" max="10" value="3">
+        <span class="val" id="particleSizeVal">3</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="group-title">Audio Reactive System</div>
+      <div class="toggle-row">
+        <label>Audio Reactive</label>
+        <div class="toggle on" id="audioReactive" onclick="this.classList.toggle('on')"></div>
+      </div>
+      <div style="font-size:9px;color:var(--text-dim);margin:-2px 0 8px 8px;line-height:1.4;">
+        BGM drives beat phase — RGB shift, glitch, particles & flash pulse on every beat
+      </div>
+      <!-- Live energy meters -->
+      <div style="display:flex;gap:6px;margin-bottom:8px;">
+        <div style="flex:1;">
+          <div style="font-size:8px;color:var(--text-dim);margin-bottom:2px;">BASS</div>
+          <div style="height:6px;background:var(--panel-light);border-radius:3px;overflow:hidden;">
+            <div id="meterBass" style="height:100%;width:0%;background:#ff4466;transition:width .1s;"></div>
+          </div>
+        </div>
+        <div style="flex:1;">
+          <div style="font-size:8px;color:var(--text-dim);margin-bottom:2px;">MID</div>
+          <div style="height:6px;background:var(--panel-light);border-radius:3px;overflow:hidden;">
+            <div id="meterMid" style="height:100%;width:0%;background:#ffaa00;transition:width .1s;"></div>
+          </div>
+        </div>
+        <div style="flex:1;">
+          <div style="font-size:8px;color:var(--text-dim);margin-bottom:2px;">HI</div>
+          <div style="height:6px;background:var(--panel-light);border-radius:3px;overflow:hidden;">
+            <div id="meterTreble" style="height:100%;width:0%;background:#00ffcc;transition:width .1s;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="toggle-row">
+        <label>Auto Segment</label>
+        <div class="toggle on" id="autoSegment" onclick="this.classList.toggle('on')"></div>
+      </div>
+      <div style="font-size:9px;color:var(--text-dim);margin:-2px 0 8px 8px;line-height:1.4;">
+        Auto-advance to next sin every 4 beats — music controls the narrative
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ BOTTOM BAR ============ -->
+<div class="bottom-bar">
+  <div class="transport-btn" onclick="togglePlay()" id="playBtn2">▶</div>
+  <div class="timeline" id="timeline" onclick="seekTo(event)">
+    <div class="timeline-cursor" id="timelineCursor" style="left:0%"></div>
+  </div>
+  <div class="time-display" id="timeDisplay">00:00 / 00:00</div>
+  <canvas id="audioViz" width="120" height="28"></canvas>
+</div>
+
+<script>
+// ================================================================
+// VJ MIXER — Real-time Visual Engine
+// ================================================================
+// Core rendering engine. Each function is a "node" in the visual
+// chain, similar to TouchDesigner's operator network.
+//
+// DATA FLOW:
+//   Video Frame → RGB Shift → Scanlines → Glitch → Noise
+//                → Posterize → Feedback → Color Grade
+//                → [Generative Overlay: Particles + Grid + Waveform]
+//                → Vignette → Output Canvas
+// ================================================================
+
+const canvas = document.getElementById('vjCanvas');
+const ctx = canvas.getContext('2d', { willReadFrequently: true });
+const video = document.getElementById('videoEl');
+const hint = document.getElementById('hint');
+
+// Off-screen canvas for feedback buffer
+const fbCanvas = document.createElement('canvas');
+fbCanvas.width = canvas.width;
+fbCanvas.height = canvas.height;
+const fbCtx = fbCanvas.getContext('2d');
+
+// Layer states
+const layers = {
+  base: true, rgbshift: true, scanlines: true, glitch: true,
+  noise: true, posterize: true, feedback: true, particles: true,
+  grid: true, waveform: true, data: true, vignette: false
+};
+
+// Seven Sins segments
+const SEGMENTS = [
+  { name: 'INTRO',    start: 0,   end: 5,   color: [200,200,200] },
+  { name: 'GLUTTONY', start: 5,   end: 10,  color: [80,150,255] },
+  { name: 'GREED',    start: 10,  end: 15,  color: [255,200,50] },
+  { name: 'SLOTH',    start: 15,  end: 20,  color: [130,130,160] },
+  { name: 'LUST',     start: 20,  end: 25,  color: [255,80,150] },
+  { name: 'PRIDE',    start: 25,  end: 30,  color: [255,130,30] },
+  { name: 'ENVY',     start: 30,  end: 35,  color: [50,230,80] },
+  { name: 'WRATH',    start: 35,  end: 99,  color: [255,30,30] },
+];
+
+// ================================================================
+// SEVEN SINS NARRATIVE DATA
+// ================================================================
+const SIN_DATA = {
+  INTRO: {
+    title: 'INTRO / 序章',
+    quote: 'When AI can generate everything, how will human sins manifest?',
+    cnQuote: '当AI能生成一切，人类的七宗罪将如何显形？',
+    hint: 'OBSERVE — 等待罪之降临',
+    interaction: 'none'
+  },
+  GLUTTONY: {
+    title: 'GLUTTONY / 食欲',
+    quote: 'Feast on everything, endlessly',
+    cnQuote: '感官盛宴，欲罢不能',
+    hint: 'CLICK — 点击画面刷新信息盛宴',
+    interaction: 'click-feed'
+  },
+  GREED: {
+    title: 'GREED / 贪婪',
+    quote: 'Accumulate weight that is never enough',
+    cnQuote: '积累永远不够的重量',
+    hint: 'DRAG — 拖拽鼠标收集金粒',
+    interaction: 'drag-collect'
+  },
+  SLOTH: {
+    title: 'SLOTH / 懒惰',
+    quote: 'Let everything stall in comfort',
+    cnQuote: '让一切停滞在舒适里',
+    hint: 'HOLD — 按住鼠标沉溺停滞',
+    interaction: 'hold-indulge'
+  },
+  LUST: {
+    title: 'LUST / 色欲',
+    quote: 'A gravity field pulled by desire',
+    cnQuote: '被欲望牵引的引力场',
+    hint: 'MOVE — 移动鼠标释放渴望',
+    interaction: 'move-desire'
+  },
+  PRIDE: {
+    title: 'PRIDE / 傲慢',
+    quote: 'Light that blooms only for itself',
+    cnQuote: '光芒只为自己绽放',
+    hint: 'DOUBLE-CLICK — 双击画面登神长阶',
+    interaction: 'dblclick-ascend'
+  },
+  ENVY: {
+    title: 'ENVY / 嫉妒',
+    quote: 'Gazing at reflections that are not your own',
+    cnQuote: '在镜中凝视不属于自己的倒影',
+    hint: 'RIGHT-CLICK — 右键碎裂镜像',
+    interaction: 'rightclick-mirror'
+  },
+  WRATH: {
+    title: 'WRATH / 暴怒',
+    quote: 'Burning to ash, pure and absolute',
+    cnQuote: '燃烧至灰烬的纯粹',
+    hint: 'SHAKE MOUSE — 快速移动释放怒火',
+    interaction: 'shake-rage'
+  }
+};
+
+// ================================================================
+// INTERACTION STATE — tracks user "sins"
+// ================================================================
+const ix = {
+  mouseX: 0, mouseY: 0,
+  prevMouseX: 0, prevMouseY: 0,
+  mouseVel: 0,
+  isMouseDown: false,
+  isDragging: false,
+  // Gluttony: consuming black holes
+  consumeBursts: [],
+  // Greed: gold particles
+  goldParticles: [],
+  goldCount: 0,
+  // Sloth: slow factor & fog
+  slowFactor: 1.0,
+  fogLevel: 0,
+  // Lust: heat points
+  heatPoints: [],
+  // Pride: light shafts
+  lightShafts: [],
+  // Envy: mirror shards
+  mirrorShards: [],
+  // Wrath: rage intensity & shake
+  rageIntensity: 0,
+  shakeX: 0, shakeY: 0,
+  // Judgment system
+  sinMeter: 0,
+  sinsCommitted: new Set(),
+  currentSinIndex: -1,
+  prevSinIndex: -1,
+  judgmentTriggered: false
+};
+
+// Particle system
+let particles = [];
+let audioData = new Uint8Array(128);
+let audioAnalyser = null;
+let audioCtx = null;
+
+// ── Audio-reactive state ──────────────────────────────────────────
+let audioBass = 0;       // low-frequency energy (0-1)
+let audioMid = 0;        // mid-frequency energy (0-1)
+let audioTreble = 0;     // high-frequency energy (0-1)
+let audioOverall = 0;    // overall energy (0-1)
+let beatPhase = 0;       // decaying beat pulse (0-1)
+let beatDetected = false;
+let lastBeatTime = 0;
+let bassHistory = [];    // rolling history for beat detection
+let autoSegLastBeat = 0; // beat counter for auto-segment
+
+// ================================================================
+// VIDEO LOADING
+// ================================================================
+function loadVideo() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'video/*';
+  input.onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    setVideoSource(url);
+  };
+  input.click();
+}
+
+function setVideoSource(url) {
+  video.src = url;
+  video.onloadedmetadata = () => {
+    hint.style.display = 'none';
+    initAudio();
+    buildTimeline();
+    render();
+  };
+}
+
+// Auto-load the embedded source video on page open
+window.addEventListener('load', () => {
+  setVideoSource('assets/videos/vj_source.mp4');
+});
+
+function initAudio() {
+  try {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const bgm = document.getElementById('bgmEl');
+    const source = audioCtx.createMediaElementSource(bgm);
+    const analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 256;
+    source.connect(analyser);
+    analyser.connect(audioCtx.destination);
+    audioAnalyser = analyser;
+  } catch(e) { console.log('Audio init skipped:', e); }
+}
+
+// ── Analyse audio frequencies into bass/mid/treble + beat detect ──
+function analyzeAudio() {
+  if (!audioAnalyser) return;
+  audioAnalyser.getByteFrequencyData(audioData);
+  const len = audioData.length;  // 128 bins
+  // Frequency ranges (approx for fftSize=256 → 128 bins, ~172Hz per bin)
+  const bassEnd = 4;     // ~0-688Hz
+  const midEnd = 24;     // ~688-4.1kHz
+  // const trebleEnd = len;  // ~4.1kHz-22kHz
+
+  let bass = 0, mid = 0, treble = 0;
+  for (let i = 0; i < bassEnd; i++) bass += audioData[i];
+  for (let i = bassEnd; i < midEnd; i++) mid += audioData[i];
+  for (let i = midEnd; i < len; i++) treble += audioData[i];
+
+  bass = bass / (bassEnd * 255);
+  mid = mid / ((midEnd - bassEnd) * 255);
+  treble = treble / ((len - midEnd) * 255);
+
+  // Smooth (exponential moving average)
+  audioBass = audioBass * 0.6 + bass * 0.4;
+  audioMid = audioMid * 0.6 + mid * 0.4;
+  audioTreble = audioTreble * 0.6 + treble * 0.4;
+  audioOverall = (audioBass + audioMid + audioTreble) / 3;
+
+  // Beat detection: compare instantaneous bass to running average
+  bassHistory.push(bass);
+  if (bassHistory.length > 30) bassHistory.shift();
+  const avg = bassHistory.reduce((a,b) => a+b, 0) / Math.max(bassHistory.length, 1);
+  const threshold = avg * 1.35 + 0.08;
+  const now = performance.now();
+  beatDetected = false;
+  if (bass > threshold && (now - lastBeatTime) > 180) {
+    beatDetected = true;
+    lastBeatTime = now;
+    beatPhase = 1.0;
+    autoSegLastBeat++;
+  }
+  // Decay beat phase
+  beatPhase *= 0.88;
+}
+
+function buildTimeline() {
+  const tl = document.getElementById('timeline');
+  const dur = video.duration || 38.5;
+  SEGMENTS[SEGMENTS.length-1].end = dur;
+  SEGMENTS.forEach((seg, i) => {
+    const el = document.createElement('div');
+    el.className = 'timeline-seg';
+    el.id = 'seg-' + i;
+    el.style.left = (seg.start / dur * 100) + '%';
+    el.style.width = ((seg.end - seg.start) / dur * 100) + '%';
+    el.textContent = seg.name;
+    el.onclick = (e) => { e.stopPropagation(); video.currentTime = seg.start + 0.01; };
+    tl.appendChild(el);
+  });
+}
+
+// ================================================================
+// PLAYBACK
+// ================================================================
+let isPlaying = false;
+function togglePlay() {
+  if (!video.src) { loadVideo(); return; }
+  const bgm = document.getElementById('bgmEl');
+  if (isPlaying) {
+    video.pause();
+    if (bgm) bgm.pause();
+    document.getElementById('playBtn').textContent = '▶ Play';
+    document.getElementById('playBtn2').textContent = '▶';
+  } else {
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    video.play();
+    if (bgm) { bgm.currentTime = video.currentTime; bgm.play().catch(()=>{}); }
+    document.getElementById('playBtn').textContent = '⏸ Pause';
+    document.getElementById('playBtn2').textContent = '⏸';
+  }
+  isPlaying = !isPlaying;
+}
+
+function seekTo(e) {
+  if (!video.src) return;
+  const rect = e.currentTarget.getBoundingClientRect();
+  const pct = (e.clientX - rect.left) / rect.width;
+  video.currentTime = pct * (video.duration || 38.5);
+}
+
+// ================================================================
+// SEGMENT DETECTION
+// ================================================================
+function getCurrentSegment(t) {
+  for (let i = 0; i < SEGMENTS.length; i++) {
+    if (t >= SEGMENTS[i].start && t < SEGMENTS[i].end) {
+      // Update UI
+      document.querySelectorAll('.timeline-seg').forEach(el => el.classList.remove('active'));
+      const segEl = document.getElementById('seg-' + i);
+      if (segEl) segEl.classList.add('active');
+      document.getElementById('segName').textContent = SEGMENTS[i].name;
+      document.getElementById('segTime').textContent = t.toFixed(2) + 's';
+
+      // Narrative: detect sin change
+      if (ix.currentSinIndex !== i) {
+        ix.prevSinIndex = ix.currentSinIndex;
+        ix.currentSinIndex = i;
+        // Show transition flash (skip on first load)
+        if (ix.prevSinIndex !== -1) {
+          sinTransition(SEGMENTS[i].name);
+        }
+        updateNarrative(SEGMENTS[i].name);
+      }
+
+      return SEGMENTS[i];
+    }
+  }
+  return SEGMENTS[0];
+}
+
+// ================================================================
+// EFFECT 1: RGB SHIFT (Chromatic Aberration)
+// ================================================================
+function applyRGBShift(imageData, amount) {
+  if (!layers.rgbshift || amount === 0) return;
+  const w = imageData.width, h = imageData.height;
+  const data = imageData.data;
+  const orig = new Uint8ClampedArray(data);
+  const shift = Math.round(amount);
+
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const idx = (y * w + x) * 4;
+      // Red channel shifted left
+      const rx = Math.max(0, x - shift);
+      data[idx] = orig[(y * w + rx) * 4];
+      // Blue channel shifted right
+      const bx = Math.min(w - 1, x + shift);
+      data[idx + 2] = orig[(y * w + bx) * 4 + 2];
+    }
+  }
+}
+
+// ================================================================
+// EFFECT 2: SCANLINES
+// ================================================================
+function applyScanlines(imageData, intensity, spacing) {
+  if (!layers.scanlines) return;
+  const data = imageData.data;
+  const w = imageData.width, h = imageData.height;
+  const factor = 1 - intensity / 100;
+
+  for (let y = 0; y < h; y += spacing) {
+    for (let x = 0; x < w; x++) {
+      const idx = (y * w + x) * 4;
+      data[idx] *= factor;
+      data[idx + 1] *= factor;
+      data[idx + 2] *= factor;
+    }
+  }
+}
+
+// ================================================================
+// EFFECT 3: GLITCH (Row Displacement)
+// ================================================================
+function applyGlitch(imageData, intensity, speed, time) {
+  if (!layers.glitch || intensity === 0) return;
+  const data = imageData.data;
+  const w = imageData.width, h = imageData.height;
+  const orig = new Uint8ClampedArray(data);
+  const threshold = intensity / 100;
+
+  for (let y = 0; y < h; y++) {
+    // Determine if this row should be displaced
+    const seed = (y * 7 + Math.floor(time * speed)) % 13;
+    if (seed > 5 && Math.sin(y * 0.1 + time * 2) > 1 - threshold) {
+      const shift = Math.floor(Math.sin(y * 0.3 + time * 3) * 30 * threshold);
+      for (let x = 0; x < w; x++) {
+        const sx = Math.max(0, Math.min(w - 1, x + shift));
+        const idx = (y * w + x) * 4;
+        const sIdx = (y * w + sx) * 4;
+        data[idx] = orig[sIdx];
+        data[idx + 1] = orig[sIdx + 1];
+        data[idx + 2] = orig[sIdx + 2];
+      }
+    }
+  }
+}
+
+// ================================================================
+// EFFECT 4: NOISE
+// ================================================================
+function applyNoise(imageData, amount) {
+  if (!layers.noise || amount === 0) return;
+  const data = imageData.data;
+  for (let i = 0; i < data.length; i += 4) {
+    const n = (Math.random() - 0.5) * amount * 2.55;
+    data[i] = Math.max(0, Math.min(255, data[i] + n));
+    data[i + 1] = Math.max(0, Math.min(255, data[i + 1] + n));
+    data[i + 2] = Math.max(0, Math.min(255, data[i + 2] + n));
+  }
+}
+
+// ================================================================
+// EFFECT 5: POSTERIZE
+// ================================================================
+function applyPosterize(imageData, levels) {
+  if (!layers.posterize) return;
+  const data = imageData.data;
+  const step = 255 / (levels - 1);
+  for (let i = 0; i < data.length; i += 4) {
+    data[i] = Math.round(data[i] / step) * step;
+    data[i + 1] = Math.round(data[i + 1] / step) * step;
+    data[i + 2] = Math.round(data[i + 2] / step) * step;
+  }
+}
+
+// ================================================================
+// EFFECT 6: COLOR GRADE
+// ================================================================
+function applyColorGrade(imageData, contrast, saturation, brightness) {
+  const data = imageData.data;
+  const c = contrast / 100;
+  const s = saturation / 100;
+  const b = brightness * 2.55;
+
+  for (let i = 0; i < data.length; i += 4) {
+    // Brightness
+    let r = data[i] + b;
+    let g = data[i + 1] + b;
+    let bl = data[i + 2] + b;
+    // Contrast
+    r = (r - 128) * c + 128;
+    g = (g - 128) * c + 128;
+    bl = (bl - 128) * c + 128;
+    // Saturation
+    const gray = r * 0.299 + g * 0.587 + bl * 0.114;
+    r = gray + (r - gray) * s;
+    g = gray + (g - gray) * s;
+    bl = gray + (bl - gray) * s;
+    data[i] = Math.max(0, Math.min(255, r));
+    data[i + 1] = Math.max(0, Math.min(255, g));
+    data[i + 2] = Math.max(0, Math.min(255, bl));
+  }
+}
+
+// ================================================================
+// EFFECT 7: FEEDBACK (Frame Echo)
+// ================================================================
+function applyFeedback(strength) {
+  if (!layers.feedback || strength === 0) return;
+  const s = strength / 100;
+  ctx.globalAlpha = s * 0.5;
+  ctx.globalCompositeOperation = 'lighter';
+  ctx.drawImage(fbCanvas, 0, 0);
+  ctx.globalAlpha = 1;
+  ctx.globalCompositeOperation = 'source-over';
+}
+
+// ================================================================
+// GENERATIVE: PARTICLE SYSTEM
+// ================================================================
+function initParticles(count) {
+  particles = [];
+  for (let i = 0; i < count; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 4,
+      vy: (Math.random() - 0.5) * 4,
+      life: Math.random(),
+      maxLife: Math.random() * 0.7 + 0.3,
+      size: Math.random() * 3 + 1
+    });
+  }
+}
+
+function renderParticles(seg, t, beatPhase) {
+  if (!layers.particles) return;
+  const cx = canvas.width / 2, cy = canvas.height / 2;
+  const color = seg.color;
+  const count = parseInt(document.getElementById('particleCount').value);
+  const sizeMult = parseInt(document.getElementById('particleSize').value);
+
+  if (particles.length !== count) initParticles(count);
+
+  for (let p of particles) {
+    p.life -= 0.01;
+    if (p.life <= 0) {
+      p.x = Math.random() * canvas.width;
+      p.y = Math.random() * canvas.height;
+      p.vx = (Math.random() - 0.5) * 4;
+      p.vy = (Math.random() - 0.5) * 4;
+      p.life = p.maxLife;
+    }
+
+    // Segment-specific behavior
+    const dx = cx - p.x, dy = cy - p.y;
+    const dist = Math.sqrt(dx*dx + dy*dy) + 0.1;
+
+    switch(seg.name) {
+      case 'GLUTTONY':
+        p.vx += dx/dist * 0.15 - dy/dist * 0.2;
+        p.vy += dy/dist * 0.15 + dx/dist * 0.2;
+        break;
+      case 'GREED':
+        p.vy -= 0.3;
+        p.vx += Math.sin(p.y * 0.02 + t * 3) * 0.15;
+        break;
+      case 'SLOTH':
+        p.vx *= 0.97; p.vy *= 0.97;
+        p.vy -= 0.03;
+        break;
+      case 'LUST':
+        const pulse = Math.sin(t * 4) * 2;
+        const ddx = p.x - cx, ddy = p.y - cy;
+        const dd = Math.sqrt(ddx*ddx + ddy*ddy) + 0.1;
+        p.vx += ddx/dd * pulse * 0.1;
+        p.vy += ddy/dd * pulse * 0.1;
+        break;
+      case 'PRIDE':
+        p.vy -= 0.25;
+        p.vx += (Math.random() - 0.5) * 0.5;
+        break;
+      case 'ENVY':
+        if (Math.random() < 0.02) { p.vx = (Math.random()-0.5)*8; p.vy = (Math.random()-0.5)*8; }
+        break;
+      case 'WRATH':
+        const wx = p.x - cx, wy = p.y - cy;
+        const wd = Math.sqrt(wx*wx + wy*wy) + 0.1;
+        p.vx += wx/wd * 0.4;
+        p.vy += wy/wd * 0.4;
+        break;
+      default:
+        p.vx += dx/dist * 0.08;
+        p.vy += dy/dist * 0.08;
+    }
+
+    p.vx *= 0.92; p.vy *= 0.92;
+    p.x += p.vx; p.y += p.vy;
+
+    const alpha = (p.life / p.maxLife) * 0.8 * (1 + beatPhase * 0.5);
+    const sz = p.size * sizeMult * alpha;
+
+    if (sz > 0) {
+      const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, sz * 3);
+      grad.addColorStop(0, `rgba(${color[0]},${color[1]},${color[2]},${alpha})`);
+      grad.addColorStop(1, `rgba(${color[0]},${color[1]},${color[2]},0)`);
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, sz * 3, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+}
+
+// ================================================================
+// GENERATIVE: GEOMETRIC GRID
+// ================================================================
+function renderGrid(seg, t) {
+  if (!layers.grid) return;
+  const cx = canvas.width / 2, cy = canvas.height / 2;
+  const color = seg.color;
+  const angle = t * 0.5;
+
+  ctx.strokeStyle = `rgba(${color[0]},${color[1]},${color[2]},0.3)`;
+  ctx.lineWidth = 1;
+
+  for (let ring = 0; ring < 5; ring++) {
+    const r = 100 + ring * 60;
+    const sides = 6 + ring;
+    const rot = angle + ring * 0.3;
+    const alpha = Math.max(0, 0.4 - ring * 0.05);
+
+    ctx.strokeStyle = `rgba(${color[0]},${color[1]},${color[2]},${alpha})`;
+    ctx.beginPath();
+    for (let i = 0; i <= sides; i++) {
+      const a = rot + i * Math.PI * 2 / sides;
+      const x = cx + Math.cos(a) * r;
+      const y = cy + Math.sin(a) * r * 0.6;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+
+  // Crosshair
+  ctx.strokeStyle = `rgba(${color[0]},${color[1]},${color[2]},0.4)`;
+  ctx.lineWidth = 1;
+  for (let d = 25; d < 31; d++) {
+    for (let sign = -1; sign <= 1; sign += 2) {
+      ctx.beginPath();
+      ctx.moveTo(cx + sign * d - 1, cy);
+      ctx.lineTo(cx + sign * d + 1, cy);
+      ctx.moveTo(cx, cy + sign * d - 1);
+      ctx.lineTo(cx, cy + sign * d + 1);
+      ctx.stroke();
+    }
+  }
+}
+
+// ================================================================
+// GENERATIVE: WAVEFORM
+// ================================================================
+function renderWaveform(seg, t, beatPhase) {
+  if (!layers.waveform) return;
+  const color = seg.color;
+  const baseY = canvas.height - 80;
+  const barCount = 64;
+  const barW = canvas.width / barCount;
+
+  for (let i = 0; i < barCount; i++) {
+    const freq = (i + 1) / barCount;
+    let amp;
+    if (audioAnalyser) {
+      amp = audioData[i] / 255;
+    } else {
+      amp = Math.abs(
+        Math.sin(t * 3 + i * 0.3) * 0.3 +
+        Math.sin(t * 7 + i * 0.5) * 0.2 +
+        (1 - freq) * 0.5 +
+        beatPhase * 0.3 * (1 - freq * 0.7)
+      );
+    }
+    const barH = amp * 60;
+    const x = i * barW;
+    const grad = ctx.createLinearGradient(0, baseY - barH, 0, baseY);
+    grad.addColorStop(0, `rgba(${color[0]},${color[1]},${color[2]},0.7)`);
+    grad.addColorStop(1, `rgba(${color[0]},${color[1]},${color[2]},0.1)`);
+    ctx.fillStyle = grad;
+    ctx.fillRect(x, baseY - barH, barW - 2, barH);
+  }
+}
+
+// ================================================================
+// GENERATIVE: DATA HUD
+// ================================================================
+function renderDataHUD(seg, t, frameNum) {
+  if (!layers.data) return;
+  const color = seg.color;
+
+  // Scanning line
+  const scanY = Math.floor((t * 200) % canvas.height);
+  ctx.fillStyle = `rgba(${color[0]},${color[1]},${color[2]},0.15)`;
+  ctx.fillRect(0, scanY, canvas.width, 1);
+
+  // HUD bars (top corners)
+  ctx.fillStyle = `rgba(${color[0]},${color[1]},${color[2]},0.2)`;
+  ctx.fillRect(10, 12, 80, 2);
+  ctx.fillRect(canvas.width - 90, 12, 80, 2);
+
+  // Random data lines
+  for (let i = 0; i < 5; i++) {
+    const bx = Math.random() * (canvas.width - 80);
+    const by = Math.random() * (canvas.height - 5);
+    const bw = 20 + Math.random() * 60;
+    ctx.fillStyle = `rgba(${color[0]},${color[1]},${color[2]},${Math.random() * 0.3})`;
+    ctx.fillRect(bx, by, bw, 1);
+  }
+}
+
+// ================================================================
+// VIGNETTE
+// ================================================================
+function renderVignette() {
+  if (!layers.vignette) return;
+  const grad = ctx.createRadialGradient(
+    canvas.width/2, canvas.height/2, canvas.height * 0.3,
+    canvas.width/2, canvas.height/2, canvas.height * 0.7
+  );
+  grad.addColorStop(0, 'rgba(0,0,0,0)');
+  grad.addColorStop(1, 'rgba(0,0,0,0.6)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+// ================================================================
+// MAIN RENDER LOOP
+// ================================================================
+let frameNum = 0;
+let lastTime = 0;
+
+function render() {
+  requestAnimationFrame(render);
+  if (!video.src || video.readyState < 2) return;
+
+  const t = video.currentTime;
+  const seg = getCurrentSegment(t);
+  frameNum++;
+
+  // ── Audio analysis: drive beat phase & energy ──────────────────
+  const audioReactiveEl = document.getElementById('audioReactive');
+  if (audioReactiveEl && audioReactiveEl.classList.contains('on') && audioAnalyser) {
+    analyzeAudio();           // updates audioBass/Mid/Treble + beatPhase + beatDetected
+  } else {
+    // Fallback: time-based pseudo-beat when audio reactive is off
+    beatPhase = Math.max(0, 1 - (t * 2 % 1));
+    audioBass = audioMid = audioTreble = audioOverall = 0;
+    beatDetected = false;
+  }
+
+  // ── Auto Segment: advance to next sin on every 4th beat ─────────
+  const autoSegEl = document.getElementById('autoSegment');
+  if (autoSegEl && autoSegEl.classList.contains('on') && beatDetected && autoSegLastBeat % 4 === 0 && autoSegLastBeat > 0) {
+    const nextIdx = (ix.currentSinIndex + 1) % SEGMENTS.length;
+    video.currentTime = SEGMENTS[nextIdx].start + 0.01;
+  }
+
+  // Draw video frame
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.globalAlpha = 1;
+  if (layers.base) {
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  } else {
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  // Apply pixel-level effects (audio-reactive when enabled)
+  const audioReactiveEl2 = document.getElementById('audioReactive');
+  const ar = audioReactiveEl2 && audioReactiveEl2.classList.contains('on');
+  if (layers.rgbshift || layers.scanlines || layers.glitch || layers.noise || layers.posterize) {
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    // Boost RGB shift & glitch on beats
+    const rgbBoost = ar ? Math.round(beatPhase * 12 + audioBass * 6) : 0;
+    const glitchBoost = ar ? beatPhase * 40 : 0;
+    applyRGBShift(imageData, parseInt(document.getElementById('rgbShiftAmt').value) + rgbBoost);
+    applyScanlines(imageData, parseInt(document.getElementById('scanlineInt').value),
+                   parseInt(document.getElementById('scanlineSpace').value));
+    applyGlitch(imageData, parseInt(document.getElementById('glitchInt').value) + Math.round(glitchBoost),
+                parseInt(document.getElementById('glitchSpeed').value), t);
+    applyNoise(imageData, parseInt(document.getElementById('noiseAmt').value) + (ar ? Math.round(beatPhase * 20) : 0));
+    applyPosterize(imageData, parseInt(document.getElementById('posterizeLvl').value));
+    applyColorGrade(imageData,
+      parseInt(document.getElementById('contrast').value),
+      parseInt(document.getElementById('saturation').value),
+      parseInt(document.getElementById('brightness').value));
+    ctx.putImageData(imageData, 0, 0);
+  }
+
+  // Feedback (uses previous frame)
+  applyFeedback(parseInt(document.getElementById('feedbackStr').value));
+
+  // Generative overlays (additive blend)
+  ctx.globalCompositeOperation = 'lighter';
+  renderParticles(seg, t, beatPhase);
+  renderGrid(seg, t);
+  renderWaveform(seg, t, beatPhase);
+  renderDataHUD(seg, t, frameNum);
+
+  // Audio-reactive beat flash — bright pulse on each detected beat
+  if (ar && beatPhase > 0.3) {
+    ctx.fillStyle = `rgba(${seg.color[0]},${seg.color[1]},${seg.color[2]},${beatPhase * 0.08})`;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+  ctx.globalCompositeOperation = 'source-over';
+
+  // ================================================================
+  // SIN-SPECIFIC NARRATIVE EFFECTS
+  // ================================================================
+  renderGluttonyEffect(seg, t);
+  renderGreedEffect(seg, t);
+  renderSlothEffect(seg, t);
+  renderLustEffect(seg, t);
+  renderPrideEffect(seg, t);
+  renderEnvyEffect(seg, t);
+  renderWrathEffect(seg, t);
+
+  // Global judgment atmosphere
+  renderJudgmentAtmosphere();
+
+  // Vignette
+  renderVignette();
+
+  // Save frame for feedback
+  fbCtx.drawImage(canvas, 0, 0);
+
+  // Update timeline
+  const dur = video.duration || 38.5;
+  const pct = (t / dur * 100);
+  document.getElementById('timelineCursor').style.left = pct + '%';
+  document.getElementById('timeDisplay').textContent =
+    formatTime(t) + ' / ' + formatTime(dur);
+
+  // Update energy meters
+  const mb = document.getElementById('meterBass');
+  const mm = document.getElementById('meterMid');
+  const mt = document.getElementById('meterTreble');
+  if (mb) mb.style.width = (audioBass * 100) + '%';
+  if (mm) mm.style.width = (audioMid * 100) + '%';
+  if (mt) mt.style.width = (audioTreble * 100) + '%';
+}
+
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
+}
+
+// ================================================================
+// AUDIO VISUALIZATION (bottom bar)
+// ================================================================
+function drawAudioViz() {
+  requestAnimationFrame(drawAudioViz);
+  const c = document.getElementById('audioViz');
+  const cx = c.getContext('2d');
+  cx.fillStyle = '#0a0a0f';
+  cx.fillRect(0, 0, c.width, c.height);
+
+  if (audioAnalyser) {
+    const bars = 30;
+    const barW = c.width / bars;
+    for (let i = 0; i < bars; i++) {
+      const v = audioData[i] / 255;
+      cx.fillStyle = `rgba(0,255,204,${v})`;
+      cx.fillRect(i * barW, c.height - v * c.height, barW - 1, v * c.height);
+    }
+  }
+}
+drawAudioViz();
+
+// ================================================================
+// LAYER TOGGLES
+// ================================================================
+document.querySelectorAll('.layer-item').forEach(el => {
+  el.addEventListener('click', () => {
+    el.classList.toggle('active');
+    const layer = el.dataset.layer;
+    layers[layer] = el.classList.contains('active');
+  });
+});
+
+// ================================================================
+// SLIDER UPDATES
+// ================================================================
+document.querySelectorAll('input[type=range]').forEach(slider => {
+  slider.addEventListener('input', () => {
+    const valEl = document.getElementById(slider.id + 'Val');
+    if (valEl) valEl.textContent = slider.value;
+  });
+});
+
+// ================================================================
+// KEYBOARD SHORTCUTS
+// ================================================================
+document.addEventListener('keydown', (e) => {
+  switch(e.key) {
+    case ' ': e.preventDefault(); togglePlay(); break;
+    case 'r': case 'R': toggleRecord(); break;
+    case '1': case '2': case '3': case '4':
+    case '5': case '6': case '7':
+      const idx = parseInt(e.key) - 1;
+      if (SEGMENTS[idx] && video.src) video.currentTime = SEGMENTS[idx].start + 0.01;
+      break;
+  }
+});
+
+// ================================================================
+// RECORDING
+// ================================================================
+let mediaRecorder = null;
+let isRecording = false;
+
+function toggleRecord() {
+  if (!video.src) { loadVideo(); return; }
+  if (isRecording) {
+    mediaRecorder.stop();
+    isRecording = false;
+    document.getElementById('recBtn').textContent = '● Record';
+    document.getElementById('recBtn').classList.remove('active');
+  } else {
+    const stream = canvas.captureStream(30);
+    mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp9' });
+    const chunks = [];
+    mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
+    mediaRecorder.onstop = () => {
+      const blob = new Blob(chunks, { type: 'video/webm' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'vj_output.webm';
+      a.click();
+    };
+    mediaRecorder.start();
+    isRecording = true;
+    document.getElementById('recBtn').textContent = '■ Stop';
+    document.getElementById('recBtn').classList.add('active');
+  }
+}
+
+// Initialize particles
+initParticles(200);
+
+// ================================================================
+// NARRATIVE INTERACTION SYSTEM
+// ================================================================
+
+// --- Mouse tracking on canvas ---
+const cursorAura = document.getElementById('cursorAura');
+
+canvas.addEventListener('mousemove', (e) => {
+  const rect = canvas.getBoundingClientRect();
+  ix.prevMouseX = ix.mouseX;
+  ix.prevMouseY = ix.mouseY;
+  ix.mouseX = (e.clientX - rect.left) / rect.width * canvas.width;
+  ix.mouseY = (e.clientY - rect.top) / rect.height * canvas.height;
+  const dx = ix.mouseX - ix.prevMouseX;
+  const dy = ix.mouseY - ix.prevMouseY;
+  ix.mouseVel = Math.sqrt(dx*dx + dy*dy);
+
+  // Update cursor aura position
+  cursorAura.style.left = (e.clientX - rect.left) + 'px';
+  cursorAura.style.top = (e.clientY - rect.top) + 'px';
+
+  // Greed: spawn gold particles when dragging
+  if (ix.isDragging && getCurrentSegmentData().name === 'GREED') {
+    for (let i = 0; i < 3; i++) {
+      ix.goldParticles.push({
+        x: ix.mouseX + (Math.random()-0.5)*40,
+        y: ix.mouseY + (Math.random()-0.5)*40,
+        vx: (Math.random()-0.5)*3,
+        vy: 2 + Math.random()*3,
+        size: 3 + Math.random()*4,
+        life: 1,
+        collected: false
+      });
+    }
+  }
+
+  // Lust: spawn heat points
+  const seg = getCurrentSegmentData();
+  if (seg.name === 'LUST' && ix.mouseVel > 1) {
+    ix.heatPoints.push({
+      x: ix.mouseX, y: ix.mouseY,
+      radius: 80 + Math.random()*60,
+      life: 1
+    });
+  }
+
+  // Wrath: accumulate rage with fast movement
+  if (seg.name === 'WRATH' && ix.mouseVel > 15) {
+    ix.rageIntensity = Math.min(1, ix.rageIntensity + 0.05);
+    addSin('WRATH', 3);
+  }
+});
+
+canvas.addEventListener('mouseenter', () => { cursorAura.classList.add('active'); });
+canvas.addEventListener('mouseleave', () => { cursorAura.classList.remove('active'); ix.isMouseDown = false; });
+
+// --- Click: Gluttony feed ---
+canvas.addEventListener('click', (e) => {
+  const seg = getCurrentSegmentData();
+  if (seg.name === 'GLUTTONY') {
+    const rect = canvas.getBoundingClientRect();
+    const cx = (e.clientX - rect.left) / rect.width * canvas.width;
+    const cy = (e.clientY - rect.top) / rect.height * canvas.height;
+    ix.consumeBursts.push({
+      x: cx, y: cy,
+      radius: 10, maxRadius: 200 + Math.random()*150,
+      life: 1
+    });
+    addSin('GLUTTONY', 5);
+  }
+});
+
+// --- Double-click: Pride ascend ---
+canvas.addEventListener('dblclick', (e) => {
+  const seg = getCurrentSegmentData();
+  if (seg.name === 'PRIDE') {
+    const rect = canvas.getBoundingClientRect();
+    const cx = (e.clientX - rect.left) / rect.width * canvas.width;
+    const cy = (e.clientY - rect.top) / rect.height * canvas.height;
+    // Spawn ascending light shafts
+    for (let i = 0; i < 12; i++) {
+      ix.lightShafts.push({
+        x: cx + (Math.random()-0.5)*100,
+        y: cy,
+        angle: -Math.PI/2 + (Math.random()-0.5)*0.4,
+        length: 0,
+        maxLength: 300 + Math.random()*200,
+        width: 8 + Math.random()*15,
+        life: 1
+      });
+    }
+    addSin('PRIDE', 8);
+  }
+});
+
+// --- Right-click: Envy mirror ---
+canvas.addEventListener('contextmenu', (e) => {
+  e.preventDefault();
+  const seg = getCurrentSegmentData();
+  if (seg.name === 'ENVY') {
+    const rect = canvas.getBoundingClientRect();
+    const cx = (e.clientX - rect.left) / rect.width * canvas.width;
+    const cy = (e.clientY - rect.top) / rect.height * canvas.height;
+    // Spawn mirror shards
+    for (let i = 0; i < 6; i++) {
+      const ang = (i / 6) * Math.PI * 2 + Math.random()*0.3;
+      ix.mirrorShards.push({
+        x: cx, y: cy,
+        vx: Math.cos(ang) * (3 + Math.random()*4),
+        vy: Math.sin(ang) * (3 + Math.random()*4),
+        rotation: Math.random() * Math.PI,
+        rotSpeed: (Math.random()-0.5)*0.1,
+        size: 60 + Math.random()*80,
+        life: 1
+      });
+    }
+    addSin('ENVY', 6);
+  }
+});
+
+// --- Mouse down/up: Sloth hold & Greed drag ---
+canvas.addEventListener('mousedown', (e) => {
+  ix.isMouseDown = true;
+  if (e.buttons === 1) ix.isDragging = true;
+});
+canvas.addEventListener('mouseup', () => {
+  ix.isMouseDown = false;
+  ix.isDragging = false;
+});
+
+// --- Helper: get current segment data ---
+function getCurrentSegmentData() {
+  if (!video.src) return SEGMENTS[0];
+  const t = video.currentTime;
+  for (let i = 0; i < SEGMENTS.length; i++) {
+    if (t >= SEGMENTS[i].start && t < SEGMENTS[i].end) return SEGMENTS[i];
+  }
+  return SEGMENTS[0];
+}
+
+// --- Sin meter: add sin and track ---
+function addSin(sinName, amount) {
+  if (!ix.sinsCommitted.has(sinName)) {
+    ix.sinsCommitted.add(sinName);
+    ix.sinMeter = (ix.sinsCommitted.size / 7) * 100;
+    updateJudgmentUI();
+
+    // Check if all 7 sins committed
+    if (ix.sinsCommitted.size >= 7 && !ix.judgmentTriggered) {
+      triggerJudgment();
+    }
+  }
+}
+
+function updateJudgmentUI() {
+  document.getElementById('judgmentFill').style.height = ix.sinMeter + '%';
+  document.getElementById('judgmentCount').textContent =
+    ix.sinsCommitted.size + ' / 7';
+}
+
+// --- Judgment final: white flash + reset ---
+function triggerJudgment() {
+  ix.judgmentTriggered = true;
+  const jf = document.getElementById('judgmentFinal');
+  jf.classList.add('active');
+  setTimeout(() => {
+    jf.classList.remove('active');
+    // Reset sins
+    ix.sinsCommitted.clear();
+    ix.sinMeter = 0;
+    ix.judgmentTriggered = false;
+    updateJudgmentUI();
+  }, 3000);
+}
+
+// --- Narrative text update ---
+function updateNarrative(segName) {
+  const data = SIN_DATA[segName];
+  if (!data) return;
+  const narrative = document.getElementById('sinNarrative');
+  const seg = SEGMENTS.find(s => s.name === segName);
+  const color = seg ? `rgb(${seg.color[0]},${seg.color[1]},${seg.color[2]})` : '#fff';
+
+  // sinTitle is hidden (segment name is shown in canvas-overlay)
+  document.getElementById('sinQuote').textContent = data.cnQuote;
+  document.getElementById('sinHint').textContent = data.hint;
+  narrative.classList.add('visible');
+
+  // Update cursor aura color
+  cursorAura.style.background = `radial-gradient(circle, ${color} 0%, transparent 70%)`;
+  cursorAura.style.boxShadow = `0 0 20px ${color}`;
+
+  // Hide after 4 seconds (keep hint visible)
+  clearTimeout(narrative._timer);
+  narrative._timer = setTimeout(() => {
+    narrative.classList.remove('visible');
+  }, 4000);
+}
+
+// --- Sin transition flash ---
+function sinTransition(segName) {
+  const flash = document.getElementById('sinFlash');
+  const flashText = document.getElementById('flashText');
+  const seg = SEGMENTS.find(s => s.name === segName);
+  const color = seg ? `rgb(${seg.color[0]},${seg.color[1]},${seg.color[2]})` : '#fff';
+  flashText.textContent = segName;
+  flashText.style.color = color;
+  flash.classList.remove('active');
+  void flash.offsetWidth; // force reflow
+  flash.classList.add('active');
+}
+
+// ================================================================
+// SIN-SPECIFIC RENDER FUNCTIONS
+// ================================================================
+
+// --- GLUTTONY: Expanding consuming black holes ---
+function renderGluttonyEffect(seg, t) {
+  if (seg.name !== 'GLUTTONY') return;
+  for (let i = ix.consumeBursts.length - 1; i >= 0; i--) {
+    const b = ix.consumeBursts[i];
+    b.radius += (b.maxRadius - b.radius) * 0.06;
+    b.life -= 0.008;
+    if (b.life <= 0) { ix.consumeBursts.splice(i, 1); continue; }
+
+    // Dark consuming circle with swirling edge
+    const grad = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.radius);
+    grad.addColorStop(0, `rgba(0,0,0,${b.life * 0.95})`);
+    grad.addColorStop(0.6, `rgba(20,10,40,${b.life * 0.6})`);
+    grad.addColorStop(0.9, `rgba(80,150,255,${b.life * 0.3})`);
+    grad.addColorStop(1, `rgba(80,150,255,0)`);
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Swirling teeth around edge
+    ctx.strokeStyle = `rgba(80,150,255,${b.life * 0.4})`;
+    ctx.lineWidth = 2;
+    for (let a = 0; a < Math.PI * 2; a += 0.3) {
+      const r1 = b.radius * 0.85;
+      const r2 = b.radius * 1.05;
+      const ang = a + t * 2;
+      ctx.beginPath();
+      ctx.moveTo(b.x + Math.cos(ang)*r1, b.y + Math.sin(ang)*r1);
+      ctx.lineTo(b.x + Math.cos(ang)*r2, b.y + Math.sin(ang)*r2);
+      ctx.stroke();
+    }
+  }
+}
+
+// --- GREED: Gold particles falling and accumulating ---
+function renderGreedEffect(seg, t) {
+  if (seg.name !== 'GREED') return;
+  for (let i = ix.goldParticles.length - 1; i >= 0; i--) {
+    const p = ix.goldParticles[i];
+    p.vy += 0.15; // gravity
+    p.x += p.vx;
+    p.y += p.vy;
+    p.vx *= 0.98;
+
+    // Bounce off bottom
+    if (p.y > canvas.height - 10) {
+      p.y = canvas.height - 10;
+      p.vy *= -0.3;
+      p.vx *= 0.7;
+      if (Math.abs(p.vy) < 1) {
+        p.collected = true;
+        ix.goldCount++;
+      }
+    }
+
+    // Draw gold coin
+    const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 2);
+    grad.addColorStop(0, `rgba(255,215,0,0.9)`);
+    grad.addColorStop(0.5, `rgba(255,180,0,0.7)`);
+    grad.addColorStop(1, `rgba(255,140,0,0)`);
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size * 2, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Core shine
+    ctx.fillStyle = `rgba(255,255,200,0.8)`;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size * 0.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    if (p.collected) {
+      p.life -= 0.02;
+      if (p.life <= 0) ix.goldParticles.splice(i, 1);
+    }
+  }
+
+  // Gold counter HUD
+  if (ix.goldCount > 0 || ix.goldParticles.length > 0) {
+    ctx.fillStyle = 'rgba(255,200,50,0.8)';
+    ctx.font = 'bold 16px monospace';
+    ctx.fillText('GOLD: ' + ix.goldCount, canvas.width - 150, canvas.height - 20);
+    if (ix.goldParticles.length > 5) addSin('GREED', 5);
+  }
+}
+
+// --- SLOTH: Time slow + fog ---
+function renderSlothEffect(seg, t) {
+  if (seg.name !== 'SLOTH') {
+    ix.slowFactor = Math.min(1.0, ix.slowFactor + 0.02);
+    ix.fogLevel = Math.max(0, ix.fogLevel - 0.01);
+    return;
+  }
+  if (ix.isMouseDown) {
+    ix.slowFactor = Math.max(0.3, ix.slowFactor - 0.02);
+    ix.fogLevel = Math.min(0.5, ix.fogLevel + 0.008);
+    video.playbackRate = ix.slowFactor;
+    addSin('SLOTH', 3);
+  } else {
+    ix.slowFactor = Math.min(1.0, ix.slowFactor + 0.01);
+    ix.fogLevel = Math.max(0, ix.fogLevel - 0.005);
+    video.playbackRate = ix.slowFactor;
+  }
+
+  // Fog overlay
+  if (ix.fogLevel > 0) {
+    ctx.fillStyle = `rgba(130,130,160,${ix.fogLevel * 0.3})`;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Dreamy blur circles
+    for (let i = 0; i < 3; i++) {
+      const fx = canvas.width/2 + Math.sin(t * 0.5 + i) * 200;
+      const fy = canvas.height/2 + Math.cos(t * 0.3 + i*1.5) * 150;
+      const grad = ctx.createRadialGradient(fx, fy, 0, fx, fy, 300);
+      grad.addColorStop(0, `rgba(200,200,220,${ix.fogLevel * 0.15})`);
+      grad.addColorStop(1, 'rgba(200,200,220,0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+}
+
+// --- LUST: Heat distortion + magnetic attraction ---
+function renderLustEffect(seg, t) {
+  if (seg.name !== 'LUST') return;
+
+  // Heat points
+  for (let i = ix.heatPoints.length - 1; i >= 0; i--) {
+    const hp = ix.heatPoints[i];
+    hp.life -= 0.02;
+    if (hp.life <= 0) { ix.heatPoints.splice(i, 1); continue; }
+
+    // Heat distortion ring
+    for (let r = 0; r < 3; r++) {
+      const radius = hp.radius * (1 - r * 0.2) * (1 + Math.sin(t * 5 + r) * 0.1);
+      ctx.strokeStyle = `rgba(255,80,150,${hp.life * 0.2 * (1 - r * 0.3)})`;
+      ctx.lineWidth = 3 - r;
+      ctx.beginPath();
+      ctx.arc(hp.x, hp.y, radius, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    // Warm glow
+    const grad = ctx.createRadialGradient(hp.x, hp.y, 0, hp.x, hp.y, hp.radius);
+    grad.addColorStop(0, `rgba(255,80,150,${hp.life * 0.15})`);
+    grad.addColorStop(0.5, `rgba(255,120,80,${hp.life * 0.08})`);
+    grad.addColorStop(1, 'rgba(255,80,150,0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(hp.x - hp.radius, hp.y - hp.radius, hp.radius * 2, hp.radius * 2);
+  }
+
+  // Magnetic attraction particles toward cursor
+  if (ix.mouseVel > 0.5) {
+    for (let i = 0; i < 20; i++) {
+      const ang = Math.random() * Math.PI * 2;
+      const dist = 100 + Math.random() * 100;
+      const px = ix.mouseX + Math.cos(ang) * dist;
+      const py = ix.mouseY + Math.sin(ang) * dist;
+      ctx.strokeStyle = `rgba(255,80,150,0.15)`;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(px, py);
+      ctx.lineTo(ix.mouseX, ix.mouseY);
+      ctx.stroke();
+    }
+    addSin('LUST', 2);
+  }
+}
+
+// --- PRIDE: Ascending light shafts + spotlight ---
+function renderPrideEffect(seg, t) {
+  if (seg.name !== 'PRIDE') return;
+
+  // Spotlight following cursor
+  const spotGrad = ctx.createRadialGradient(ix.mouseX, ix.mouseY, 0, ix.mouseX, ix.mouseY, 250);
+  spotGrad.addColorStop(0, 'rgba(255,200,100,0.15)');
+  spotGrad.addColorStop(0.5, 'rgba(255,130,30,0.05)');
+  spotGrad.addColorStop(1, 'rgba(255,130,30,0)');
+  ctx.fillStyle = spotGrad;
+  ctx.fillRect(ix.mouseX - 250, ix.mouseY - 250, 500, 500);
+
+  // Light shafts
+  for (let i = ix.lightShafts.length - 1; i >= 0; i--) {
+    const s = ix.lightShafts[i];
+    s.length += (s.maxLength - s.length) * 0.08;
+    s.life -= 0.006;
+    if (s.life <= 0) { ix.lightShafts.splice(i, 1); continue; }
+
+    const endX = s.x + Math.cos(s.angle) * s.length;
+    const endY = s.y + Math.sin(s.angle) * s.length;
+
+    const grad = ctx.createLinearGradient(s.x, s.y, endX, endY);
+    grad.addColorStop(0, `rgba(255,220,150,${s.life * 0.6})`);
+    grad.addColorStop(0.5, `rgba(255,180,60,${s.life * 0.3})`);
+    grad.addColorStop(1, `rgba(255,130,30,0)`);
+    ctx.fillStyle = grad;
+
+    // Draw shaft as a triangle
+    const perp = s.angle + Math.PI / 2;
+    const w = s.width / 2;
+    ctx.beginPath();
+    ctx.moveTo(s.x + Math.cos(perp)*w, s.y + Math.sin(perp)*w);
+    ctx.lineTo(s.x - Math.cos(perp)*w, s.y - Math.sin(perp)*w);
+    ctx.lineTo(endX, endY);
+    ctx.closePath();
+    ctx.fill();
+
+    // Core bright line
+    ctx.strokeStyle = `rgba(255,255,200,${s.life * 0.5})`;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(s.x, s.y);
+    ctx.lineTo(endX, endY);
+    ctx.stroke();
+  }
+}
+
+// --- ENVY: Mirror shards ---
+function renderEnvyEffect(seg, t) {
+  if (seg.name !== 'ENVY') return;
+
+  // Draw mirrored video fragments
+  for (let i = ix.mirrorShards.length - 1; i >= 0; i--) {
+    const m = ix.mirrorShards[i];
+    m.x += m.vx;
+    m.y += m.vy;
+    m.vx *= 0.96;
+    m.vy *= 0.96;
+    m.rotation += m.rotSpeed;
+    m.life -= 0.005;
+    if (m.life <= 0) { ix.mirrorShards.splice(i, 1); continue; }
+
+    ctx.save();
+    ctx.translate(m.x, m.y);
+    ctx.rotate(m.rotation);
+    ctx.globalAlpha = m.life * 0.4;
+
+    // Mirrored video slice
+    const flip = i % 2 === 0 ? -1 : 1;
+    ctx.scale(flip, 1);
+    try {
+      ctx.drawImage(video,
+        (i * 37) % (video.videoWidth || 1280 - 100), 0, 100, video.videoHeight || 720,
+        -m.size/2, -m.size/2, m.size, m.size
+      );
+    } catch(e) {}
+
+    // Green envy border
+    ctx.globalAlpha = m.life * 0.5;
+    ctx.strokeStyle = `rgba(50,230,80,${m.life * 0.6})`;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(-m.size/2, -m.size/2, m.size, m.size);
+
+    ctx.restore();
+  }
+  ctx.globalAlpha = 1;
+}
+
+// --- WRATH: Screen shake + shatter + red surge ---
+function renderWrathEffect(seg, t) {
+  if (seg.name !== 'WRATH') {
+    ix.rageIntensity = Math.max(0, ix.rageIntensity - 0.02);
+    return;
+  }
+
+  // Decay rage
+  ix.rageIntensity = Math.max(0.2, ix.rageIntensity - 0.003);
+
+  // Screen shake
+  if (ix.rageIntensity > 0.1) {
+    ix.shakeX = (Math.random() - 0.5) * ix.rageIntensity * 30;
+    ix.shakeY = (Math.random() - 0.5) * ix.rageIntensity * 30;
+    canvas.style.transform = `translate(${ix.shakeX}px, ${ix.shakeY}px)`;
+  } else {
+    canvas.style.transform = '';
+  }
+
+  // Red surge overlay
+  if (ix.rageIntensity > 0.2) {
+    ctx.fillStyle = `rgba(255,30,30,${ix.rageIntensity * 0.15})`;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  // Shatter cracks
+  if (ix.rageIntensity > 0.5) {
+    ctx.strokeStyle = `rgba(255,80,80,${ix.rageIntensity * 0.6})`;
+    ctx.lineWidth = 1.5;
+    const crackCount = Math.floor(ix.rageIntensity * 8);
+    for (let i = 0; i < crackCount; i++) {
+      const startX = (i * 137 + t * 50) % canvas.width;
+      const startY = (i * 89 + t * 30) % canvas.height;
+      ctx.beginPath();
+      ctx.moveTo(startX, startY);
+      let cx = startX, cy = startY;
+      for (let j = 0; j < 5; j++) {
+        cx += (Math.random() - 0.5) * 100;
+        cy += (Math.random() - 0.5) * 100;
+        ctx.lineTo(cx, cy);
+      }
+      ctx.stroke();
+    }
+  }
+}
+
+// --- Global judgment atmosphere: darkens as sins accumulate ---
+function renderJudgmentAtmosphere() {
+  if (ix.sinMeter < 10) return;
+  const darkness = (ix.sinMeter / 100) * 0.35;
+  // Vignette darkening
+  const grad = ctx.createRadialGradient(
+    canvas.width/2, canvas.height/2, canvas.height * 0.2,
+    canvas.width/2, canvas.height/2, canvas.height * 0.8
+  );
+  grad.addColorStop(0, 'rgba(0,0,0,0)');
+  grad.addColorStop(1, `rgba(0,0,0,${darkness})`);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Red tint at high sin
+  if (ix.sinMeter > 70) {
+    ctx.fillStyle = `rgba(40,0,0,${(ix.sinMeter - 70) / 30 * 0.2})`;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+}
+</script>
+</body>
+</html>
